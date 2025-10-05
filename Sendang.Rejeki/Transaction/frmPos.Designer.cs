@@ -30,15 +30,15 @@ namespace Sendang.Rejeki.Transaction
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle18 = new System.Windows.Forms.DataGridViewCellStyle();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.cboPaymentType = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
@@ -48,6 +48,15 @@ namespace Sendang.Rejeki.Transaction
             this.txtPayment = new System.Windows.Forms.TextBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.grid = new System.Windows.Forms.DataGridView();
+            this.colNo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colProduct = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.colProductCode = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colQty = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colUnit = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colColi = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colPrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colSubTotal = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.toolStrip = new System.Windows.Forms.ToolStrip();
             this.btnAdd = new System.Windows.Forms.ToolStripButton();
             this.btnDelete = new System.Windows.Forms.ToolStripButton();
@@ -71,7 +80,7 @@ namespace Sendang.Rejeki.Transaction
             this.btnPrint = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
             this.btnPrintToFile = new System.Windows.Forms.Button();
-            this.btnPrintSJ= new System.Windows.Forms.Button();
+            this.btnPrintSJ = new System.Windows.Forms.Button();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -81,15 +90,6 @@ namespace Sendang.Rejeki.Transaction
             this.Price = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.qty = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.disc = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colNo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colProduct = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.colProductCode = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colQty = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colUnit = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colColi = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colPrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colSubTotal = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox2.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grid)).BeginInit();
@@ -121,7 +121,7 @@ namespace Sendang.Rejeki.Transaction
             this.cboPaymentType.Location = new System.Drawing.Point(580, 214);
             this.cboPaymentType.Name = "cboPaymentType";
             this.cboPaymentType.Size = new System.Drawing.Size(343, 21);
-            this.cboPaymentType.TabIndex = 27;
+            this.cboPaymentType.TabIndex = 1;
             // 
             // label3
             // 
@@ -148,7 +148,7 @@ namespace Sendang.Rejeki.Transaction
             this.txtNotes.Multiline = true;
             this.txtNotes.Name = "txtNotes";
             this.txtNotes.Size = new System.Drawing.Size(325, 67);
-            this.txtNotes.TabIndex = 20;
+            this.txtNotes.TabIndex = 0;
             // 
             // label11
             // 
@@ -168,7 +168,7 @@ namespace Sendang.Rejeki.Transaction
             this.txtPayment.Multiline = true;
             this.txtPayment.Name = "txtPayment";
             this.txtPayment.Size = new System.Drawing.Size(343, 35);
-            this.txtPayment.TabIndex = 15;
+            this.txtPayment.TabIndex = 2;
             this.txtPayment.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txtPayment.Enter += new System.EventHandler(this.tb_Enter);
             this.txtPayment.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tb_KeyPress);
@@ -213,10 +213,95 @@ namespace Sendang.Rejeki.Transaction
             this.grid.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.grid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
             this.grid.Size = new System.Drawing.Size(908, 163);
-            this.grid.TabIndex = 4;
+            this.grid.TabIndex = 1;
             this.grid.CellBeginEdit += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.grid_CellBeginEdit);
             this.grid.CellEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.grid_CellEnter);
             this.grid.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.grid_EditingControlShowing);
+            // 
+            // colNo
+            // 
+            this.colNo.DataPropertyName = "Index";
+            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter;
+            dataGridViewCellStyle10.Format = "N0";
+            dataGridViewCellStyle10.NullValue = null;
+            this.colNo.DefaultCellStyle = dataGridViewCellStyle10;
+            this.colNo.HeaderText = "No.";
+            this.colNo.Name = "colNo";
+            this.colNo.Width = 30;
+            // 
+            // colProduct
+            // 
+            this.colProduct.DataPropertyName = "CatalogName";
+            this.colProduct.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.ComboBox;
+            this.colProduct.HeaderText = "Catalog";
+            this.colProduct.Name = "colProduct";
+            this.colProduct.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.colProduct.Width = 200;
+            // 
+            // colProductCode
+            // 
+            this.colProductCode.DataPropertyName = "CatalogID";
+            this.colProductCode.HeaderText = "CatalogID";
+            this.colProductCode.Name = "colProductCode";
+            this.colProductCode.Visible = false;
+            // 
+            // colQty
+            // 
+            this.colQty.DataPropertyName = "Qty";
+            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle11.Format = "N2";
+            this.colQty.DefaultCellStyle = dataGridViewCellStyle11;
+            this.colQty.HeaderText = "Quantity";
+            this.colQty.Name = "colQty";
+            this.colQty.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.colQty.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // colUnit
+            // 
+            this.colUnit.DataPropertyName = "Unit";
+            this.colUnit.HeaderText = "Unit";
+            this.colUnit.Name = "colUnit";
+            this.colUnit.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.colUnit.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // colColi
+            // 
+            this.colColi.DataPropertyName = "Coli";
+            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopRight;
+            dataGridViewCellStyle12.Format = "N0";
+            this.colColi.DefaultCellStyle = dataGridViewCellStyle12;
+            this.colColi.HeaderText = "Colly";
+            this.colColi.Name = "colColi";
+            // 
+            // colPrice
+            // 
+            this.colPrice.DataPropertyName = "Price";
+            dataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle13.Format = "N0";
+            this.colPrice.DefaultCellStyle = dataGridViewCellStyle13;
+            this.colPrice.HeaderText = "Harga/Item";
+            this.colPrice.Name = "colPrice";
+            this.colPrice.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.colPrice.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.colPrice.Width = 150;
+            // 
+            // colSubTotal
+            // 
+            this.colSubTotal.DataPropertyName = "SubTotal";
+            dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle14.Format = "N0";
+            this.colSubTotal.DefaultCellStyle = dataGridViewCellStyle14;
+            this.colSubTotal.HeaderText = "Sub Total";
+            this.colSubTotal.Name = "colSubTotal";
+            this.colSubTotal.ReadOnly = true;
+            this.colSubTotal.Width = 200;
+            // 
+            // colID
+            // 
+            this.colID.DataPropertyName = "ID";
+            this.colID.HeaderText = "ID";
+            this.colID.Name = "colID";
+            this.colID.Visible = false;
             // 
             // toolStrip
             // 
@@ -226,7 +311,7 @@ namespace Sendang.Rejeki.Transaction
             this.toolStrip.Location = new System.Drawing.Point(0, 0);
             this.toolStrip.Name = "toolStrip";
             this.toolStrip.Size = new System.Drawing.Size(908, 25);
-            this.toolStrip.TabIndex = 3;
+            this.toolStrip.TabIndex = 0;
             this.toolStrip.Text = "toolStrip";
             // 
             // btnAdd
@@ -279,7 +364,7 @@ namespace Sendang.Rejeki.Transaction
             this.txtTransDate.Location = new System.Drawing.Point(117, 16);
             this.txtTransDate.Name = "txtTransDate";
             this.txtTransDate.Size = new System.Drawing.Size(325, 20);
-            this.txtTransDate.TabIndex = 28;
+            this.txtTransDate.TabIndex = 0;
             this.txtTransDate.ValueChanged += new System.EventHandler(this.txtTransDate_ValueChanged);
             // 
             // label4
@@ -298,7 +383,7 @@ namespace Sendang.Rejeki.Transaction
             this.txtAddress.Multiline = true;
             this.txtAddress.Name = "txtAddress";
             this.txtAddress.Size = new System.Drawing.Size(325, 66);
-            this.txtAddress.TabIndex = 26;
+            this.txtAddress.TabIndex = 3;
             // 
             // cboCustomer
             // 
@@ -306,7 +391,7 @@ namespace Sendang.Rejeki.Transaction
             this.cboCustomer.Location = new System.Drawing.Point(117, 67);
             this.cboCustomer.Name = "cboCustomer";
             this.cboCustomer.Size = new System.Drawing.Size(325, 21);
-            this.cboCustomer.TabIndex = 25;
+            this.cboCustomer.TabIndex = 2;
             this.cboCustomer.SelectedIndexChanged += new System.EventHandler(this.cboCustomer_SelectedIndexChanged);
             // 
             // label14
@@ -358,7 +443,7 @@ namespace Sendang.Rejeki.Transaction
             this.txtReturn.Name = "txtReturn";
             this.txtReturn.ReadOnly = true;
             this.txtReturn.Size = new System.Drawing.Size(343, 35);
-            this.txtReturn.TabIndex = 13;
+            this.txtReturn.TabIndex = 6;
             this.txtReturn.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // txtTotalPayed
@@ -371,7 +456,7 @@ namespace Sendang.Rejeki.Transaction
             this.txtTotalPayed.Name = "txtTotalPayed";
             this.txtTotalPayed.ReadOnly = true;
             this.txtTotalPayed.Size = new System.Drawing.Size(343, 35);
-            this.txtTotalPayed.TabIndex = 12;
+            this.txtTotalPayed.TabIndex = 5;
             this.txtTotalPayed.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // txtTotalPrice
@@ -384,7 +469,7 @@ namespace Sendang.Rejeki.Transaction
             this.txtTotalPrice.Name = "txtTotalPrice";
             this.txtTotalPrice.ReadOnly = true;
             this.txtTotalPrice.Size = new System.Drawing.Size(343, 45);
-            this.txtTotalPrice.TabIndex = 11;
+            this.txtTotalPrice.TabIndex = 4;
             this.txtTotalPrice.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // label2
@@ -411,8 +496,9 @@ namespace Sendang.Rejeki.Transaction
             this.txtTransNo.Location = new System.Drawing.Point(117, 42);
             this.txtTransNo.MaxLength = 50;
             this.txtTransNo.Name = "txtTransNo";
+            this.txtTransNo.ReadOnly = true;
             this.txtTransNo.Size = new System.Drawing.Size(325, 20);
-            this.txtTransNo.TabIndex = 2;
+            this.txtTransNo.TabIndex = 1;
             // 
             // btnCancel
             // 
@@ -420,7 +506,7 @@ namespace Sendang.Rejeki.Transaction
             this.btnCancel.Location = new System.Drawing.Point(874, 499);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
-            this.btnCancel.TabIndex = 8;
+            this.btnCancel.TabIndex = 4;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
@@ -432,7 +518,7 @@ namespace Sendang.Rejeki.Transaction
             this.btnPrint.Location = new System.Drawing.Point(712, 499);
             this.btnPrint.Name = "btnPrint";
             this.btnPrint.Size = new System.Drawing.Size(75, 23);
-            this.btnPrint.TabIndex = 9;
+            this.btnPrint.TabIndex = 2;
             this.btnPrint.Text = "Print";
             this.btnPrint.UseVisualStyleBackColor = true;
             this.btnPrint.Click += new System.EventHandler(this.btnPrint_Click);
@@ -443,7 +529,7 @@ namespace Sendang.Rejeki.Transaction
             this.btnSave.Location = new System.Drawing.Point(793, 499);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 23);
-            this.btnSave.TabIndex = 10;
+            this.btnSave.TabIndex = 3;
             this.btnSave.Text = "Save";
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
@@ -455,29 +541,30 @@ namespace Sendang.Rejeki.Transaction
             this.btnPrintToFile.Location = new System.Drawing.Point(631, 499);
             this.btnPrintToFile.Name = "btnPrintToFile";
             this.btnPrintToFile.Size = new System.Drawing.Size(75, 23);
-            this.btnPrintToFile.TabIndex = 12;
+            this.btnPrintToFile.TabIndex = 1;
             this.btnPrintToFile.Text = "Print to File";
             this.btnPrintToFile.UseVisualStyleBackColor = true;
             this.btnPrintToFile.Click += new System.EventHandler(this.btnPrintToFile_Click);
-
+            // 
+            // btnPrintSJ
+            // 
             this.btnPrintSJ.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnPrintSJ.Enabled = false;
             this.btnPrintSJ.Location = new System.Drawing.Point(550, 499);
             this.btnPrintSJ.Name = "btnPrintSJ";
             this.btnPrintSJ.Size = new System.Drawing.Size(75, 23);
-            this.btnPrintSJ.TabIndex = 12;
+            this.btnPrintSJ.TabIndex = 0;
             this.btnPrintSJ.Text = "Print SJ";
             this.btnPrintSJ.UseVisualStyleBackColor = true;
             this.btnPrintSJ.Click += new System.EventHandler(this.btnPrintSJ_Click);
-
             // 
             // dataGridViewTextBoxColumn1
             // 
             this.dataGridViewTextBoxColumn1.DataPropertyName = "Index";
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter;
-            dataGridViewCellStyle6.Format = "N0";
-            dataGridViewCellStyle6.NullValue = null;
-            this.dataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter;
+            dataGridViewCellStyle15.Format = "N0";
+            dataGridViewCellStyle15.NullValue = null;
+            this.dataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle15;
             this.dataGridViewTextBoxColumn1.HeaderText = "Barcode";
             this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
             this.dataGridViewTextBoxColumn1.Resizable = System.Windows.Forms.DataGridViewTriState.False;
@@ -499,8 +586,8 @@ namespace Sendang.Rejeki.Transaction
             // dataGridViewTextBoxColumn3
             // 
             this.dataGridViewTextBoxColumn3.DataPropertyName = "Qty";
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            this.dataGridViewTextBoxColumn3.DefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle16.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.dataGridViewTextBoxColumn3.DefaultCellStyle = dataGridViewCellStyle16;
             this.dataGridViewTextBoxColumn3.HeaderText = "Quantity";
             this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
             this.dataGridViewTextBoxColumn3.Resizable = System.Windows.Forms.DataGridViewTriState.False;
@@ -509,8 +596,8 @@ namespace Sendang.Rejeki.Transaction
             // dataGridViewTextBoxColumn4
             // 
             this.dataGridViewTextBoxColumn4.DataPropertyName = "Price";
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            this.dataGridViewTextBoxColumn4.DefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle17.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.dataGridViewTextBoxColumn4.DefaultCellStyle = dataGridViewCellStyle17;
             this.dataGridViewTextBoxColumn4.HeaderText = "Discount";
             this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
             this.dataGridViewTextBoxColumn4.Resizable = System.Windows.Forms.DataGridViewTriState.False;
@@ -520,8 +607,8 @@ namespace Sendang.Rejeki.Transaction
             // dataGridViewTextBoxColumn5
             // 
             this.dataGridViewTextBoxColumn5.DataPropertyName = "SubTotal";
-            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            this.dataGridViewTextBoxColumn5.DefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle18.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.dataGridViewTextBoxColumn5.DefaultCellStyle = dataGridViewCellStyle18;
             this.dataGridViewTextBoxColumn5.HeaderText = "Price";
             this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
             this.dataGridViewTextBoxColumn5.ReadOnly = true;
@@ -553,91 +640,6 @@ namespace Sendang.Rejeki.Transaction
             this.disc.Name = "disc";
             this.disc.Width = 50;
             // 
-            // colNo
-            // 
-            this.colNo.DataPropertyName = "Index";
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter;
-            dataGridViewCellStyle1.Format = "N0";
-            dataGridViewCellStyle1.NullValue = null;
-            this.colNo.DefaultCellStyle = dataGridViewCellStyle1;
-            this.colNo.HeaderText = "No.";
-            this.colNo.Name = "colNo";
-            this.colNo.Width = 30;
-            // 
-            // colProduct
-            // 
-            this.colProduct.DataPropertyName = "CatalogName";
-            this.colProduct.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.ComboBox;
-            this.colProduct.HeaderText = "Catalog";
-            this.colProduct.Name = "colProduct";
-            this.colProduct.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.colProduct.Width = 200;
-            // 
-            // colProductCode
-            // 
-            this.colProductCode.DataPropertyName = "CatalogID";
-            this.colProductCode.HeaderText = "CatalogID";
-            this.colProductCode.Name = "colProductCode";
-            this.colProductCode.Visible = false;
-            // 
-            // colQty
-            // 
-            this.colQty.DataPropertyName = "Qty";
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle2.Format = "N2";
-            this.colQty.DefaultCellStyle = dataGridViewCellStyle2;
-            this.colQty.HeaderText = "Quantity";
-            this.colQty.Name = "colQty";
-            this.colQty.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.colQty.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // colUnit
-            // 
-            this.colUnit.DataPropertyName = "Unit";
-            this.colUnit.HeaderText = "Unit";
-            this.colUnit.Name = "colUnit";
-            this.colUnit.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.colUnit.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // colColi
-            // 
-            this.colColi.DataPropertyName = "Coli";
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopRight;
-            dataGridViewCellStyle3.Format = "N0";
-            this.colColi.DefaultCellStyle = dataGridViewCellStyle3;
-            this.colColi.HeaderText = "Colly";
-            this.colColi.Name = "colColi";
-            // 
-            // colPrice
-            // 
-            this.colPrice.DataPropertyName = "Price";
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle4.Format = "N0";
-            this.colPrice.DefaultCellStyle = dataGridViewCellStyle4;
-            this.colPrice.HeaderText = "Harga/Item";
-            this.colPrice.Name = "colPrice";
-            this.colPrice.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.colPrice.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.colPrice.Width = 150;
-            // 
-            // colSubTotal
-            // 
-            this.colSubTotal.DataPropertyName = "SubTotal";
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle5.Format = "N0";
-            this.colSubTotal.DefaultCellStyle = dataGridViewCellStyle5;
-            this.colSubTotal.HeaderText = "Sub Total";
-            this.colSubTotal.Name = "colSubTotal";
-            this.colSubTotal.ReadOnly = true;
-            this.colSubTotal.Width = 200;
-            // 
-            // colID
-            // 
-            this.colID.DataPropertyName = "ID";
-            this.colID.HeaderText = "ID";
-            this.colID.Name = "colID";
-            this.colID.Visible = false;
-            // 
             // frmPos
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -645,7 +647,6 @@ namespace Sendang.Rejeki.Transaction
             this.ClientSize = new System.Drawing.Size(972, 534);
             this.Controls.Add(this.btnPrintSJ);
             this.Controls.Add(this.btnPrintToFile);
- 
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.btnPrint);
             this.Controls.Add(this.btnCancel);

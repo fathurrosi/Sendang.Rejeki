@@ -18,6 +18,7 @@ using System.Drawing.Printing;
 
 namespace Sendang.Rejeki.Transaction
 {
+    //    public partial class frmPos : Form
     public partial class frmPos : SendangRejekiForm
     {
         public class PosHelper
@@ -111,10 +112,12 @@ namespace Sendang.Rejeki.Transaction
 
         List<Catalog> catalogList = new List<Catalog>();
         Sale sale = null;
+        string _AutoAID = "Auto Generate";
         private void frmPos_Load(object sender, EventArgs e)
         {
             btnSave.Enabled = false;
             btnCancel.Text = "Close";
+            //#if (debug)
             if (AllowCreate || AllowUpdate)
             {
                 btnSave.Text = "Save";
@@ -124,16 +127,14 @@ namespace Sendang.Rejeki.Transaction
 
             btnAdd.Enabled = AllowCreate;
             btnDelete.Enabled = AllowDelete;
-            //btnEdit.Enabled = AllowRead || AllowCreate || AllowUpdate;
-            //if (!AllowUpdate && AllowRead)
-            //    btnEdit.Text = "View";
-
+            //#endif
             DateTime NOW = DateTime.Now;
             txtTransDate.CustomFormat = Utilities.FORMAT_DateTime;
             txtTransDate.Value = NOW;
             //txtTransDate.Enabled = Utilities.IsSuperAdmin();
-            int saleIndex = SaleItem.GetNewIndex(NOW);
-            txtTransNo.Text = (string.IsNullOrEmpty(TransactionID)) ? string.Format((saleIndex <= 1000) ? "{0}{1:000}" : "{0}{1:0000}", NOW.ToString(Utilities.FORMAT_Date_Flat), saleIndex) : TransactionID;
+            //int saleIndex = SaleItem.GetNewIndex(NOW);
+            //txtTransNo.Text = (string.IsNullOrEmpty(TransactionID)) ? string.Format((saleIndex <= 1000) ? "{0}{1:000}" : "{0}{1:0000}", NOW.ToString(Utilities.FORMAT_Date_Flat), saleIndex) : TransactionID;
+            txtTransNo.Text = (string.IsNullOrEmpty(TransactionID)) ? _AutoAID : TransactionID;
             List<Customer> list = CustomerItem.GetAll();
             list.Insert(0, new Customer(0, string.Empty));
             cboCustomer.DisplayMember = "FullName";
@@ -398,7 +399,7 @@ namespace Sendang.Rejeki.Transaction
         {
             int paymentTipe = 0;
             int customerID = 0;
-
+            sale = null;
             Sale existingItem = SaleItem.GetByTransID(txtTransNo.Text.Trim());
             if (string.IsNullOrEmpty(TransactionID) && existingItem != null)
             {
@@ -544,9 +545,13 @@ namespace Sendang.Rejeki.Transaction
                 existingItem = SaleItem.GetByTransID(TransactionID);
                 if (existingItem == null)
                 {
-                    result = SaleItem.Insert(item);
-                    Log.Insert(string.Format("{0}-{1}", this.Text, JsonConvert.SerializeObject(item)));
-                    sale = SaleItem.GetByTransID(item.TransactionID);
+                    sale = SaleItem.Insert(item);
+                    if (sale != null)
+                    {
+                        Log.Insert(string.Format("{0}-{1}", this.Text, JsonConvert.SerializeObject(sale)));
+                        txtTransNo.Text = sale.TransactionID;
+                    }
+                    //sale = SaleItem.GetByTransID(item.TransactionID);
                 }
                 else
                 {
@@ -558,12 +563,13 @@ namespace Sendang.Rejeki.Transaction
                         //item.CustomerName = existingItem.CustomerName;
                         item.ExpiredDate = existingItem.ExpiredDate;
                         //item.MemberID = existingItem.MemberID;
-                        result = SaleItem.Insert(item);
-                        if (result > 0)
+                        sale = SaleItem.Insert(item);
+                        if (sale != null)
                         {
-                            SaleItem.Update(item.TransactionID, DateTime.Now, item.Username);
-                            Log.Update(string.Format("{0}-{1}", this.Text, string.Format("{0}-{1}", this.Text, JsonConvert.SerializeObject(item))));
-                            sale = SaleItem.GetByTransID(item.TransactionID);
+                            txtTransNo.Text = sale.TransactionID;
+                            SaleItem.Update(sale.TransactionID, DateTime.Now, item.Username);
+                            Log.Update(string.Format("{0}-{1}", this.Text, string.Format("{0}-{1}", this.Text, JsonConvert.SerializeObject(sale))));
+                            //sale = SaleItem.GetByTransID(item.TransactionID);
                         }
                     }
                 }
@@ -573,7 +579,7 @@ namespace Sendang.Rejeki.Transaction
                 Log.Error(ex.ToString());
             }
 
-            if (result > 0)
+            if (sale != null)
             {
                 if (Utilities.ShowInformation("Data sudah berhasil disimpan") == System.Windows.Forms.DialogResult.OK)
                 {
@@ -837,9 +843,12 @@ namespace Sendang.Rejeki.Transaction
         private void txtTransDate_ValueChanged(object sender, EventArgs e)
         {
             DateTime NOW = txtTransDate.Value;
-            int saleIndex = SaleItem.GetNewIndex(NOW);
+            //int saleIndex = SaleItem.GetNewIndex(NOW);
             if (string.IsNullOrEmpty(TransactionID))
-                txtTransNo.Text = string.Format((saleIndex <= 1000) ? "{0}{1:000}" : "{0}{1:0000}", NOW.ToString(Utilities.FORMAT_Date_Flat), saleIndex);
+            {
+                //txtTransNo.Text = string.Format((saleIndex <= 1000) ? "{0}{1:000}" : "{0}{1:0000}", NOW.ToString(Utilities.FORMAT_Date_Flat), saleIndex);
+                txtTransNo.Text = _AutoAID;
+            }
 
         }
     }

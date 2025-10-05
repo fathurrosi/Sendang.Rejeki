@@ -70,21 +70,21 @@ namespace DataLayer
         public static Reconcile Insert(DateTime ProccessDate, string Description, ReconcileDetail detail)
         {
             Reconcile reconcile = null;
-//            string sql = @"
-//
-//INSERT INTO reconcile 
-//	( 
-//	ProccessDate, 
-//	Description
-//	)
-//	VALUES
-//	(
-//	@ProccessDate, 
-//	@Description
-//	);
-//
-//SELECT * FROM reconcile WHERE id = LAST_INSERT_ID();
-//";
+            //            string sql = @"
+            //
+            //INSERT INTO reconcile 
+            //	( 
+            //	ProccessDate, 
+            //	Description
+            //	)
+            //	VALUES
+            //	(
+            //	@ProccessDate, 
+            //	@Description
+            //	);
+            //
+            //SELECT * FROM reconcile WHERE id = LAST_INSERT_ID();
+            //";
             IDBHelper ictx = new DBHelper();
             try
             {
@@ -97,33 +97,33 @@ namespace DataLayer
                 reconcile = DBUtil.ExecuteMapper<Reconcile>(ictx, new Reconcile()).FirstOrDefault();
                 if (reconcile != null)
                 {
-//                    sql = @"
-//
-//INSERT INTO reconciledetail 
-//	(
-//	CatalogID, 
-//	CatalogQty, 
-//	CatalogPrice, 
-//	ProductID, 
-//	ProductPrice, 
-//	ProductQty, 
-//	CreatedBy, 
-//	CreatedDate, 
-//	ReconcileID,CatalogPriceDate
-//	)
-//	VALUES
-//	(
-//	@CatalogID, 
-//	@CatalogQty, 
-//	@CatalogPrice, 
-//	@ProductID, 
-//	@ProductPrice, 
-//	@ProductQty, 
-//	@CreatedBy, 
-//	@CreatedDate, 
-//	@ReconcileID,@CatalogPriceDate
-//	);
-//";
+                    //                    sql = @"
+                    //
+                    //INSERT INTO reconciledetail 
+                    //	(
+                    //	CatalogID, 
+                    //	CatalogQty, 
+                    //	CatalogPrice, 
+                    //	ProductID, 
+                    //	ProductPrice, 
+                    //	ProductQty, 
+                    //	CreatedBy, 
+                    //	CreatedDate, 
+                    //	ReconcileID,CatalogPriceDate
+                    //	)
+                    //	VALUES
+                    //	(
+                    //	@CatalogID, 
+                    //	@CatalogQty, 
+                    //	@CatalogPrice, 
+                    //	@ProductID, 
+                    //	@ProductPrice, 
+                    //	@ProductQty, 
+                    //	@CreatedBy, 
+                    //	@CreatedDate, 
+                    //	@ReconcileID,@CatalogPriceDate
+                    //	);
+                    //";
                     ictx.CommandText = "Usp_InsertReconcileDetail";
                     ictx.CommandType = CommandType.StoredProcedure;
                     ictx.AddParameter("@ReconcileID", reconcile.ID);
@@ -197,18 +197,11 @@ namespace DataLayer
                         saleItem.TotalPayment = saleDetail.TotalPrice;
 
                         saleItem.Details = saleDetails;
-                        SaleItem.Insert(saleItem);
+                        Sale saleItemResult = SaleItem.Insert(saleItem);
 
-//                        sql = @"
-//
-//UPDATE reconcile 
-//	SET purchaseno = @purchaseno , 
-//	transactionid = @transactionid	
-//	WHERE ID = @ID ;
-//";
                         ictx.CommandText = "Usp_UpdateReconcile";
                         ictx.CommandType = CommandType.StoredProcedure;
-                        ictx.AddParameter("@transactionid", saleItem.TransactionID);
+                        ictx.AddParameter("@transactionid", saleItemResult.TransactionID);
                         ictx.AddParameter("@purchaseno", purchaseItem.PurchaseNo);
                         ictx.AddParameter("@ID", reconcile.ID);
                         DBUtil.ExecuteNonQuery(ictx);
@@ -220,7 +213,7 @@ namespace DataLayer
             {
                 //reconcile = -1;
                 ictx.RollbackTransaction();
-                LogItem.Error(ex);     
+                LogItem.Error(ex);
             }
             return reconcile;
         }

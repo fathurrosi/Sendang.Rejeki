@@ -356,67 +356,16 @@ namespace DataLayer
             ictx.AddParameter("@UpdatedBy", updatedBy);
             return DBUtil.ExecuteNonQuery(ictx);
         }
-        public static int Insert(Sale item)
+        public static Sale Insert(Sale item)
         {
-            //            string itemQuery = @"
-            //INSERT INTO sale 
-            //	(TransactionID, 
-            //	TotalPrice, 
-            //	TotalQty, 
-            //	TransactionDate, 
-            //	Username, 
-            //	MemberID, 
-            //	Terminal, 
-            //	TotalPayment, 
-            //	TotalPaymentReturn, 
-            //	Notes, 
-            //	PaymentType, ExpiredDate
-            //	)
-            //	VALUES
-            //	(
-            //    @TransactionID, 
-            //	@TotalPrice, 
-            //	@TotalQty, 
-            //	@TransactionDate, 
-            //	@Username, 
-            //	@MemberID, 
-            //	@Terminal, 
-            //	@TotalPayment, 
-            //	@TotalPaymentReturn, 
-            //	@Notes, 
-            //	@PaymentType, @ExpiredDate
-            //	);
-            //";
-
-            //            string detailQuery = @"
-            //INSERT INTO saledetail 
-            //	( 
-            //	TransactionID, 
-            //	CatalogID, 
-            //	Price, 
-            //	Discount, 
-            //	Quantity, 
-            //	TotalPrice,Sequence,Coli
-            //	)
-            //	VALUES
-            //	(
-            //	@TransactionID, 
-            //	@CatalogID, 
-            //	@Price, 
-            //	@Discount, 
-            //	@Quantity, 
-            //	@TotalPrice,@Sequence,@Coli
-            //	);
-            //";
-
-            int itemResult = 0;
+            Sale itemResult = null;
             IDBHelper ictx = new DBHelper();
             try
             {
                 ictx.BeginTransaction();
                 ictx.CommandText = "[Usp_InsertSale]";
                 ictx.CommandType = CommandType.StoredProcedure;
-                ictx.AddParameter("@TransactionID", item.TransactionID);
+                //ictx.AddParameter("@TransactionID", item.TransactionID);
                 ictx.AddParameter("@TotalPrice", item.TotalPrice);
                 ictx.AddParameter("@TotalQty", item.TotalQty);
                 ictx.AddParameter("@TransactionDate", item.TransactionDate);
@@ -428,15 +377,15 @@ namespace DataLayer
                 ictx.AddParameter("@Notes", item.Notes);
                 ictx.AddParameter("@PaymentType", item.PaymentType);
                 ictx.AddParameter("@ExpiredDate", item.ExpiredDate);
-                itemResult = DBUtil.ExecuteNonQuery(ictx);
-                if (itemResult > 0)
+                itemResult = DBUtil.ExecuteMapper<Sale>(ictx, new Sale()).FirstOrDefault();
+                if (itemResult != null)
                 {
 
                     foreach (SaleDetail detail in item.Details)
                     {
                         ictx.CommandType = CommandType.StoredProcedure;
                         ictx.CommandText = "[Usp_InsertSaleDetailWithColi]";
-                        ictx.AddParameter("@TransactionID", item.TransactionID);
+                        ictx.AddParameter("@TransactionID", itemResult.TransactionID);
                         ictx.AddParameter("@CatalogID", detail.CatalogID);
                         ictx.AddParameter("@Price", detail.Price);
                         ictx.AddParameter("@Discount", detail.Discount);
@@ -452,7 +401,8 @@ namespace DataLayer
             }
             catch (Exception ex)
             {
-                itemResult = -1; ictx.RollbackTransaction();
+                itemResult = null;
+                ictx.RollbackTransaction();
                 LogItem.Error(ex);
             }
 
@@ -528,37 +478,29 @@ namespace DataLayer
             return result;
         }
 
-        public static int GetNewIndex(DateTime currentDate)
-        {
-            int result = -1;
+        //public static int GetNewIndex(DateTime currentDate)
+        //{
+        //    int result = -1;
+        //    IDBHelper context = new DBHelper();
+        //    context.CommandText = "Usp_GetSaleNewIndex";
+        //    context.CommandType = CommandType.StoredProcedure;
+        //    context.AddParameter("@TransactionDate", currentDate);
+        //    object obj = DBUtil.ExecuteScalar(context);
+        //    if (obj != null)
+        //    {
+        //        //24072017027
+        //        string temp = obj.ToString();
+        //        result = Convert.ToInt32(temp.Substring(8)) + 1;
+        //        //Int32.TryParse(obj.ToString(), out result);
+        //    }
+        //    else
+        //    {
+        //        result = 1;
+        //    }
 
-            //            string sql = @"
-            //           SELECT transactionid FROM Sale
-            //  WHERE transactionid NOT IN (SELECT DISTINCT transactionid FROM reconcile )
-            //  AND CAST(transactiondate AS DATE) = CAST(@TransactionDate AS DATE)
-            //  ORDER BY transactiondate DESC
-            //  LIMIT 1
-            //            ";
-            IDBHelper context = new DBHelper();
-            context.CommandText = "Usp_GetSaleNewIndex";
-            context.CommandType = CommandType.StoredProcedure;
-            context.AddParameter("@TransactionDate", currentDate);
-            object obj = DBUtil.ExecuteScalar(context);
-            if (obj != null)
-            {
-                //24072017027
-                string temp = obj.ToString();
-                result = Convert.ToInt32(temp.Substring(8)) + 1;
-                //Int32.TryParse(obj.ToString(), out result);
-            }
-            else
-            {
-                result = 1;
-            }
+        //    return result;
 
-            return result;
-
-        }
+        //}
         public static List<CstmMonthlyGrossProfit> GetMonthlyGrossProfit(DateTime start, DateTime end)
         {
 
@@ -639,7 +581,7 @@ namespace DataLayer
 
         public static List<CstmDailySale> GetTotalDailySales(DateTime start, DateTime end)
         {
-          
+
             IDBHelper context = new DBHelper();
             context.CommandText = "Usp_GetTotalDailySales";
             context.AddParameter("@startDate", start);
@@ -650,7 +592,7 @@ namespace DataLayer
 
         }
 
-       
+
 
         public static List<CstmDailySale> GetTotalDailySalesDetail(DateTime start, DateTime end)
         {
