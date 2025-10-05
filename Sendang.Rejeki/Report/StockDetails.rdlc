@@ -468,7 +468,7 @@
         <DataSetName>CstmCatalogStock</DataSetName>
         <Left>0.01937in</Left>
         <Height>0.5in</Height>
-        <Width>6.51937in</Width>
+        <Width>6.51936in</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -490,8 +490,6 @@
           <Source>Embedded</Source>
           <Value>BigLogo</Value>
           <Sizing>FitProportional</Sizing>
-          <Top>0cm</Top>
-          <Left>0cm</Left>
           <Height>3.32317cm</Height>
           <Width>4.38396cm</Width>
           <Style>
@@ -544,7 +542,6 @@ Email : sendang.rejeki@gmail.com
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox1</rd:DefaultName>
-          <Top>0cm</Top>
           <Left>4.51131cm</Left>
           <Height>3.32317cm</Height>
           <Width>12.09711cm</Width>

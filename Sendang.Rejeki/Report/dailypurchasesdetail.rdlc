@@ -54,76 +54,6 @@
   </DataSets>
   <Body>
     <ReportItems>
-      <Textbox Name="Textbox1">
-        <CanGrow>true</CanGrow>
-        <KeepTogether>true</KeepTogether>
-        <Paragraphs>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value>SENDANG REJEKI
-</Value>
-                <Style>
-                  <FontFamily>times New Roman</FontFamily>
-                  <FontSize>20pt</FontSize>
-                </Style>
-              </TextRun>
-              <TextRun>
-                <Value>Trusted &amp; Qualified Chicken Provider
-</Value>
-                <Style>
-                  <FontFamily>times New Roman</FontFamily>
-                  <FontSize>18pt</FontSize>
-                </Style>
-              </TextRun>
-              <TextRun>
-                <Value>Jl. Gapura, Kp. Rawa Banteng, RT.04 RW.06 Desa Cibuntu Kecamatan Cibitung Kabupaten Bekasi - Jawa Barat
-Telp 0878 8432 0511, 0878 7955 4400
-Email : sendang.rejeki@gmail.com
-</Value>
-                <Style>
-                  <FontFamily>times New Roman</FontFamily>
-                  <FontSize>8pt</FontSize>
-                </Style>
-              </TextRun>
-              <TextRun>
-                <Value>www.sendangrejeki.com</Value>
-                <Style>
-                  <FontSize>8pt</FontSize>
-                  <Color>Blue</Color>
-                </Style>
-              </TextRun>
-            </TextRuns>
-            <Style />
-          </Paragraph>
-        </Paragraphs>
-        <rd:DefaultName>Textbox1</rd:DefaultName>
-        <Left>4.86109cm</Left>
-        <Height>3.32317cm</Height>
-        <Width>13.78885cm</Width>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
-          <PaddingLeft>2pt</PaddingLeft>
-          <PaddingRight>2pt</PaddingRight>
-          <PaddingTop>2pt</PaddingTop>
-          <PaddingBottom>2pt</PaddingBottom>
-        </Style>
-      </Textbox>
-      <Image Name="Logo">
-        <Source>Embedded</Source>
-        <Value>BigLogo</Value>
-        <Sizing>FitProportional</Sizing>
-        <Height>3.32317cm</Height>
-        <Width>4.38396cm</Width>
-        <ZIndex>1</ZIndex>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
-        </Style>
-      </Image>
       <Tablix Name="Tablix2">
         <TablixBody>
           <TablixColumns>
@@ -967,18 +897,123 @@ Email : sendang.rejeki@gmail.com
         <Left>0.00001cm</Left>
         <Height>0.75in</Height>
         <Width>7.34249in</Width>
-        <ZIndex>2</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
           </Border>
         </Style>
       </Tablix>
+      <Image Name="Logo">
+        <Source>Embedded</Source>
+        <Value>BigLogo</Value>
+        <Sizing>FitProportional</Sizing>
+        <Top>0.31002cm</Top>
+        <Left>0.03749cm</Left>
+        <Height>2.34421cm</Height>
+        <Width>3.06104cm</Width>
+        <ZIndex>1</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+        </Style>
+      </Image>
+      <Textbox Name="Textbox3">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>PT. SENDANG REJEKI BINANGKIT</Value>
+                <Style>
+                  <FontFamily>Cooper Black</FontFamily>
+                  <FontSize>11pt</FontSize>
+                  <FontWeight>Bold</FontWeight>
+                </Style>
+              </TextRun>
+              <TextRun>
+                <Value xml:space="preserve">
+</Value>
+                <Style>
+                  <FontFamily>times New Roman</FontFamily>
+                  <FontSize>11pt</FontSize>
+                </Style>
+              </TextRun>
+              <TextRun>
+                <Value>Trusted &amp; Qualified Chicken Provider</Value>
+                <Style>
+                  <FontFamily>Mistral</FontFamily>
+                  <FontSize>11pt</FontSize>
+                </Style>
+              </TextRun>
+              <TextRun>
+                <Value xml:space="preserve">
+</Value>
+                <Style>
+                  <FontFamily>times New Roman</FontFamily>
+                  <FontSize>18pt</FontSize>
+                </Style>
+              </TextRun>
+              <TextRun>
+                <Value>Jl. Gapura No. 4 RT. 001 RW . 011, Kp. Rawa Banteng, Desa Cibuntu, Kec. Cibitung, Bekasi, Jawa Barat
+</Value>
+                <Style>
+                  <FontFamily>Calibri</FontFamily>
+                  <FontSize>11pt</FontSize>
+                </Style>
+              </TextRun>
+              <TextRun>
+                <Value>Telp. 021-82635000, 0878 8434 0511, 0878 7955 4400</Value>
+                <Style>
+                  <FontStyle>Normal</FontStyle>
+                  <FontFamily>Calibri</FontFamily>
+                  <FontSize>11pt</FontSize>
+                  <FontWeight>Normal</FontWeight>
+                  <TextDecoration>None</TextDecoration>
+                  <Color>#000000</Color>
+                </Style>
+              </TextRun>
+              <TextRun>
+                <Value xml:space="preserve">
+</Value>
+                <Style>
+                  <FontFamily>Calibri</FontFamily>
+                  <FontSize>11pt</FontSize>
+                </Style>
+              </TextRun>
+              <TextRun>
+                <Value>www.sendangrejeki.com</Value>
+                <Style>
+                  <FontFamily>Calibri</FontFamily>
+                  <FontSize>11pt</FontSize>
+                  <Color>Blue</Color>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style />
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>Textbox1</rd:DefaultName>
+        <Left>3.27492cm</Left>
+        <Height>3.1997cm</Height>
+        <Width>15.37501cm</Width>
+        <ZIndex>2</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
     </ReportItems>
     <Height>2.19133in</Height>
     <Style />
   </Body>
-  <Width>7.3425in</Width>
+  <Width>7.34249in</Width>
   <Page>
     <PageHeight>29.7cm</PageHeight>
     <PageWidth>21cm</PageWidth>

@@ -2296,10 +2296,10 @@
     <Height>2.92709in</Height>
     <Style />
   </Body>
-  <Width>7.93946in</Width>
+  <Width>7.82291in</Width>
   <Page>
     <PageHeader>
-      <Height>1.30833in</Height>
+      <Height>1.23889in</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
@@ -2307,32 +2307,46 @@
           <Source>Embedded</Source>
           <Value>BigLogo</Value>
           <Sizing>FitProportional</Sizing>
-          <Top>0cm</Top>
-          <Left>0cm</Left>
-          <Height>3.32317cm</Height>
-          <Width>4.38396cm</Width>
+          <Top>0.39688cm</Top>
+          <Height>2.27807cm</Height>
+          <Width>3.06104cm</Width>
           <Style>
             <Border>
               <Style>None</Style>
             </Border>
           </Style>
         </Image>
-        <Textbox Name="Textbox1">
+        <Textbox Name="Textbox4">
           <CanGrow>true</CanGrow>
           <KeepTogether>true</KeepTogether>
           <Paragraphs>
             <Paragraph>
               <TextRuns>
                 <TextRun>
-                  <Value>SENDANG REJEKI
-</Value>
+                  <Value>PT. SENDANG REJEKI BINANGKIT</Value>
                   <Style>
-                    <FontFamily>times New Roman</FontFamily>
-                    <FontSize>20pt</FontSize>
+                    <FontFamily>Cooper Black</FontFamily>
+                    <FontSize>11pt</FontSize>
+                    <FontWeight>Bold</FontWeight>
                   </Style>
                 </TextRun>
                 <TextRun>
-                  <Value>Trusted &amp; Qualified Chicken Provider
+                  <Value xml:space="preserve">
+</Value>
+                  <Style>
+                    <FontFamily>times New Roman</FontFamily>
+                    <FontSize>11pt</FontSize>
+                  </Style>
+                </TextRun>
+                <TextRun>
+                  <Value>Trusted &amp; Qualified Chicken Provider</Value>
+                  <Style>
+                    <FontFamily>Mistral</FontFamily>
+                    <FontSize>11pt</FontSize>
+                  </Style>
+                </TextRun>
+                <TextRun>
+                  <Value xml:space="preserve">
 </Value>
                   <Style>
                     <FontFamily>times New Roman</FontFamily>
@@ -2340,19 +2354,37 @@
                   </Style>
                 </TextRun>
                 <TextRun>
-                  <Value>Jl. Setia No.145 RT 07 RW 01 Bolong Rawalumbu, Bekasi
-Telp 0878 8432 0511, 0878 7955 4400
-Email : sendang.rejeki@gmail.com
+                  <Value>Jl. Gapura No. 4 RT. 001 RW . 011, Kp. Rawa Banteng, Desa Cibuntu, Kec. Cibitung, Bekasi, Jawa Barat
 </Value>
                   <Style>
-                    <FontFamily>times New Roman</FontFamily>
-                    <FontSize>8pt</FontSize>
+                    <FontFamily>Calibri</FontFamily>
+                    <FontSize>11pt</FontSize>
+                  </Style>
+                </TextRun>
+                <TextRun>
+                  <Value>Telp. 021-82635000, 0878 8434 0511, 0878 7955 4400</Value>
+                  <Style>
+                    <FontStyle>Normal</FontStyle>
+                    <FontFamily>Calibri</FontFamily>
+                    <FontSize>11pt</FontSize>
+                    <FontWeight>Normal</FontWeight>
+                    <TextDecoration>None</TextDecoration>
+                    <Color>#000000</Color>
+                  </Style>
+                </TextRun>
+                <TextRun>
+                  <Value xml:space="preserve">
+</Value>
+                  <Style>
+                    <FontFamily>Calibri</FontFamily>
+                    <FontSize>11pt</FontSize>
                   </Style>
                 </TextRun>
                 <TextRun>
                   <Value>www.sendangrejeki.com</Value>
                   <Style>
-                    <FontSize>8pt</FontSize>
+                    <FontFamily>Calibri</FontFamily>
+                    <FontSize>11pt</FontSize>
                     <Color>Blue</Color>
                   </Style>
                 </TextRun>
@@ -2361,10 +2393,9 @@ Email : sendang.rejeki@gmail.com
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox1</rd:DefaultName>
-          <Top>0cm</Top>
-          <Left>4.51131cm</Left>
-          <Height>3.32317cm</Height>
-          <Width>12.09711cm</Width>
+          <Left>3.09129cm</Left>
+          <Height>3.13356cm</Height>
+          <Width>14.38504cm</Width>
           <ZIndex>1</ZIndex>
           <Style>
             <Border>

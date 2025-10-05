@@ -84,7 +84,7 @@
           </TablixColumns>
           <TablixRows>
             <TablixRow>
-              <Height>0.25in</Height>
+              <Height>0.2691in</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -233,7 +233,7 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.25in</Height>
+              <Height>0.2691in</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -390,8 +390,8 @@
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>Catalog</DataSetName>
-        <Top>0.4386in</Top>
-        <Height>0.5in</Height>
+        <Top>0.29624in</Top>
+        <Height>0.5382in</Height>
         <Width>6.93798in</Width>
         <Style>
           <Border>
@@ -419,7 +419,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox4</rd:DefaultName>
-        <Height>0.41082in</Height>
+        <Height>0.29624in</Height>
         <Width>6.93798in</Width>
         <ZIndex>1</ZIndex>
         <Style>
@@ -433,13 +433,13 @@
         </Style>
       </Textbox>
     </ReportItems>
-    <Height>26cm</Height>
+    <Height>2.45208cm</Height>
     <Style />
   </Body>
   <Width>17.62248cm</Width>
   <Page>
     <PageHeader>
-      <Height>3.54366cm</Height>
+      <Height>3.1997cm</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
@@ -447,10 +447,9 @@
           <Source>Embedded</Source>
           <Value>BigLogo</Value>
           <Sizing>FitProportional</Sizing>
-          <Top>0cm</Top>
-          <Left>0.87752cm</Left>
-          <Height>3.32317cm</Height>
-          <Width>4.38396cm</Width>
+          <Top>0.39688cm</Top>
+          <Height>2.34421cm</Height>
+          <Width>3.06104cm</Width>
           <Style>
             <Border>
               <Style>None</Style>
@@ -464,15 +463,30 @@
             <Paragraph>
               <TextRuns>
                 <TextRun>
-                  <Value>SENDANG REJEKI
-</Value>
+                  <Value>PT. SENDANG REJEKI BINANGKIT</Value>
                   <Style>
-                    <FontFamily>times New Roman</FontFamily>
-                    <FontSize>20pt</FontSize>
+                    <FontFamily>Cooper Black</FontFamily>
+                    <FontSize>11pt</FontSize>
+                    <FontWeight>Bold</FontWeight>
                   </Style>
                 </TextRun>
                 <TextRun>
-                  <Value>Trusted &amp; Qualified Chicken Provider
+                  <Value xml:space="preserve">
+</Value>
+                  <Style>
+                    <FontFamily>times New Roman</FontFamily>
+                    <FontSize>11pt</FontSize>
+                  </Style>
+                </TextRun>
+                <TextRun>
+                  <Value>Trusted &amp; Qualified Chicken Provider</Value>
+                  <Style>
+                    <FontFamily>Mistral</FontFamily>
+                    <FontSize>11pt</FontSize>
+                  </Style>
+                </TextRun>
+                <TextRun>
+                  <Value xml:space="preserve">
 </Value>
                   <Style>
                     <FontFamily>times New Roman</FontFamily>
@@ -480,19 +494,37 @@
                   </Style>
                 </TextRun>
                 <TextRun>
-                  <Value>Jl. Gapura, Kp. Rawa Banteng, RT.04 RW.06 Desa Cibuntu Kecamatan Cibitung Kabupaten Bekasi - Jawa Barat
-Telp 0878 8432 0511, 0878 7955 4400
-Email : sendang.rejeki@gmail.com
+                  <Value>Jl. Gapura No. 4 RT. 001 RW . 011, Kp. Rawa Banteng, Desa Cibuntu, Kec. Cibitung, Bekasi, Jawa Barat
 </Value>
                   <Style>
-                    <FontFamily>times New Roman</FontFamily>
-                    <FontSize>8pt</FontSize>
+                    <FontFamily>Calibri</FontFamily>
+                    <FontSize>11pt</FontSize>
+                  </Style>
+                </TextRun>
+                <TextRun>
+                  <Value>Telp. 021-82635000, 0878 8434 0511, 0878 7955 4400</Value>
+                  <Style>
+                    <FontStyle>Normal</FontStyle>
+                    <FontFamily>Calibri</FontFamily>
+                    <FontSize>11pt</FontSize>
+                    <FontWeight>Normal</FontWeight>
+                    <TextDecoration>None</TextDecoration>
+                    <Color>#000000</Color>
+                  </Style>
+                </TextRun>
+                <TextRun>
+                  <Value xml:space="preserve">
+</Value>
+                  <Style>
+                    <FontFamily>Calibri</FontFamily>
+                    <FontSize>11pt</FontSize>
                   </Style>
                 </TextRun>
                 <TextRun>
                   <Value>www.sendangrejeki.com</Value>
                   <Style>
-                    <FontSize>8pt</FontSize>
+                    <FontFamily>Calibri</FontFamily>
+                    <FontSize>11pt</FontSize>
                     <Color>Blue</Color>
                   </Style>
                 </TextRun>
@@ -501,10 +533,9 @@ Email : sendang.rejeki@gmail.com
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox1</rd:DefaultName>
-          <Top>0cm</Top>
-          <Left>5.52536cm</Left>
-          <Height>3.54366cm</Height>
-          <Width>12.09711cm</Width>
+          <Left>3.23743cm</Left>
+          <Height>3.1997cm</Height>
+          <Width>14.38504cm</Width>
           <ZIndex>1</ZIndex>
           <Style>
             <Border>

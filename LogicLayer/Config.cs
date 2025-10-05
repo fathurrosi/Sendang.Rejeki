@@ -7,18 +7,11 @@ namespace LogicLayer
 {
     public class Config
     {
-
-    //<add key="X_No" value="7"/>
-    //<add key="X_Item" value="35"/>
-    //<add key="X_Colly" value="570"/>
-    //<add key="X_Qty" value="635"/>
-    //<add key="X_Harga" value="700"/>
-    //<add key="X_TotalHarga" value="800"/>
-         public static string GetDecimalPoint()
+        public static string GetDecimalPoint()
         {
             return Get("DecimalPoint");
         }
-        
+
         public static string GetSuperAdmin()
         {
             return "superadmin";

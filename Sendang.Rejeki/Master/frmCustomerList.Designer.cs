@@ -33,6 +33,7 @@
             this.ctlFooter1 = new Sendang.Rejeki.Control.ctlFooter();
             this.ctlHeader1 = new Sendang.Rejeki.Control.ctlHeader();
             this.colID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colCode = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colAddress = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colPhone = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -49,6 +50,7 @@
             this.grid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.grid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colID,
+            this.colCode,
             this.colName,
             this.colAddress,
             this.colPhone,
@@ -63,7 +65,7 @@
             this.grid.ReadOnly = true;
             this.grid.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.grid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.grid.Size = new System.Drawing.Size(671, 436);
+            this.grid.Size = new System.Drawing.Size(832, 436);
             this.grid.TabIndex = 6;
             // 
             // ctlFooter1
@@ -73,7 +75,7 @@
             this.ctlFooter1.Name = "ctlFooter1";
             this.ctlFooter1.Offset = 0;
             this.ctlFooter1.PageIndex = 1;
-            this.ctlFooter1.Size = new System.Drawing.Size(671, 23);
+            this.ctlFooter1.Size = new System.Drawing.Size(832, 23);
             this.ctlFooter1.TabIndex = 5;
             this.ctlFooter1.TotalRows = 0;
             // 
@@ -92,7 +94,7 @@
             this.ctlHeader1.NewButton = null;
             this.ctlHeader1.NewButtonEnabled = true;
             this.ctlHeader1.NewButtonText = "Add";
-            this.ctlHeader1.Size = new System.Drawing.Size(671, 25);
+            this.ctlHeader1.Size = new System.Drawing.Size(832, 25);
             this.ctlHeader1.TabIndex = 4;
             this.ctlHeader1.TextToSearch = "";
             // 
@@ -103,6 +105,13 @@
             this.colID.Name = "colID";
             this.colID.ReadOnly = true;
             this.colID.Visible = false;
+            // 
+            // colCode
+            // 
+            this.colCode.DataPropertyName = "Code";
+            this.colCode.HeaderText = "Kode";
+            this.colCode.Name = "colCode";
+            this.colCode.ReadOnly = true;
             // 
             // colName
             // 
@@ -166,13 +175,12 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(671, 484);
+            this.ClientSize = new System.Drawing.Size(832, 484);
             this.Controls.Add(this.grid);
             this.Controls.Add(this.ctlFooter1);
             this.Controls.Add(this.ctlHeader1);
             this.Name = "frmCustomerList";
             this.Text = "frmCustomerList";
-            //this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmCustomerList_FormClosed);
             this.Load += new System.EventHandler(this.frmCustomerList_Load);
             ((System.ComponentModel.ISupportInitialize)(this.grid)).EndInit();
             this.ResumeLayout(false);
@@ -185,6 +193,7 @@
         private Control.ctlFooter ctlFooter1;
         private Control.ctlHeader ctlHeader1;
         private System.Windows.Forms.DataGridViewTextBoxColumn colID;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colCode;
         private System.Windows.Forms.DataGridViewTextBoxColumn colName;
         private System.Windows.Forms.DataGridViewTextBoxColumn colAddress;
         private System.Windows.Forms.DataGridViewTextBoxColumn colPhone;

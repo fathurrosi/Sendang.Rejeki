@@ -35,12 +35,14 @@
             this.label1 = new System.Windows.Forms.Label();
             this.txtPhone = new System.Windows.Forms.TextBox();
             this.ctlTransButton1 = new Sendang.Rejeki.Control.ctlTransButton();
+            this.label3 = new System.Windows.Forms.Label();
+            this.txtCode = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(25, 13);
+            this.label5.Location = new System.Drawing.Point(25, 41);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(41, 13);
             this.label5.TabIndex = 45;
@@ -49,7 +51,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(21, 34);
+            this.label2.Location = new System.Drawing.Point(21, 67);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(45, 13);
             this.label2.TabIndex = 44;
@@ -57,15 +59,15 @@
             // 
             // txtAddress
             // 
-            this.txtAddress.Location = new System.Drawing.Point(72, 36);
+            this.txtAddress.Location = new System.Drawing.Point(72, 64);
             this.txtAddress.Multiline = true;
             this.txtAddress.Name = "txtAddress";
-            this.txtAddress.Size = new System.Drawing.Size(487, 265);
+            this.txtAddress.Size = new System.Drawing.Size(487, 237);
             this.txtAddress.TabIndex = 43;
             // 
             // txtName
             // 
-            this.txtName.Location = new System.Drawing.Point(72, 10);
+            this.txtName.Location = new System.Drawing.Point(72, 38);
             this.txtName.Name = "txtName";
             this.txtName.Size = new System.Drawing.Size(277, 20);
             this.txtName.TabIndex = 42;
@@ -83,7 +85,7 @@
             // 
             this.txtPhone.Location = new System.Drawing.Point(72, 307);
             this.txtPhone.Name = "txtPhone";
-            this.txtPhone.Size = new System.Drawing.Size(207, 20);
+            this.txtPhone.Size = new System.Drawing.Size(277, 20);
             this.txtPhone.TabIndex = 46;
             // 
             // ctlTransButton1
@@ -99,12 +101,30 @@
             this.ctlTransButton1.Size = new System.Drawing.Size(579, 45);
             this.ctlTransButton1.TabIndex = 48;
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(28, 15);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(38, 13);
+            this.label3.TabIndex = 50;
+            this.label3.Text = "Kode :";
+            // 
+            // txtCode
+            // 
+            this.txtCode.Location = new System.Drawing.Point(72, 12);
+            this.txtCode.Name = "txtCode";
+            this.txtCode.Size = new System.Drawing.Size(277, 20);
+            this.txtCode.TabIndex = 49;
+            // 
             // frmCustomer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(579, 404);
             this.ControlBox = false;
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.txtCode);
             this.Controls.Add(this.ctlTransButton1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.txtPhone);
@@ -130,5 +150,7 @@
         private System.Windows.Forms.Label label1;
         public System.Windows.Forms.TextBox txtPhone;
         private Control.ctlTransButton ctlTransButton1;
+        private System.Windows.Forms.Label label3;
+        public System.Windows.Forms.TextBox txtCode;
     }
 }

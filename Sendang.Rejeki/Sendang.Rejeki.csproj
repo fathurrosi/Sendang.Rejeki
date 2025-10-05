@@ -534,9 +534,6 @@
     <EmbeddedResource Include="Report\frmReportViewerWithRange.resx">
       <DependentUpon>frmReportViewerWithRange.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Report\graphofsales.rdlc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
     <EmbeddedResource Include="Report\MonthlyGrossProfit.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>

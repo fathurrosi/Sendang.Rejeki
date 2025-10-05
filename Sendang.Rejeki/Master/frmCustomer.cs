@@ -24,6 +24,12 @@ namespace Sendang.Rejeki.Master
 
         public bool IsValid()
         {
+            if (txtCode.Text.Length == 0)
+            {
+                Utilities.ShowValidation("Kode tidak boleh kosong");
+                txtName.Focus();
+                return false;
+            }
             if (txtName.Text.Length == 0)
             {
                 Utilities.ShowValidation("Nama tidak boleh kosong");
@@ -51,7 +57,7 @@ namespace Sendang.Rejeki.Master
             int result = -1;
             if (ID > 0)
             {
-                result = CustomerItem.Update(ID, txtName.Text, txtAddress.Text, txtPhone.Text, Utilities.Username);
+                result = CustomerItem.Update(ID,txtCode.Text, txtName.Text, txtAddress.Text, txtPhone.Text, Utilities.Username);
             }
             else
             {
@@ -78,9 +84,16 @@ namespace Sendang.Rejeki.Master
             Customer prd = CustomerItem.GetByID(ID);
             if (prd != null)
             {
+                txtCode.Enabled = true;
+                txtCode.Text = prd.Code;
                 txtAddress.Text = prd.Address;
                 txtName.Text = prd.FullName;
                 txtPhone.Text = prd.Phone;
+            }
+            else
+            {
+                txtCode.Text = "Auto Generate";
+                txtCode.Enabled = false;
             }
         }
 

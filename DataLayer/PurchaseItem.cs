@@ -10,117 +10,6 @@ namespace DataLayer
 {
     public partial class PurchaseItem
     {
-        //        public static int Insert(Sale item)
-        //        {
-        //            string itemQuery = @"
-        //INSERT INTO sale 
-        //	(TransactionID, 
-        //	TotalPrice, 
-        //	TotalQty, 
-        //	TransactionDate, 
-        //	Username, 
-        //	MemberID, 
-        //	Terminal, 
-        //	TotalPayment, 
-        //	TotalPaymentReturn, 
-        //	Notes, 
-        //	PaymentType
-        //	)
-        //	VALUES
-        //	(
-        //    @TransactionID, 
-        //	@TotalPrice, 
-        //	@TotalQty, 
-        //	@TransactionDate, 
-        //	@Username, 
-        //	@MemberID, 
-        //	@Terminal, 
-        //	@TotalPayment, 
-        //	@TotalPaymentReturn, 
-        //	@Notes, 
-        //	@PaymentType
-        //	);
-        //";
-
-        //            string detailQuery = @"
-        //INSERT INTO saledetail 
-        //	( 
-        //	TransactionID, 
-        //	CatalogID, 
-        //	Price, 
-        //	Discount, 
-        //	Quantity, 
-        //	TotalPrice
-        //	)
-        //	VALUES
-        //	(
-        //	@TransactionID, 
-        //	@CatalogID, 
-        //	@Price, 
-        //	@Discount, 
-        //	@Quantity, 
-        //	@TotalPrice
-        //	);
-        //";
-
-        //            int itemResult = 0;
-        //            IDBHelper ictx = new DBHelper();
-        //            try
-        //            {
-        //                ictx.BeginTransaction();
-        //                ictx.CommandText = itemQuery;
-        //                ictx.CommandType =   CommandType.StoredProcedure;
-        //                ictx.AddParameter("@TransactionID", item.TransactionID);
-        //                ictx.AddParameter("@TotalPrice", item.TotalPrice);
-        //                ictx.AddParameter("@TotalQty", item.TotalQty);
-        //                ictx.AddParameter("@TransactionDate", item.TransactionDate);
-        //                ictx.AddParameter("@Username", item.Username);
-        //                ictx.AddParameter("@MemberID", item.MemberID);
-        //                ictx.AddParameter("@Terminal", item.Terminal);
-        //                ictx.AddParameter("@TotalPayment", item.TotalPayment);
-        //                ictx.AddParameter("@TotalPaymentReturn", item.TotalPaymentReturn);
-        //                ictx.AddParameter("@Notes", item.Notes);
-        //                ictx.AddParameter("@PaymentType", item.PaymentType);
-        //                itemResult = DBUtil.ExecuteNonQuery(ictx);
-        //                if (itemResult > 0)
-        //                {
-        //                    ictx.CommandText = detailQuery;
-        //                    foreach (SaleDetail deital in item.Details)
-        //                    {
-
-        //                        ictx.AddParameter("@TransactionID", item.TransactionID);
-        //                        ictx.AddParameter("@CatalogID", deital.CatalogID);
-        //                        ictx.AddParameter("@Price", deital.Price);
-        //                        ictx.AddParameter("@Discount", deital.Discount);
-        //                        ictx.AddParameter("@Quantity", deital.Quantity);
-        //                        ictx.AddParameter("@TotalPrice", deital.TotalPrice);
-        //                        int result = DBUtil.ExecuteNonQuery(ictx);
-        //                        if (result == -1)
-        //                        {
-        //                            ictx.RollbackTransaction();
-        //                        }
-        //                    }
-        //                    ictx.CommitTransaction();
-        //                }
-        //            }
-        //            catch (Exception)
-        //            { ictx.RollbackTransaction(); }
-
-        //            return itemResult;
-        //        }
-
-        //        public static Sale GetByTransID(string transactionID)
-        //        {
-        //            IDBHelper context = new DBHelper();
-        //            context.CommandText = @"	SELECT * from Sale WHERE TransactionID = @TransactionID ";
-        //            context.CommandType =   CommandType.StoredProcedure;
-        //            context.AddParameter("@TransactionID", transactionID);
-        //            List<Sale> result = DBUtil.ExecuteMapper<Sale>(context, new Sale());
-        //            Sale sale = result.FirstOrDefault();
-        //            sale.Details = SaleDetailItem.GetTransID(sale.TransactionID);
-        //            return sale;
-        //        }
-
         public static List<Purchase> GetAll()
         {
             IDBHelper ictx = new DBHelper();
@@ -162,16 +51,6 @@ namespace DataLayer
         public static List<CstmPurchasePriceRate> GetHargaBeliRata(string catalogID, DateTime transDate)
         {
             IDBHelper context = new DBHelper();
-
-            //            context.CommandText = @"
-            //SELECT SUM(CASE WHEN a.PricePerUnit IS NULL THEN 0 ELSE a.PricePerUnit END)/ COUNT(1) AS PricePerUnit, COUNT(1) AS totalItem,  CAST(b.PurchaseDate AS DATE) AS PurchaseDate FROM purchasedetail a
-            //INNER JOIN Purchase b  ON a.PurchaseNo =b.PurchaseNo 
-            //WHERE a.catalogID =  @catalogID AND CAST( b.PurchaseDate as Date) <= CAST( @PurchaseDate as Date)
-            //GROUP BY CAST(b.PurchaseDate AS DATE) , a.CatalogID
-            //ORDER BY b.PurchaseDate DESC
-            //LIMIT 2 
-            //
-            // ";
             context.CommandText = @"[GetHargaBeliRata]";
             context.CommandType = CommandType.StoredProcedure;
             context.AddParameter("@catalogID", catalogID);
@@ -184,16 +63,6 @@ namespace DataLayer
         public static CstmPurchaseDetail GetCatalogReconcilePrice(int catalogID)
         {
             IDBHelper context = new DBHelper();
-            //            context.CommandText = @"
-            //
-            //SELECT pd.*,c.Name AS CatalogName, p.PurchaseDate FROM Purchase  p
-            //LEFT JOIN Supplier s ON s.Code = p.SupplierCode
-            //LEFT JOIN purchasedetail pd ON pd.PurchaseNo =p.PurchaseNo 
-            //INNER JOIN Catalog c ON c.ID =pd.CatalogID
-            //WHERE pd.CatalogID = @catalogID
-            //ORDER BY p.PurchaseDate desc
-            //limit 5
-            //            ";
             context.CommandText = "Usp_GetCatalogReconcilePrice";
             context.CommandType = CommandType.StoredProcedure;
             context.AddParameter("@catalogID", catalogID);
@@ -206,15 +75,6 @@ namespace DataLayer
         public static List<CstmPurchase> GetCstmPaging(string text, int pageIndex, int pageSize, out int totalRecord)
         {
             IDBHelper context = new DBHelper();
-            //            context.CommandText = @"
-            //SELECT p.*,CASE WHEN p.createdby ='system' THEN 'System' ELSE s.Name END AS SupplierName FROM Purchase  p
-            //LEFT JOIN Supplier s ON s.Code = p.SupplierCode
-            //
-            //WHERE ( p.Notes LIKE concat ('%', @text ,'%') OR s.Name  LIKE concat ('%', @text ,'%') )
-            //and p.purchaseno NOT IN( SELECT DISTINCT purchaseno FROM reconcile)
-            //order by p.PurchaseDate desc
-            //LIMIT  @pageSize OFFSET @offset
-            //            ";
             context.CommandText = "Usp_GetCstmPurchasePaging";
             context.CommandType = CommandType.StoredProcedure;
             context.AddParameter("@text", text);

@@ -52,7 +52,13 @@ namespace DataObject
             obj.ExpiredDate = (reader["ExpiredDate"] is System.DBNull) ? (DateTime?)null : Convert.ToDateTime(reader["ExpiredDate"]);
             obj.Notes = reader["Notes"].ToString();
             obj.PaymentType = Convert.ToInt32(reader["PaymentType"]);
-
+            try
+            {
+                obj.CustomerName = string.Format("{0}", reader["CustomerName"]);
+            }
+            catch (Exception)
+            {
+            }
             return obj;
         }
     }

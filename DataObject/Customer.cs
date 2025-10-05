@@ -18,6 +18,8 @@ namespace DataObject
 
         public int ID { get; set; }
 
+        public string Code { get; set; }
+
         public string FullName { get; set; }
 
         public string Address { get; set; }
@@ -31,6 +33,13 @@ namespace DataObject
             obj.FullName = reader["FullName"].ToString();
             obj.Address = reader["Address"].ToString();
             obj.Phone = reader["Phone"].ToString();
+            try
+            {
+                obj.Code = reader["Code"].ToString();
+            }
+            catch (Exception)
+            {
+            }
 
             return obj;
         }

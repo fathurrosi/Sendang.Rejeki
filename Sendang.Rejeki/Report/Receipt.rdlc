@@ -1620,10 +1620,10 @@
       <Prompt>ReportParameter1</Prompt>
     </ReportParameter>
   </ReportParameters>
-  <Width>13.68825cm</Width>
+  <Width>13.55187cm</Width>
   <Page>
     <PageHeader>
-      <Height>3.05859cm</Height>
+      <Height>3.13356cm</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
@@ -1631,25 +1631,42 @@
           <Source>Embedded</Source>
           <Value>BigLogo</Value>
           <Sizing>FitProportional</Sizing>
-          <Height>2.98803cm</Height>
-          <Width>3.4491cm</Width>
+          <Top>0.39688cm</Top>
+          <Height>2.27807cm</Height>
+          <Width>3.06104cm</Width>
           <Style>
             <Border>
               <Style>None</Style>
             </Border>
           </Style>
         </Image>
-        <Textbox Name="Textbox1">
+        <Textbox Name="Textbox16">
           <CanGrow>true</CanGrow>
           <KeepTogether>true</KeepTogether>
           <Paragraphs>
             <Paragraph>
               <TextRuns>
                 <TextRun>
-                  <Value>Trusted &amp; Qualified Chicken Provider</Value>
+                  <Value>PT. SENDANG REJEKI BINANGKIT</Value>
+                  <Style>
+                    <FontFamily>Cooper Black</FontFamily>
+                    <FontSize>11pt</FontSize>
+                    <FontWeight>Bold</FontWeight>
+                  </Style>
+                </TextRun>
+                <TextRun>
+                  <Value xml:space="preserve">
+</Value>
                   <Style>
                     <FontFamily>times New Roman</FontFamily>
-                    <FontSize>12pt</FontSize>
+                    <FontSize>11pt</FontSize>
+                  </Style>
+                </TextRun>
+                <TextRun>
+                  <Value>Trusted &amp; Qualified Chicken Provider</Value>
+                  <Style>
+                    <FontFamily>Mistral</FontFamily>
+                    <FontSize>11pt</FontSize>
                   </Style>
                 </TextRun>
                 <TextRun>
@@ -1661,19 +1678,37 @@
                   </Style>
                 </TextRun>
                 <TextRun>
-                  <Value>Jl. Gapura, Kp. Rawa Banteng, RT.04 RW.06 Desa Cibuntu Kecamatan Cibitung Kabupaten Bekasi - Jawa Barat
-Telp 0878 8432 0511, 0878 7955 4400
-Email : sendang.rejeki@gmail.com
+                  <Value>Jl. Gapura No. 4 RT. 001 RW . 011, Kp. Rawa Banteng, Desa Cibuntu, Kec. Cibitung, Bekasi, Jawa Barat
 </Value>
                   <Style>
-                    <FontFamily>times New Roman</FontFamily>
-                    <FontSize>8pt</FontSize>
+                    <FontFamily>Calibri</FontFamily>
+                    <FontSize>11pt</FontSize>
+                  </Style>
+                </TextRun>
+                <TextRun>
+                  <Value>Telp. 021-82635000, 0878 8434 0511, 0878 7955 4400</Value>
+                  <Style>
+                    <FontStyle>Normal</FontStyle>
+                    <FontFamily>Calibri</FontFamily>
+                    <FontSize>11pt</FontSize>
+                    <FontWeight>Normal</FontWeight>
+                    <TextDecoration>None</TextDecoration>
+                    <Color>#000000</Color>
+                  </Style>
+                </TextRun>
+                <TextRun>
+                  <Value xml:space="preserve">
+</Value>
+                  <Style>
+                    <FontFamily>Calibri</FontFamily>
+                    <FontSize>11pt</FontSize>
                   </Style>
                 </TextRun>
                 <TextRun>
                   <Value>www.sendangrejeki.com</Value>
                   <Style>
-                    <FontSize>8pt</FontSize>
+                    <FontFamily>Calibri</FontFamily>
+                    <FontSize>11pt</FontSize>
                     <Color>Blue</Color>
                   </Style>
                 </TextRun>
@@ -1682,43 +1717,10 @@ Email : sendang.rejeki@gmail.com
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox1</rd:DefaultName>
-          <Top>0.3175cm</Top>
-          <Left>3.48437cm</Left>
-          <Height>2.67053cm</Height>
-          <Width>10.06748cm</Width>
+          <Left>3.05803cm</Left>
+          <Height>3.13356cm</Height>
+          <Width>10.49384cm</Width>
           <ZIndex>1</ZIndex>
-          <Style>
-            <Border>
-              <Style>None</Style>
-            </Border>
-            <PaddingLeft>2pt</PaddingLeft>
-            <PaddingRight>2pt</PaddingRight>
-            <PaddingTop>2pt</PaddingTop>
-            <PaddingBottom>2pt</PaddingBottom>
-          </Style>
-        </Textbox>
-        <Textbox Name="Textbox16">
-          <CanGrow>true</CanGrow>
-          <KeepTogether>true</KeepTogether>
-          <Paragraphs>
-            <Paragraph>
-              <TextRuns>
-                <TextRun>
-                  <Value>SENDANG REJEKI</Value>
-                  <Style>
-                    <FontFamily>times New Roman</FontFamily>
-                    <FontSize>12pt</FontSize>
-                  </Style>
-                </TextRun>
-              </TextRuns>
-              <Style />
-            </Paragraph>
-          </Paragraphs>
-          <rd:DefaultName>Textbox1</rd:DefaultName>
-          <Left>3.48438cm</Left>
-          <Height>0.70821cm</Height>
-          <Width>10.06748cm</Width>
-          <ZIndex>2</ZIndex>
           <Style>
             <Border>
               <Style>None</Style>

@@ -18,11 +18,12 @@ namespace DataLayer
             return DBUtil.ExecuteMapper<Customer>(context, new Customer());
         }
 
-        public static int Update(int id, string name, string address, string phone, string Username)
+        public static int Update(int id,string code, string name, string address, string phone, string Username)
         {
             IDBHelper context = new DBHelper();
             context.CommandText = @"[Usp_UpdateCustomer]";
             context.AddParameter("@ID", id);
+            context.AddParameter("@Code", code);
             context.AddParameter("@FullName", name);
             context.AddParameter("@Address", address);
             context.AddParameter("@Phone", phone);

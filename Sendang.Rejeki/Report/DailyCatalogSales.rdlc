@@ -1,18 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2008/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
+<Report xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner" xmlns="http://schemas.microsoft.com/sqlserver/reporting/2008/01/reportdefinition">
+  <DataSources>
+    <DataSource Name="DataObject">
+      <ConnectionProperties>
+        <DataProvider>System.Data.DataSet</DataProvider>
+        <ConnectString>/* Local Connection */</ConnectString>
+      </ConnectionProperties>
+      <rd:DataSourceID>9d6b188d-d896-4657-9820-0078e260b871</rd:DataSourceID>
+    </DataSource>
+  </DataSources>
+  <DataSets>
+    <DataSet Name="DailyCatalogSales">
+      <Fields>
+        <Field Name="CatalogID">
+          <DataField>CatalogID</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="CatalogName">
+          <DataField>CatalogName</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="MonthYear">
+          <DataField>MonthYear</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Quantity">
+          <DataField>Quantity</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="TotalSale">
+          <DataField>TotalSale</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="TransDate">
+          <DataField>TransDate</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="Unit">
+          <DataField>Unit</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+      <Query>
+        <DataSourceName>DataObject</DataSourceName>
+        <CommandText>/* Local Query */</CommandText>
+      </Query>
+      <rd:DataSetInfo>
+        <rd:DataSetName>DataObject</rd:DataSetName>
+        <rd:TableName>CstmDailySalesPerCatalog</rd:TableName>
+        <rd:ObjectDataSourceType>DataObject.CstmDailySalesPerCatalog, DataObject, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</rd:ObjectDataSourceType>
+      </rd:DataSetInfo>
+    </DataSet>
+  </DataSets>
   <Body>
     <ReportItems>
       <Tablix Name="Tablix1">
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>2.68719in</Width>
+              <Width>2.56631in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.84344in</Width>
+              <Width>1.72256in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.61427in</Width>
+              <Width>0.49339in</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -255,7 +307,7 @@
           <TablixMembers>
             <TablixMember>
               <TablixHeader>
-                <Size>2.1976in</Size>
+                <Size>2.07672in</Size>
                 <CellContents>
                   <Textbox Name="Textbox9">
                     <CanGrow>true</CanGrow>
@@ -310,7 +362,7 @@
                 </SortExpression>
               </SortExpressions>
               <TablixHeader>
-                <Size>2.1976in</Size>
+                <Size>2.07672in</Size>
                 <CellContents>
                   <Textbox Name="TransDate1">
                     <CanGrow>true</CanGrow>
@@ -357,8 +409,9 @@
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>DailyCatalogSales</DataSetName>
+        <Left>0.10032cm</Left>
         <Height>0.5in</Height>
-        <Width>7.3425in</Width>
+        <Width>6.85899in</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -369,10 +422,10 @@
     <Height>0.75in</Height>
     <Style />
   </Body>
-  <Width>7.3425in</Width>
+  <Width>6.93798in</Width>
   <Page>
     <PageHeader>
-      <Height>1.37778in</Height>
+      <Height>1.41598in</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
@@ -380,32 +433,46 @@
           <Source>Embedded</Source>
           <Value>BigLogo</Value>
           <Sizing>FitProportional</Sizing>
-          <Top>0cm</Top>
-          <Left>0cm</Left>
-          <Height>3.32317cm</Height>
-          <Width>4.38396cm</Width>
+          <Top>0.59532cm</Top>
+          <Height>2.34421cm</Height>
+          <Width>3.06104cm</Width>
           <Style>
             <Border>
               <Style>None</Style>
             </Border>
           </Style>
         </Image>
-        <Textbox Name="Textbox1">
+        <Textbox Name="Textbox4">
           <CanGrow>true</CanGrow>
           <KeepTogether>true</KeepTogether>
           <Paragraphs>
             <Paragraph>
               <TextRuns>
                 <TextRun>
-                  <Value>SENDANG REJEKI
-</Value>
+                  <Value>PT. SENDANG REJEKI BINANGKIT</Value>
                   <Style>
-                    <FontFamily>times New Roman</FontFamily>
-                    <FontSize>20pt</FontSize>
+                    <FontFamily>Cooper Black</FontFamily>
+                    <FontSize>11pt</FontSize>
+                    <FontWeight>Bold</FontWeight>
                   </Style>
                 </TextRun>
                 <TextRun>
-                  <Value>Trusted &amp; Qualified Chicken Provider
+                  <Value xml:space="preserve">
+</Value>
+                  <Style>
+                    <FontFamily>times New Roman</FontFamily>
+                    <FontSize>11pt</FontSize>
+                  </Style>
+                </TextRun>
+                <TextRun>
+                  <Value>Trusted &amp; Qualified Chicken Provider</Value>
+                  <Style>
+                    <FontFamily>Mistral</FontFamily>
+                    <FontSize>11pt</FontSize>
+                  </Style>
+                </TextRun>
+                <TextRun>
+                  <Value xml:space="preserve">
 </Value>
                   <Style>
                     <FontFamily>times New Roman</FontFamily>
@@ -413,19 +480,37 @@
                   </Style>
                 </TextRun>
                 <TextRun>
-                  <Value>Jl. Gapura, Kp. Rawa Banteng, RT.04 RW.06 Desa Cibuntu Kecamatan Cibitung Kabupaten Bekasi - Jawa Barat
-Telp 0878 8432 0511, 0878 7955 4400
-Email : sendang.rejeki@gmail.com
+                  <Value>Jl. Gapura No. 4 RT. 001 RW . 011, Kp. Rawa Banteng, Desa Cibuntu, Kec. Cibitung, Bekasi, Jawa Barat
 </Value>
                   <Style>
-                    <FontFamily>times New Roman</FontFamily>
-                    <FontSize>8pt</FontSize>
+                    <FontFamily>Calibri</FontFamily>
+                    <FontSize>11pt</FontSize>
+                  </Style>
+                </TextRun>
+                <TextRun>
+                  <Value>Telp. 021-82635000, 0878 8434 0511, 0878 7955 4400</Value>
+                  <Style>
+                    <FontStyle>Normal</FontStyle>
+                    <FontFamily>Calibri</FontFamily>
+                    <FontSize>11pt</FontSize>
+                    <FontWeight>Normal</FontWeight>
+                    <TextDecoration>None</TextDecoration>
+                    <Color>#000000</Color>
+                  </Style>
+                </TextRun>
+                <TextRun>
+                  <Value xml:space="preserve">
+</Value>
+                  <Style>
+                    <FontFamily>Calibri</FontFamily>
+                    <FontSize>11pt</FontSize>
                   </Style>
                 </TextRun>
                 <TextRun>
                   <Value>www.sendangrejeki.com</Value>
                   <Style>
-                    <FontSize>8pt</FontSize>
+                    <FontFamily>Calibri</FontFamily>
+                    <FontSize>11pt</FontSize>
                     <Color>Blue</Color>
                   </Style>
                 </TextRun>
@@ -434,10 +519,10 @@ Email : sendang.rejeki@gmail.com
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox1</rd:DefaultName>
-          <Top>0cm</Top>
-          <Left>4.86109cm</Left>
-          <Height>3.49955cm</Height>
-          <Width>13.78885cm</Width>
+          <Top>0.19844cm</Top>
+          <Left>3.23743cm</Left>
+          <Height>3.1997cm</Height>
+          <Width>14.38504cm</Width>
           <ZIndex>1</ZIndex>
           <Style>
             <Border>
@@ -462,59 +547,6 @@ Email : sendang.rejeki@gmail.com
     <BottomMargin>1in</BottomMargin>
     <Style />
   </Page>
-  <AutoRefresh>0</AutoRefresh>
-  <DataSources>
-    <DataSource Name="DataObject">
-      <ConnectionProperties>
-        <DataProvider>System.Data.DataSet</DataProvider>
-        <ConnectString>/* Local Connection */</ConnectString>
-      </ConnectionProperties>
-      <rd:DataSourceID>9d6b188d-d896-4657-9820-0078e260b871</rd:DataSourceID>
-    </DataSource>
-  </DataSources>
-  <DataSets>
-    <DataSet Name="DailyCatalogSales">
-      <Query>
-        <DataSourceName>DataObject</DataSourceName>
-        <CommandText>/* Local Query */</CommandText>
-      </Query>
-      <Fields>
-        <Field Name="CatalogID">
-          <DataField>CatalogID</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
-        <Field Name="CatalogName">
-          <DataField>CatalogName</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="MonthYear">
-          <DataField>MonthYear</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Quantity">
-          <DataField>Quantity</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="TotalSale">
-          <DataField>TotalSale</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="TransDate">
-          <DataField>TransDate</DataField>
-          <rd:TypeName>System.DateTime</rd:TypeName>
-        </Field>
-        <Field Name="Unit">
-          <DataField>Unit</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-      </Fields>
-      <rd:DataSetInfo>
-        <rd:DataSetName>DataObject</rd:DataSetName>
-        <rd:TableName>CstmDailySalesPerCatalog</rd:TableName>
-        <rd:ObjectDataSourceType>DataObject.CstmDailySalesPerCatalog, DataObject, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</rd:ObjectDataSourceType>
-      </rd:DataSetInfo>
-    </DataSet>
-  </DataSets>
   <EmbeddedImages>
     <EmbeddedImage Name="BigLogo">
       <MIMEType>image/jpeg</MIMEType>
@@ -568,6 +600,6 @@ Ubl2kn8MavJK2lyFmyRbToGkgUc4R0kXOACi4x+J/wC1R+xp8Tf2NPiHL4b+I/gvXfC9+jCOGS6s2W1v
 QAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQBFJAXdiDg9uB/PBqveaXDqkIiu7WO4A7yKrD+n8qu0UDuZ+n6Ba6UP9Ftba1IP8EQGfpjpU624VmxHJhzlskc+5PU/nVmigLiR5K8/yxS0UUCCiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAoooqkgCiiinZAFFFFFkAUUUUWQBRRRRZAFFFFFkAUUUUWQBRRRRZAFFFFFkAUUUUWQBRRRRZAFFFFFkAUUUUWQBRRRRZAFFFFFkAUUUUWQBRRRRZAFFFFFkAUUUUWQBRRRRZAFFFFFkAUUUUWQBRRRRZAFFFFFkAUUUUWQBRRRRZAFFFFFkAUUUUWQBRRRRZAFFFFFkAUUUVABRRRQAUUUUAFFFFABRRRVRAKKKKoAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooA//9k=</ImageData>
     </EmbeddedImage>
   </EmbeddedImages>
-  <rd:ReportUnitType>Inch</rd:ReportUnitType>
   <rd:ReportID>f0c2f7fc-2019-49fd-86a7-169873658483</rd:ReportID>
+  <rd:ReportUnitType>Inch</rd:ReportUnitType>
 </Report>

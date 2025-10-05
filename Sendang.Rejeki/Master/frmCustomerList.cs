@@ -15,26 +15,10 @@ namespace Sendang.Rejeki.Master
 {
     public partial class frmCustomerList : Form, IMasterHeader, IMasterFooter
     {
-
-
         public frmCustomerList()
         {
             InitializeComponent();
         }
-
-        //public void Search()
-        //{
-        //    string textToSearch = ctlHeader1.TextToSearch;
-        //    LoadData(textToSearch, ctlFooter1.Offset, ctlFooter1.PageSize);
-        //}
-
-        //void LoadData(string text, int offset, int pageSize)
-        //{
-
-        //    List<Customer> list = CustomerItem.GetPaging(text, offset, pageSize);
-        //    grid.DataSource = list;
-        //    ctlFooter1.TotalRows = CustomerItem.GetRecordCount(text);
-        //}
 
         public void Search()
         {
@@ -49,13 +33,10 @@ namespace Sendang.Rejeki.Master
             grid.DataSource = list;
             ctlFooter1.TotalRows = totalRecord;
         }
-
-
-
+        
         public void Add()
         {
             frmCustomer f = new frmCustomer();
-            //f.Username = Utilities.Username;
             f.Tag = this.Tag;
             if (f.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
@@ -73,14 +54,12 @@ namespace Sendang.Rejeki.Master
 
             f.ID = ID;
             f.Tag = this.Tag;
-            //f.Username = Utilities.Username;
             if (f.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 Search();
             }
         }
-
-
+        
         public void Delete()
         {
             if (grid.CurrentRow == null) return;
@@ -99,9 +78,7 @@ namespace Sendang.Rejeki.Master
                 }
             }
         }
-
-
-
+        
         private void frmCustomerList_Load(object sender, EventArgs e)
         {
             Search();

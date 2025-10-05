@@ -1,21 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2008/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
+<Report xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner" xmlns="http://schemas.microsoft.com/sqlserver/reporting/2008/01/reportdefinition">
+  <DataSources>
+    <DataSource Name="DataObject">
+      <ConnectionProperties>
+        <DataProvider>System.Data.DataSet</DataProvider>
+        <ConnectString>/* Local Connection */</ConnectString>
+      </ConnectionProperties>
+      <rd:DataSourceID>f583171b-85fe-45c2-a069-cbcf89bc9c61</rd:DataSourceID>
+    </DataSource>
+  </DataSources>
+  <DataSets>
+    <DataSet Name="CstmCatalogPrice">
+      <Fields>
+        <Field Name="BuyPricePerunit">
+          <DataField>BuyPricePerunit</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="CatalogID">
+          <DataField>CatalogID</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="CatalogName">
+          <DataField>CatalogName</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="CreatedBy">
+          <DataField>CreatedBy</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="ID">
+          <DataField>ID</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="PriceDate">
+          <DataField>PriceDate</DataField>
+          <rd:TypeName>System.Nullable`1[[System.DateTime, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
+        </Field>
+        <Field Name="SellPrice">
+          <DataField>SellPrice</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="SupplierCode">
+          <DataField>SupplierCode</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="SupplierName">
+          <DataField>SupplierName</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+      <Query>
+        <DataSourceName>DataObject</DataSourceName>
+        <CommandText>/* Local Query */</CommandText>
+      </Query>
+      <rd:DataSetInfo>
+        <rd:DataSetName>DataObject</rd:DataSetName>
+        <rd:TableName>CstmCatalogPrice</rd:TableName>
+        <rd:ObjectDataSourceType>DataObject.CstmCatalogPrice, DataObject, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</rd:ObjectDataSourceType>
+      </rd:DataSetInfo>
+    </DataSet>
+  </DataSets>
   <Body>
     <ReportItems>
       <Tablix Name="Tablix1">
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>1.10417in</Width>
+              <Width>1.19392in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.84375in</Width>
+              <Width>1.9335in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.70833in</Width>
+              <Width>1.79808in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.84375in</Width>
+              <Width>1.9335in</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -335,9 +395,8 @@
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>CstmCatalogPrice</DataSetName>
-        <Left>0.04625in</Left>
         <Height>0.5in</Height>
-        <Width>6.5in</Width>
+        <Width>6.85899in</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -348,10 +407,10 @@
     <Height>2in</Height>
     <Style />
   </Body>
-  <Width>6.5925in</Width>
+  <Width>6.85899in</Width>
   <Page>
     <PageHeader>
-      <Height>1.39514in</Height>
+      <Height>1.26493in</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
@@ -359,32 +418,47 @@
           <Source>Embedded</Source>
           <Value>BigLogo</Value>
           <Sizing>FitProportional</Sizing>
-          <Top>0cm</Top>
-          <Left>0cm</Left>
-          <Height>3.32317cm</Height>
-          <Width>4.38396cm</Width>
+          <Top>0.39688cm</Top>
+          <Left>0.08489cm</Left>
+          <Height>2.35744cm</Height>
+          <Width>3.06104cm</Width>
           <Style>
             <Border>
               <Style>None</Style>
             </Border>
           </Style>
         </Image>
-        <Textbox Name="Textbox1">
+        <Textbox Name="Textbox4">
           <CanGrow>true</CanGrow>
           <KeepTogether>true</KeepTogether>
           <Paragraphs>
             <Paragraph>
               <TextRuns>
                 <TextRun>
-                  <Value>SENDANG REJEKI
-</Value>
+                  <Value>PT. SENDANG REJEKI BINANGKIT</Value>
                   <Style>
-                    <FontFamily>times New Roman</FontFamily>
-                    <FontSize>20pt</FontSize>
+                    <FontFamily>Cooper Black</FontFamily>
+                    <FontSize>11pt</FontSize>
+                    <FontWeight>Bold</FontWeight>
                   </Style>
                 </TextRun>
                 <TextRun>
-                  <Value>Trusted &amp; Qualified Chicken Provider
+                  <Value xml:space="preserve">
+</Value>
+                  <Style>
+                    <FontFamily>times New Roman</FontFamily>
+                    <FontSize>11pt</FontSize>
+                  </Style>
+                </TextRun>
+                <TextRun>
+                  <Value>Trusted &amp; Qualified Chicken Provider</Value>
+                  <Style>
+                    <FontFamily>Mistral</FontFamily>
+                    <FontSize>11pt</FontSize>
+                  </Style>
+                </TextRun>
+                <TextRun>
+                  <Value xml:space="preserve">
 </Value>
                   <Style>
                     <FontFamily>times New Roman</FontFamily>
@@ -392,19 +466,37 @@
                   </Style>
                 </TextRun>
                 <TextRun>
-                  <Value>Jl. Gapura, Kp. Rawa Banteng, RT.04 RW.06 Desa Cibuntu Kecamatan Cibitung Kabupaten Bekasi - Jawa Barat
-Telp 0878 8432 0511, 0878 7955 4400
-Email : sendang.rejeki@gmail.com
+                  <Value>Jl. Gapura No. 4 RT. 001 RW . 011, Kp. Rawa Banteng, Desa Cibuntu, Kec. Cibitung, Bekasi, Jawa Barat
 </Value>
                   <Style>
-                    <FontFamily>times New Roman</FontFamily>
-                    <FontSize>8pt</FontSize>
+                    <FontFamily>Calibri</FontFamily>
+                    <FontSize>11pt</FontSize>
+                  </Style>
+                </TextRun>
+                <TextRun>
+                  <Value>Telp. 021-82635000, 0878 8434 0511, 0878 7955 4400</Value>
+                  <Style>
+                    <FontStyle>Normal</FontStyle>
+                    <FontFamily>Calibri</FontFamily>
+                    <FontSize>11pt</FontSize>
+                    <FontWeight>Normal</FontWeight>
+                    <TextDecoration>None</TextDecoration>
+                    <Color>#000000</Color>
+                  </Style>
+                </TextRun>
+                <TextRun>
+                  <Value xml:space="preserve">
+</Value>
+                  <Style>
+                    <FontFamily>Calibri</FontFamily>
+                    <FontSize>11pt</FontSize>
                   </Style>
                 </TextRun>
                 <TextRun>
                   <Value>www.sendangrejeki.com</Value>
                   <Style>
-                    <FontSize>8pt</FontSize>
+                    <FontFamily>Calibri</FontFamily>
+                    <FontSize>11pt</FontSize>
                     <Color>Blue</Color>
                   </Style>
                 </TextRun>
@@ -413,10 +505,9 @@ Email : sendang.rejeki@gmail.com
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox1</rd:DefaultName>
-          <Top>0cm</Top>
-          <Left>4.64784cm</Left>
-          <Height>3.54366cm</Height>
-          <Width>12.09711cm</Width>
+          <Left>3.32232cm</Left>
+          <Height>3.21293cm</Height>
+          <Width>14.09952cm</Width>
           <ZIndex>1</ZIndex>
           <Style>
             <Border>
@@ -441,67 +532,6 @@ Email : sendang.rejeki@gmail.com
     <BottomMargin>1in</BottomMargin>
     <Style />
   </Page>
-  <AutoRefresh>0</AutoRefresh>
-  <DataSources>
-    <DataSource Name="DataObject">
-      <ConnectionProperties>
-        <DataProvider>System.Data.DataSet</DataProvider>
-        <ConnectString>/* Local Connection */</ConnectString>
-      </ConnectionProperties>
-      <rd:DataSourceID>f583171b-85fe-45c2-a069-cbcf89bc9c61</rd:DataSourceID>
-    </DataSource>
-  </DataSources>
-  <DataSets>
-    <DataSet Name="CstmCatalogPrice">
-      <Query>
-        <DataSourceName>DataObject</DataSourceName>
-        <CommandText>/* Local Query */</CommandText>
-      </Query>
-      <Fields>
-        <Field Name="BuyPricePerunit">
-          <DataField>BuyPricePerunit</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="CatalogID">
-          <DataField>CatalogID</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
-        <Field Name="CatalogName">
-          <DataField>CatalogName</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="CreatedBy">
-          <DataField>CreatedBy</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="ID">
-          <DataField>ID</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
-        <Field Name="PriceDate">
-          <DataField>PriceDate</DataField>
-          <rd:TypeName>System.Nullable`1[[System.DateTime, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
-        </Field>
-        <Field Name="SellPrice">
-          <DataField>SellPrice</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="SupplierCode">
-          <DataField>SupplierCode</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="SupplierName">
-          <DataField>SupplierName</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-      </Fields>
-      <rd:DataSetInfo>
-        <rd:DataSetName>DataObject</rd:DataSetName>
-        <rd:TableName>CstmCatalogPrice</rd:TableName>
-        <rd:ObjectDataSourceType>DataObject.CstmCatalogPrice, DataObject, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</rd:ObjectDataSourceType>
-      </rd:DataSetInfo>
-    </DataSet>
-  </DataSets>
   <EmbeddedImages>
     <EmbeddedImage Name="BigLogo">
       <MIMEType>image/jpeg</MIMEType>
@@ -555,6 +585,6 @@ Ubl2kn8MavJK2lyFmyRbToGkgUc4R0kXOACi4x+J/wC1R+xp8Tf2NPiHL4b+I/gvXfC9+jCOGS6s2W1v
 QAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQBFJAXdiDg9uB/PBqveaXDqkIiu7WO4A7yKrD+n8qu0UDuZ+n6Ba6UP9Ftba1IP8EQGfpjpU624VmxHJhzlskc+5PU/nVmigLiR5K8/yxS0UUCCiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAoooqkgCiiinZAFFFFFkAUUUUWQBRRRRZAFFFFFkAUUUUWQBRRRRZAFFFFFkAUUUUWQBRRRRZAFFFFFkAUUUUWQBRRRRZAFFFFFkAUUUUWQBRRRRZAFFFFFkAUUUUWQBRRRRZAFFFFFkAUUUUWQBRRRRZAFFFFFkAUUUUWQBRRRRZAFFFFFkAUUUUWQBRRRRZAFFFFFkAUUUVABRRRQAUUUUAFFFFABRRRVRAKKKKoAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooA//9k=</ImageData>
     </EmbeddedImage>
   </EmbeddedImages>
-  <rd:ReportUnitType>Inch</rd:ReportUnitType>
   <rd:ReportID>76d87de7-4d28-43e6-83be-a9fcb6968ffb</rd:ReportID>
+  <rd:ReportUnitType>Inch</rd:ReportUnitType>
 </Report>
