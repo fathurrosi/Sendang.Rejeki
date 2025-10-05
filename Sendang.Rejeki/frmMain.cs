@@ -29,8 +29,8 @@ namespace Sendang.Rejeki
 
         Form GetInstance(string formName)
         {
-            Form activeForm = null;
-            //LogicLayer.Log log = LogicLayer.Log.CreateInstance();
+            
+            Form activeForm = null;            
             switch (formName.ToLower().Trim())
             {
                 case "logout":
@@ -67,8 +67,6 @@ namespace Sendang.Rejeki
                     activeForm = new frmCustomerList(); break;
                 case "stock":
                     activeForm = new frmStocks(); break;
-                //case "s":
-                //    activeForm = new frmStockList(); break;
                 case "recon":
                     activeForm = new frmReconcileList(); break;
                 case "hpp":
@@ -95,11 +93,14 @@ namespace Sendang.Rejeki
 
             if (activeForm != null)
             {
+                activeForm.Icon = Properties.Resources.sendangrejeki32x32;
                 foreach (Form f in this.MdiChildren)
                 {
                     if (f.Name == activeForm.Name)
                     {
+                      
                         activeForm = f;
+                        
                         break;
                     }
                 }
@@ -121,16 +122,12 @@ namespace Sendang.Rejeki
                     Report.frmReportViewerWithRange rptViewerRange = null;
                     switch (item.Name.ToLower().Trim())
                     {
-                        //case "config":
-                        //    Log.Info(string.Format("{0} opened {1} report", Utilities.Username, item.Name));
-                        //    frmConfig f = new frmConfig();
-                        //    f.ShowDialog();
-                        //    break;
                         case "dailysalescatalog":
                             rptViewerRange = new Report.frmReportViewerWithRange();
                             rptViewerRange.RptType = ReportType.DailySalesPerCatalog;
                             rptViewerRange.ReportName = "DailyCatalogSales";
                             rptViewerRange.ReportPath = string.Format("{0}\\Report\\DailyCatalogSales.rdlc", reportPath);
+                            rptViewerRange.Icon = Properties.Resources.sendangrejeki32x32;
                             rptViewerRange.ShowDialog();
                             break;
                         case "dailysales":
@@ -138,6 +135,7 @@ namespace Sendang.Rejeki
                             rptViewerRange.RptType = ReportType.TotalDailySale;
                             rptViewerRange.ReportName = "DailySales";
                             rptViewerRange.ReportPath = string.Format("{0}\\Report\\DailySales.rdlc", reportPath);
+                            rptViewerRange.Icon = Properties.Resources.sendangrejeki32x32;
                             rptViewerRange.ShowDialog();
                             break;
                         case "dailysalesdetail":
@@ -145,6 +143,7 @@ namespace Sendang.Rejeki
                             rptViewerRange.RptType = ReportType.TotalDailySaleDetail;
                             rptViewerRange.ReportName = "DailySales";
                             rptViewerRange.ReportPath = string.Format("{0}\\Report\\DailySalesDetail.rdlc", reportPath);
+                            rptViewerRange.Icon = Properties.Resources.sendangrejeki32x32;
                             rptViewerRange.ShowDialog();
                             break;
                         case "ar":
@@ -152,91 +151,71 @@ namespace Sendang.Rejeki
                             rptViewerRange.RptType = ReportType.Piutang;
                             rptViewerRange.ReportName = "Piutang";
                             rptViewerRange.ReportPath = string.Format("{0}\\Report\\Piutang.rdlc", reportPath);
+                            rptViewerRange.Icon = Properties.Resources.sendangrejeki32x32;
                             rptViewerRange.ShowDialog();
                             break;
-                        case "rptcatalog":
-                            rptViewer = new Report.frmReportViewer();
-                            rptViewer.ReportName = "Catalog";
-                            rptViewer.ReportPath = string.Format("{0}\\Report\\Catalog.rdlc", reportPath);
-                            rptViewer.DataSource = CatalogItem.GetAll();
-                            rptViewer.ShowDialog();
-                            break;
-                        case "graphofsales":
-                            rptViewer = new Report.frmReportViewer();
-                            rptViewer.ReportName = "graphofsales";
-                            rptViewer.ReportPath = string.Format("{0}\\Report\\graphofsales.rdlc", reportPath);
-                            rptViewer.ShowDialog();
-                            break;
-
                         case "dailygrossprofit":
                             rptViewerRange = new Report.frmReportViewerWithRange();
                             rptViewerRange.RptType = ReportType.DailyGrossProfit;
                             rptViewerRange.ReportName = "DailyGrossProfit";
                             rptViewerRange.ReportPath = string.Format("{0}\\Report\\DailyGrossProfit.rdlc", reportPath);
+                            rptViewerRange.Icon = Properties.Resources.sendangrejeki32x32;
                             rptViewerRange.ShowDialog();
                             break;
                         case "monthlygrossprofit":
                             rptViewerRange = new Report.frmReportViewerWithRange();
                             rptViewerRange.RptType = ReportType.MonthlyGrossProfit;
-                            rptViewerRange.ReportName = "MonthlyGrossProfit";
-                            //rptViewerRange.DataSource = SaleItem.GetMonthlyGrossProfit();
+                            rptViewerRange.ReportName = "MonthlyGrossProfit";                            
                             rptViewerRange.ReportPath = string.Format("{0}\\Report\\MonthlyGrossProfit.rdlc", reportPath);
+                            rptViewerRange.Icon = Properties.Resources.sendangrejeki32x32;
                             rptViewerRange.ShowDialog();
                             break;
                         case "salespermonth":
                             rptViewerRange = new Report.frmReportViewerWithRange();
                             rptViewerRange.RptType = ReportType.TotalSalesPerCatalog;
                             rptViewerRange.ReportName = "SalesPerMonth";
-
                             rptViewerRange.ReportPath = string.Format("{0}\\Report\\SalesPerMonth.rdlc", reportPath);
+                            rptViewerRange.Icon = Properties.Resources.sendangrejeki32x32;
                             rptViewerRange.ShowDialog();
                             break;
                         case "totalsalespermonth":
                             rptViewerRange = new Report.frmReportViewerWithRange();
                             rptViewerRange.RptType = ReportType.TotalSalesPerItemPerMonth;
                             rptViewerRange.ReportName = "SalesPerMonth";
-
                             rptViewerRange.ReportPath = string.Format("{0}\\Report\\TotalSalesPerItemPerMonth.rdlc", reportPath);
+                            rptViewerRange.Icon = Properties.Resources.sendangrejeki32x32;
                             rptViewerRange.ShowDialog();
                             break;
                         case "salespercustomer":
                             rptViewerRange = new Report.frmReportViewerWithRange();
                             rptViewerRange.RptType = ReportType.TotalSalesPerCustomer;
                             rptViewerRange.ReportName = "SalesPerCustomer";
-                            //rptViewerRange.DataSource = SaleItem.GetTotalSalePerCustomer();
                             rptViewerRange.ReportPath = string.Format("{0}\\Report\\SalesPerCustomer.rdlc", reportPath);
+                            rptViewerRange.Icon = Properties.Resources.sendangrejeki32x32;
                             rptViewerRange.ShowDialog();
                             break;
-
                         case "salesperformancepermonth":
                             rptViewerRange = new Report.frmReportViewerWithRange();
                             rptViewerRange.RptType = ReportType.SalesPerformancePerMonth;
                             rptViewerRange.ReportName = "SalesPerformancePerMonth";
-                            //rptViewerRange.DataSource = SaleItem.GetTotalSalePerCustomer();
                             rptViewerRange.ReportPath = string.Format("{0}\\Report\\SalesPerformancePerMonth.rdlc", reportPath);
+                            rptViewerRange.Icon = Properties.Resources.sendangrejeki32x32;
                             rptViewerRange.ShowDialog();
                             break;
-
-
                         case "dailypurchasesdetail":
                             rptViewerRange = new Report.frmReportViewerWithRange();
                             rptViewerRange.RptType = ReportType.DailyPurchaseDetail;
                             rptViewerRange.ReportName = "dailypurchasesdetail";
                             rptViewerRange.ReportPath = string.Format("{0}\\Report\\dailypurchasesdetail.rdlc", reportPath);
+                            rptViewerRange.Icon = Properties.Resources.sendangrejeki32x32;
                             rptViewerRange.ShowDialog();
                             break;
-                        case "lapstockdetail":
-                            //rptViewer = new Report.frmReportViewer();
-                            //rptViewer.ReportName = "Stock";
-                            //rptViewer.DataSource = CatalogStockItem.GetAll();
-                            //rptViewer.ReportPath = string.Format("{0}\\Report\\StockDetail.rdlc", reportPath);
-                            //rptViewer.ShowDialog();
-
+                        case "lapstockdetail":                            
                             rptViewerRange = new Report.frmReportViewerWithRange();
                             rptViewerRange.RptType = ReportType.StockDetail;
-                            rptViewerRange.ReportName = "CstmCatalogStock";
-                            //rptViewerRange.DataSource = SaleItem.GetDailyGrossProfit();
+                            rptViewerRange.ReportName = "CstmCatalogStock";                            
                             rptViewerRange.ReportPath = string.Format("{0}\\Report\\StockDetails.rdlc", reportPath);
+                            rptViewerRange.Icon = Properties.Resources.sendangrejeki32x32;
                             rptViewerRange.ShowDialog();
                             break;
                         case "lapstock":
@@ -244,6 +223,7 @@ namespace Sendang.Rejeki
                             rptViewer.ReportName = "Stock";
                             rptViewer.DataSource = CatalogStockItem.GetStockReport();
                             rptViewer.ReportPath = string.Format("{0}\\Report\\Stock.rdlc", reportPath);
+                            rptViewer.Icon = Properties.Resources.sendangrejeki32x32;
                             rptViewer.ShowDialog();
                             break;
 
@@ -252,6 +232,7 @@ namespace Sendang.Rejeki
                             rptViewer.ReportName = "Supplier";
                             rptViewer.DataSource = SupplierItem.GetAll();
                             rptViewer.ReportPath = string.Format("{0}\\Report\\Supplier.rdlc", reportPath);
+                            rptViewer.Icon = Properties.Resources.sendangrejeki32x32;
                             rptViewer.ShowDialog();
                             break;
                         case "lapcustomer":
@@ -259,10 +240,27 @@ namespace Sendang.Rejeki
                             rptViewer.ReportName = "Customer";
                             rptViewer.DataSource = CustomerItem.GetAll();
                             rptViewer.ReportPath = string.Format("{0}\\Report\\Customer.rdlc", reportPath);
+                            rptViewer.Icon = Properties.Resources.sendangrejeki32x32;
+                            rptViewer.ShowDialog();
+                            break;
+                        case "rptcatalog":
+                            rptViewer = new Report.frmReportViewer();
+                            rptViewer.ReportName = "Catalog";
+                            rptViewer.ReportPath = string.Format("{0}\\Report\\Catalog.rdlc", reportPath);
+                            rptViewer.DataSource = CatalogItem.GetAll();
+                            rptViewer.Icon = Properties.Resources.sendangrejeki32x32;
+                            rptViewer.ShowDialog();
+                            break;
+                        case "graphofsales":
+                            rptViewer = new Report.frmReportViewer();
+                            rptViewer.ReportName = "graphofsales";
+                            rptViewer.ReportPath = string.Format("{0}\\Report\\graphofsales.rdlc", reportPath);
+                            rptViewer.Icon = Properties.Resources.sendangrejeki32x32;
                             rptViewer.ShowDialog();
                             break;
                         default:
                             rptViewer = null;
+                            rptViewerRange = null;
                             break;
                     }
 

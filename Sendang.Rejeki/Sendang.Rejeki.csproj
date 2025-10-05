@@ -379,6 +379,7 @@
     </Compile>
     <EmbeddedResource Include="Control\ctlFooter.resx">
       <DependentUpon>ctlFooter.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Control\ctlHeader.resx">
       <DependentUpon>ctlHeader.cs</DependentUpon>
@@ -630,11 +631,6 @@
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="DataObject.CstmDailyPurchaseDetail.datasource" />
-    <None Include="DataObject.CstmDailySale.datasource" />
-    <None Include="DataObject.CstmPurchaseDetail.datasource" />
-    <None Include="DataObject.CstmPurchasesPerSupplierDaily.datasource" />
-    <None Include="DataObject.CstmTotalSalePerMonth.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -648,6 +644,11 @@
   <ItemGroup>
     <Content Include="Images\BigLogo.jpg" />
     <Content Include="Images\BigLogo1.png" />
+    <Content Include="Images\print.png" />
+    <None Include="Images\sendangrejeki32x32.ico" />
+    <Content Include="Images\trans.ico" />
+    <Content Include="Images\user.png" />
+    <None Include="Resources\SendangRejekiIcon.ico" />
     <None Include="Resources\graphic_report %282%29.png" />
     <None Include="Resources\insert_chart.png" />
     <None Include="Resources\graphic_report.png" />
