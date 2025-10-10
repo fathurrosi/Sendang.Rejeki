@@ -29,29 +29,21 @@ namespace DataLayer
             return DBUtil.ExecuteMapper<Previllage>(context, new Previllage());
         }
 
-        public static int Update(List<Previllage> list)
+        public static int Update(List<Previllage> list, int selectedRoleID)
         {
+            List<Previllage> existingItems = GetByRoleID(selectedRoleID);
             int result = -1;
             IDBHelper ctx = new DBHelper();
             ctx.BeginTransaction();
             ctx.CommandType = CommandType.StoredProcedure;
             try
             {
-
-                foreach (Previllage item in list)
+                List<Previllage> listToSave = list.Where(t => t.RoleID == selectedRoleID).ToList();
+                foreach (Previllage item in listToSave)
                 {
-//                    ctx.CommandText = @"
-//select * from Previllage
-//where   MenuID = @MenuID and  RoleID = @RoleID ";
-
-//                    ctx.AddParameter("@RoleID", item.RoleID);
-//                    ctx.AddParameter("@MenuID", item.MenuID);
-//                    Previllage tempItem = DBUtil.ExecuteMapper<Previllage>(ctx, new Previllage()).FirstOrDefault();
-
-                    Previllage tempItem = GetByRoleAndMenuID(item.RoleID, item.MenuID).FirstOrDefault();
+                    Previllage tempItem = existingItems.Where(t => t.RoleID == selectedRoleID && t.MenuID == item.MenuID).FirstOrDefault();
                     if (tempItem != null)
                     {
-                        //Update
                         ctx.CommandType = CommandType.StoredProcedure;
                         ctx.CommandText = @"[Usp_UpdatePrevillage]";
                     }

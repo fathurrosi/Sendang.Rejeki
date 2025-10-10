@@ -86,6 +86,7 @@ namespace Sendang.Rejeki.Control
         protected override void OnLoad(EventArgs e)
         {
 
+#if (!DEBUG)
             User user = Utilities.CurrentUser;
             List<int> roles = user.Roles.Select(t => t.ID).ToList();
             List<Previllage> previllages = PrevillageItem.GetAll();
@@ -131,7 +132,7 @@ namespace Sendang.Rejeki.Control
                 btnPrint.Enabled = allowPrint;
                 btnEdit.Enabled = allowUpdate || allowCreate;
             }
-
+#endif
 
             base.OnLoad(e);
         }

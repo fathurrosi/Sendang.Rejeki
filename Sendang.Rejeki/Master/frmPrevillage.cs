@@ -250,7 +250,7 @@ namespace Sendang.Rejeki.Master
         {
             try
             {
-                PrevillageItem.Update(PrevillageList);
+                PrevillageItem.Update(PrevillageList, SelectedRoleID);
                 this.DialogResult = System.Windows.Forms.DialogResult.OK;
                 Utilities.ShowInformation("Data saved!");
             }

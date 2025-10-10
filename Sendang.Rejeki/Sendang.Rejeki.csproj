@@ -183,6 +183,18 @@
     <Compile Include="Master\frmMenuList.Designer.cs">
       <DependentUpon>frmMenuList.cs</DependentUpon>
     </Compile>
+    <Compile Include="Master\frmOption.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Master\frmOption.Designer.cs">
+      <DependentUpon>frmOption.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Master\frmOptions.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Master\frmOptions.Designer.cs">
+      <DependentUpon>frmOptions.cs</DependentUpon>
+    </Compile>
     <Compile Include="Master\frmPrevillage.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -292,6 +304,18 @@
     </Compile>
     <Compile Include="Report\frmTotalSalesPerCustomer .Designer.cs">
       <DependentUpon>frmTotalSalesPerCustomer .cs</DependentUpon>
+    </Compile>
+    <Compile Include="Transaction\frmAccountReceivable.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Transaction\frmAccountReceivable.Designer.cs">
+      <DependentUpon>frmAccountReceivable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Transaction\frmAccountReceivableList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Transaction\frmAccountReceivableList.Designer.cs">
+      <DependentUpon>frmAccountReceivableList.cs</DependentUpon>
     </Compile>
     <Compile Include="Transaction\frmCatalogPriceList.cs">
       <SubType>Form</SubType>
@@ -422,6 +446,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Master\frmMenuList.resx">
       <DependentUpon>frmMenuList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Master\frmOption.resx">
+      <DependentUpon>frmOption.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Master\frmOptions.resx">
+      <DependentUpon>frmOptions.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Master\frmPrevillage.resx">
       <DependentUpon>frmPrevillage.cs</DependentUpon>
@@ -581,6 +611,9 @@
     <EmbeddedResource Include="Report\TotalSalesPerItemPerMonth.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Transaction\frmAccountReceivableList.resx">
+      <DependentUpon>frmAccountReceivableList.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Transaction\frmCatalogPriceList.resx">
       <DependentUpon>frmCatalogPriceList.cs</DependentUpon>

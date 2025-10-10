@@ -87,6 +87,7 @@ namespace Sendang.Rejeki.Control
 
         private void ctlTransButton_Load(object sender, EventArgs e)
         {
+#if(!DEBUG)
             User user = Utilities.CurrentUser;
             List<int> roles = user.Roles.Select(t => t.ID).ToList();
             List<Previllage> previllages = PrevillageItem.GetAll();
@@ -128,14 +129,8 @@ namespace Sendang.Rejeki.Control
                 btnSave.Enabled = false;
                 btnCancel.Text = "Close";
             }
-            //if (!SaveButtonEnabled)
-            //{
-            //    btnSave.Enabled = false;
-            //}
-            //if (!CancelButtonEnabled)
-            //{
-            //    btnCancel.Enabled = false;
-            //}
+#endif
+           
         }
 
         public string SaveButtonText { get; set; }

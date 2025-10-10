@@ -41,6 +41,12 @@ namespace Sendang.Rejeki
                     Log.Info("Close");
                     Application.Exit();
                     break;
+
+
+                case "option":
+                    activeForm = new frmOptions(); break;
+                case "cst_invoice_list":
+                    activeForm = new frmAccountReceivableList(); break;
                 case "catalog":
                     activeForm = new frmCatalogList(); break;
                 case "supplier":
