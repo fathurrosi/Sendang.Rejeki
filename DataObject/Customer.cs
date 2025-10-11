@@ -15,6 +15,12 @@ namespace DataObject
             this.FullName = fullname;
         }
 
+        public Customer(int id, string fullname, string code)
+        {
+            this.ID = id;
+            this.FullName = fullname;
+            this.Code = code;
+        }
 
         public int ID { get; set; }
 

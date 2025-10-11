@@ -11,19 +11,17 @@ namespace DataLayer
 {
     public class SaleItem
     {
+        public static List<CstmInvoiceDetail> GetDetailInvoice(int customerID)
+        {
+            IDBHelper ictx = new DBHelper();
+            ictx.CommandText = "[Us_GetDetailInvoice]";
+            ictx.AddParameter("@MemberID", customerID);
+            ictx.CommandType = CommandType.StoredProcedure;
+            return DBUtil.ExecuteMapper<CstmInvoiceDetail>(ictx, new CstmInvoiceDetail());
+        }
+
         public static List<CstmSales> GetTotalSales(DateTime date)
         {
-            //SET @CurrentDate ='2017/11/1';
-            //            string query =@"
-            //
-            //SELECT  DATE_FORMAT( s.TransactionDate, '%m-%Y') AS Bulan,
-            //sd.CatalogID, SUM( sd.Price * sd.Quantity) AS Sales FROM SaleDetail sd
-            //INNER JOIN Sale s ON s.TransactionId = sd.TransactionID
-            //INNER JOIN Catalog c ON c.ID = sd.CatalogID
-            //WHERE  DATE_FORMAT( s.TransactionDate, '%m-%Y') =  DATE_FORMAT( @CurrentDate, '%m-%Y')
-            //AND c.Type ='Item'
-            //GROUP BY DATE_FORMAT( s.TransactionDate, '%m-%Y'),sd.CatalogID
-            //";
             IDBHelper ictx = new DBHelper();
             ictx.CommandText = "[Usp_GetTotalSalesPerMonth]";
             ictx.AddParameter("@CurrentDate", date);
@@ -33,21 +31,7 @@ namespace DataLayer
 
         public static List<CstmTotalPurchase> GetAllPurchases()
         {
-            //            string sql = @"
-            //SELECT sd.totalprice AS TotalPrice,
-            //sd.PricePerUnit,
-            //sd.Qty AS Quantity,
-            //CAST(s.PurchaseDate AS DATE) AS PurchaseDate,
-            //c.name AS CatalogName, 
-            //sd.CatalogID  AS CatalogID, c.Unit
-            //FROM purchasedetail sd
-            //INNER JOIN Purchase s ON s.PurchaseNo= sd.PurchaseNo
-            //INNER JOIN Catalog c ON sd.CatalogID= c.ID                                                                  
-            //WHERE  c.Type ='Item'
-            //ORDER BY CAST(s.PurchaseDate AS DATE) ,sd.CatalogID
-            //";
             List<CstmTotalPurchase> result = new List<CstmTotalPurchase>();
-
             try
             {
                 IDBHelper ictx = new DBHelper();
@@ -61,65 +45,10 @@ namespace DataLayer
             }
             return result.OrderBy(t => t.TotalPrice).ToList();
         }
-        //public static List<cstmHPP> GetTotalHPH(DateTime start, DateTime end)
-        //{
-        //    List<cstmHPP> list = new List<cstmHPP>();
 
-        //    List<CstmTotalPurchase> purchaseList = GetAllPurchases(start.AddDays(-1), end);
-        //    DateTime _start = purchaseList.Select(t => t.PurchaseDate).Min();
-        //    DateTime _end = purchaseList.Select(t => t.PurchaseDate).Max();
-        //    for (; _start <= end; _start.AddDays(1))
-        //    {
-        //        DateTime counterDate = _start;
-        //        List<int> catalogIdList = purchaseList.Where(t => t.PurchaseDate.Date == counterDate.Date).Select(t => t.CatalogID).Distinct().ToList();
-        //        foreach (int catalogID in catalogIdList)
-        //        {
-        //            CstmTotalPurchase pNow = purchaseList.Where(t => t.PurchaseDate.Date == counterDate.Date && t.CatalogID == catalogID).FirstOrDefault();
-        //            if (pNow != null)
-        //            {
-        //                CstmTotalPurchase pNext = purchaseList.Where(t => t.PurchaseDate.Date < counterDate.Date && t.CatalogID == catalogID).FirstOrDefault();
-        //                if (pNext != null)
-        //                {
-        //                    //HPP --> harga pokok penjualan
-        //                    // HPP = totalharga / totalpenjualan
-        //                    decimal nowTotalQty = pNow.Quantity;
-        //                    decimal nowTotalPrice = pNow.TotalPrice;
-        //                    decimal prevTotalQty = pNext.Quantity;
-        //                    decimal provTotalPrice = pNext.TotalPrice;
-        //                    //C5 = stok hari ini
-        //                    //C7 = stok kemarin
-        //                    //E7 = stok kermain * (harga_rata2_kemarin atau hpp_kemarin)
-        //                    //E5 = total harga hari ini
-        //                    //HPP =(E7+E5)/(C5+C7)
-        //                    //----------------------------
-        //                    //(Qty kemarin)
-        //                }
-        //            }
-        //        }
-        //    }
-
-        //    return list;
-        //}
         public static List<Piutang> GetPiutang(DateTime start, DateTime end)
         {
-            //            string sql = @"
-            //SELECT cust.ID CustomerID, 
-            //cust.Fullname AS CustomerName, 
-            // s.TransactionID,
-            //s.transactiondate AS TransDate,
-            //s.TotalPrice,
-            //s.TotalPayment,
-            //CASE WHEN (s.TotalPrice - s.TotalPayment) >0 THEN (s.TotalPrice - s.TotalPayment) ELSE 0 END AS Piutang,
-            //s.ExpiredDate
-            //FROM  Sale s 
-            //LEFT JOIN Customer cust ON cust.ID =s.MemberID 
-            //
-            //WHERE s.transactiondate BETWEEN @startDate AND @endDate
-            //and (s.TotalPrice - s.TotalPayment) > 0
-            //";
-
             List<Piutang> result = new List<Piutang>();
-
             try
             {
                 IDBHelper ictx = new DBHelper();
@@ -264,7 +193,6 @@ namespace DataLayer
                                 DBUtil.ExecuteNonQuery(ictx);
                             }
                             #endregion
-
                         }
                     }
 
@@ -278,7 +206,6 @@ namespace DataLayer
                             DBUtil.ExecuteNonQuery(ictx);
                         }
                     }
-
                     ictx.CommitTransaction();
                 }
             }
@@ -287,7 +214,6 @@ namespace DataLayer
                 itemResult = -1; ictx.RollbackTransaction();
                 LogItem.Error(ex);
             }
-
             return itemResult;
         }
 
@@ -301,6 +227,7 @@ namespace DataLayer
             ictx.AddParameter("@UpdatedBy", updatedBy);
             return DBUtil.ExecuteNonQuery(ictx);
         }
+
         public static Sale Insert(Sale item)
         {
             Sale itemResult = null;
@@ -350,7 +277,6 @@ namespace DataLayer
                 ictx.RollbackTransaction();
                 LogItem.Error(ex);
             }
-
             return itemResult;
         }
 
@@ -368,7 +294,7 @@ namespace DataLayer
             }
             return sale;
         }
-        
+
         public static List<Sale> GetPaging(string text, int pageIndex, int pageSize, out int totalRecord)
         {
             IDBHelper context = new DBHelper();
@@ -379,10 +305,9 @@ namespace DataLayer
             context.AddParameter("@pageIndex", pageIndex);
             context.AddParameter("@totalRecord", 0, ParameterDirection.Output);
             List<Sale> result = DBUtil.ExecuteMapper<Sale>(context, new Sale(), out totalRecord);
-           
             return result;
         }
-             
+
         public static List<CstmMonthlyGrossProfit> GetMonthlyGrossProfit(DateTime start, DateTime end)
         {
 
@@ -416,14 +341,11 @@ namespace DataLayer
             context.CommandType = CommandType.StoredProcedure;
             List<CstmDailySale> result = DBUtil.ExecuteMapper<CstmDailySale>(context, new CstmDailySale());
             return result.OrderByDescending(t => t.Tgl).ToList();
-
         }
-
-
 
         public static List<CstmDailySale> GetTotalDailySalesDetail(DateTime start, DateTime end)
         {
-          
+
             IDBHelper context = new DBHelper();
             context.CommandText = "[Usp_GetTotalDailySalesDetail]";
             context.AddParameter("@startDate", start);
@@ -431,7 +353,6 @@ namespace DataLayer
             context.CommandType = CommandType.StoredProcedure;
             List<CstmDailySale> result = DBUtil.ExecuteMapper<CstmDailySale>(context, new CstmDailySale());
             return result.OrderByDescending(t => t.Tgl).ToList();
-
         }
 
         /// <summary>
@@ -449,7 +370,6 @@ namespace DataLayer
             context.CommandType = CommandType.StoredProcedure;
             List<CstmTotalSalePerMonth> result = DBUtil.ExecuteMapper<CstmTotalSalePerMonth>(context, new CstmTotalSalePerMonth());
             return result;
-
         }
 
         public static List<CstmTotalSalePerMonth> GetTotalSalePerCatalog(DateTime start, DateTime end)
@@ -461,13 +381,11 @@ namespace DataLayer
             context.CommandType = CommandType.StoredProcedure;
             List<CstmTotalSalePerMonth> result = DBUtil.ExecuteMapper<CstmTotalSalePerMonth>(context, new CstmTotalSalePerMonth());
             return result;
-
         }
 
 
         public static List<CstmPerformancePerMonth> GetPerformancePerMonth(DateTime start, DateTime end)
         {
-          
             IDBHelper context = new DBHelper();
             context.CommandText = "Usp_GetPerformancePerMonth";
             context.AddParameter("@startDate", start);
@@ -476,9 +394,9 @@ namespace DataLayer
             List<CstmPerformancePerMonth> result = DBUtil.ExecuteMapper<CstmPerformancePerMonth>(context, new CstmPerformancePerMonth());
             return result;
         }
-        
+
         public static List<CstmTotalSalePerCustomer> GetTotalSalePerCustomer(DateTime start, DateTime end)
-        {            
+        {
             IDBHelper context = new DBHelper();
             context.CommandText = "Usp_GetTotalSalePerCustomer";
             context.AddParameter("@startDate", start);
@@ -486,10 +404,7 @@ namespace DataLayer
             context.CommandType = CommandType.StoredProcedure;
             List<CstmTotalSalePerCustomer> result = DBUtil.ExecuteMapper<CstmTotalSalePerCustomer>(context, new CstmTotalSalePerCustomer());
             return result;
-
         }
-
-
 
         public static List<CstmTotalSalePerDay> GetTotalSales(DateTime start, DateTime end)
         {
@@ -523,11 +438,29 @@ namespace DataLayer
                 dgp.DailyGrossProfit = dgp.TotalSales - (dgp.Qty * dgp.HPP.Value);
                 list.Add(dgp);
             }
-
-
             return list;
         }
 
+        public static int PrintSJ(string transactionID, DateTime date)
+        {
+            Sale item = GetByTransID(transactionID);
+            int itemResult = 0;
+            try
+            {
+                IDBHelper ictx = new DBHelper();
+                ictx.CommandText = "Usp_PrintSJ";
+                ictx.CommandType = CommandType.StoredProcedure;
+                ictx.AddParameter("@TransactionID", transactionID);
+                ictx.AddParameter("@PrintDate", date);
+                itemResult = DBUtil.ExecuteNonQuery(ictx);
+            }
+            catch (Exception ex)
+            {
+                itemResult = -1;
+                LogItem.Error(ex);
+            }
+            return itemResult;
+        }
 
         public static int Delete(string transactionID)
         {
@@ -560,37 +493,19 @@ namespace DataLayer
                 ictx.RollbackTransaction();
                 LogItem.Error(ex);
             }
-
             return itemResult;
         }
-        
+
         public static CstmBuyPrice GetPrevBuyPrices(DateTime start, int catalogID)
         {
-            // daftar harga beli       
-            //            string sql = @"
-            //SELECT CatalogID,c.Name AS CatalogName, c.Unit, 
-            //SUM(pd.TotalPrice ) TotalBuyPrice, 
-            //SUM(pd.Qty) AS TotalQty, 
-            //SUM(pd.PricePerUnit) AS TotalPrice, 
-            //SUM(pd.PricePerUnit)/COUNT(1) AS BuyPrice, 
-            //CAST(p.PurchaseDate  AS DATE) AS TransDate, COUNT(1) AS TotalItem FROM purchasedetail pd
-            //INNER JOIN purchase p ON p.PurchaseNo= pd.PurchaseNo 
-            //INNER JOIN Catalog c ON c.ID = pd.CatalogID
-            //where 
-            //p.PurchaseNo NOT IN (SELECT DISTINCT purchaseno FROM reconcile  )
-            //AND CAST(p.PurchaseDate  AS DATE)  < CAST(@startDate  AS DATE)  and pd.CatalogID =@CatalogID
-            //GROUP BY CatalogID, TransDate  desc
-            //";
             IDBHelper context = new DBHelper();
             context.CommandText = "Usp_GetPrevBuyPrices";
             context.CommandType = CommandType.StoredProcedure;
             context.AddParameter("@startDate", start);
             context.AddParameter("@CatalogID", catalogID);
-
             List<CstmBuyPrice> result = DBUtil.ExecuteMapper<CstmBuyPrice>(context, new CstmBuyPrice());
             return result.FirstOrDefault();
         }
-
 
         public static List<CstmBuyPrice> GetBuyPrices(DateTime start, DateTime end)
         {

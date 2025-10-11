@@ -15,10 +15,11 @@ namespace DataLayer
             IDBHelper context = new DBHelper();
             context.CommandText = @"[Usp_GetCustomer]";
             context.CommandType = CommandType.StoredProcedure;
-            return DBUtil.ExecuteMapper<Customer>(context, new Customer());
+            List<Customer> list = DBUtil.ExecuteMapper<Customer>(context, new Customer());
+            return list.OrderBy(t => t.Code).ToList();
         }
 
-        public static int Update(int id,string code, string name, string address, string phone, string Username)
+        public static int Update(int id, string code, string name, string address, string phone, string Username)
         {
             IDBHelper context = new DBHelper();
             context.CommandText = @"[Usp_UpdateCustomer]";

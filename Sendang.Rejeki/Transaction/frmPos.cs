@@ -142,14 +142,17 @@ namespace Sendang.Rejeki.Transaction
             cboCustomer.DataSource = list.OrderBy(t => t.FullName).ToList();
 
             catalogList = CatalogItem.GetAll();
-            List<object> paymentList = new List<object>();
-            paymentList.Add(new { ID = 1, Name = "Cash" });
-            paymentList.Add(new { ID = 2, Name = "Bank Transfer" });
-            paymentList.Add(new { ID = 3, Name = "Credit" });
+
+            List<Options> paymentList = OptionItem.GetOptionsByName("Payment");
+
+            //List<object> paymentList = new List<object>();
+            //paymentList.Add(new { ID = 1, Name = "Cash" });
+            //paymentList.Add(new { ID = 2, Name = "Bank Transfer" });
+            //paymentList.Add(new { ID = 3, Name = "Credit" });
 
             cboPaymentType.DataSource = paymentList;
-            cboPaymentType.ValueMember = "ID";
-            cboPaymentType.DisplayMember = "Name";
+            cboPaymentType.ValueMember = "ValueMember";
+            cboPaymentType.DisplayMember = "DisplayMember";
 
             if (!string.IsNullOrEmpty(TransactionID))
             {
@@ -813,6 +816,7 @@ namespace Sendang.Rejeki.Transaction
 
         private void btnPrintSJ_Click(object sender, EventArgs e)
         {
+            DateTime today = DateTime.Now;
             //string reportPath = Directory.GetCurrentDirectory() + "\\Report\\Receipt.rdlc";
             string reportPath = Directory.GetCurrentDirectory() + "\\Report\\PrintSJ.rdlc";
             Report.frmReportViewer f = new Report.frmReportViewer();
@@ -826,17 +830,19 @@ namespace Sendang.Rejeki.Transaction
             parameters.Add(new ReportParameter("TotalPrice", txtTotalPrice.Text, true));
             parameters.Add(new ReportParameter("TotalPayed", txtTotalPayed.Text, true));
             parameters.Add(new ReportParameter("TotalReturn", txtReturn.Text, true));
-            parameters.Add(new ReportParameter("tglCetak", DateTime.Now.ToString("dd MMM yyyy"), true));
-
-
+            parameters.Add(new ReportParameter("tglCetak", today.ToString("dd MMM yyyy"), true));
+            
             f.ReportName = "Sale";
             f.ReportPath = reportPath;
-
-
             f.DataSource = sale.Details;
             f.Params = parameters;
             f.Tag = this.Tag;
-            f.ShowDialog();
+
+            int result = SaleItem.PrintSJ(sale.TransactionID, today);
+            if (result > 0)
+            {
+                f.ShowDialog();
+            }
         }
 
 

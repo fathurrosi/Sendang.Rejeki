@@ -45,6 +45,8 @@ namespace Sendang.Rejeki
 
                 case "option":
                     activeForm = new frmOptions(); break;
+                case "cst_invoice":
+                    activeForm = new frmAccountReceivable(); break;
                 case "cst_invoice_list":
                     activeForm = new frmAccountReceivableList(); break;
                 case "catalog":

@@ -52,10 +52,13 @@
     <Compile Include="Cstm\CstmMenu.cs" />
     <Compile Include="Cstm\CstmSales.cs" />
     <Compile Include="Cstm\CstmSalesPercustomerPerYear.cs" />
+    <Compile Include="Cstm\CstmInvoiceDetail.cs" />
     <Compile Include="Cstm\Piutang.cs" />
     <Compile Include="CurrentStock.cs" />
     <Compile Include="Customer.cs" />
     <Compile Include="GrossProfit.cs" />
+    <Compile Include="Invoice.cs" />
+    <Compile Include="InvoiceDetail.cs" />
     <Compile Include="Log.cs" />
     <Compile Include="Menu.cs" />
     <Compile Include="Options.cs" />

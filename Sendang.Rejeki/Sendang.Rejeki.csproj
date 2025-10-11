@@ -612,6 +612,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Transaction\frmAccountReceivable.resx">
+      <DependentUpon>frmAccountReceivable.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Transaction\frmAccountReceivableList.resx">
       <DependentUpon>frmAccountReceivableList.cs</DependentUpon>
     </EmbeddedResource>
@@ -672,10 +675,16 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Images\bg.JPG" />
     <Content Include="Images\BigLogo.jpg" />
     <Content Include="Images\BigLogo1.png" />
+    <Content Include="Images\login.png" />
     <Content Include="Images\print.png" />
     <None Include="Images\sendangrejeki32x32.ico" />
+    <Content Include="Images\sendangrejeki256x256.ico" />
+    <Content Include="Images\sendangrejeki40x40.ico" />
+    <Content Include="Images\sendangrejeki48x48.ico" />
+    <Content Include="Images\sendangrejeki64x64.ico" />
     <Content Include="Images\trans.ico" />
     <Content Include="Images\user.png" />
     <None Include="Resources\SendangRejekiIcon.ico" />

@@ -10,7 +10,7 @@ namespace DataLayer
 {
     public class OptionItem
     {
-      
+
         public static List<DataObject.Options> GetPaging(string text, int pageIndex, int pageSize, out int totalRecord)
         {
             IDBHelper context = new DBHelper();
@@ -22,6 +22,16 @@ namespace DataLayer
             context.AddParameter("@totalRecord", 0, ParameterDirection.Output);
             List<Options> list = DBUtil.ExecuteMapper<Options>(context, new Options(), out totalRecord);
             return list;
+        }
+
+        public static List<Options> GetOptionsByName(string name)
+        {
+            IDBHelper context = new DBHelper();
+            context.AddParameter("@Name", name);
+
+            context.CommandText = "Usp_GetOptionsByName";
+            context.CommandType = CommandType.StoredProcedure;
+            return DBUtil.ExecuteMapper<Options>(context, new Options()).ToList();
         }
 
         public static Options GetOptionsByKey(string name, string valueMember)
