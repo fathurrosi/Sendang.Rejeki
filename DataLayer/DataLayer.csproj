@@ -47,6 +47,7 @@
     <Compile Include="CustomerItem.cs" />
     <Compile Include="GrossProfitItem.cs" />
     <Compile Include="HPPItem.cs" />
+    <Compile Include="InvoiceDetailItem.cs" />
     <Compile Include="InvoiceItem.cs" />
     <Compile Include="LogItem.cs" />
     <Compile Include="MenuItem.cs" />

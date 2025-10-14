@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using LogicLayer;
+using DataObject;
+using DataLayer;
 
 namespace Sendang.Rejeki.Transaction
 {
@@ -25,37 +27,34 @@ namespace Sendang.Rejeki.Transaction
 
         void LoadData(string text, int pageIndex, int pageSize)
         {
-            //int totalRecord = 0;
-            //List<Catalog> list = CatalogItem.GetPaging(text, pageIndex, pageSize, out totalRecord);
-            //grid.DataSource = list;
-            //ctlFooter1.TotalRows = totalRecord;
+            int totalRecord = 0;
+            List<Invoice> list = InvoiceItem.GetPaging(text, pageIndex, pageSize, out totalRecord);
+            grid.AutoGenerateColumns = false;
+            grid.DataSource = list;
+            ctlFooter1.TotalRows = totalRecord;
         }
 
         public void Add()
         {
-            //frmCatalog f = new frmCatalog();
-            ////f.Username = Utilities.Username;
-            //f.Tag = this.Tag;
-            //if (f.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            //{
-            //    Search();
-            //}
+            frmAccountReceivable f = new frmAccountReceivable();
+            f.Tag = this.Tag;
+            if (f.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                Search();
+            }
         }
 
         public void Edit()
         {
-            //if (grid.CurrentRow == null) return;
-            //frmCatalog f = new frmCatalog();
-            //int Row = grid.CurrentRow.Index;
-            //int ID = 0;
-            //int.TryParse(grid["Code", Row].Value.ToString(), out ID);
-            //f.Tag = this.Tag;
-            //f.ID = ID;
-            ////f.Username = Utilities.Username;
-            //if (f.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            //{
-            //    Search();
-            //}
+            if (grid.CurrentRow == null) return;
+            frmAccountReceivable f = new frmAccountReceivable();
+            int Row = grid.CurrentRow.Index;
+            f.Tag = this.Tag;
+            f.InvoceNo = string.Format("{0}", grid["colInvoiceNo", Row].Value);
+            if (f.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                Search();
+            }
         }
 
 
@@ -88,7 +87,7 @@ namespace Sendang.Rejeki.Transaction
 
         }
 
-        private void frmCatalogList_Load(object sender, EventArgs e)
+        private void frmAccountReceivableList_Load(object sender, EventArgs e)
         {
             Search();
         }

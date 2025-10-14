@@ -10,6 +10,7 @@ using DataObject;
 using DataLayer;
 using DataObject.Cstm;
 using LogicLayer;
+using Newtonsoft.Json;
 
 namespace Sendang.Rejeki.Transaction
 {
@@ -49,7 +50,6 @@ namespace Sendang.Rejeki.Transaction
             cboBuyer.DisplayMember = "Code";
             cboBuyer.ValueMember = "ID";
 
-
             cboBuyer.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
             cboBuyer.AutoCompleteSource = AutoCompleteSource.CustomSource;
             cboTrade.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
@@ -64,6 +64,32 @@ namespace Sendang.Rejeki.Transaction
             dtTanggal.Enabled = false;
             dtDueDate.Value = dtTanggal.Value.AddDays(30);
             txtNoInvoice.Enabled = false;
+
+            if (string.Format("{0}", InvoceNo).Length > 0)
+            {
+                LoadData(string.Format("{0}", InvoceNo));
+            }
+        }
+
+        void LoadData(string invoiceNo)
+        {
+            grid.AutoGenerateColumns = false;
+            Invoice item = InvoiceItem.GetOptionsByKey(invoiceNo);
+            if (item != null)
+            {
+                cboBuyer.SelectedValue = item.CustomerID;
+                txtNoInvoice.Text = item.InvoiceNo;
+                DateTime? dueDate = item.DueDate;
+                if (dueDate.HasValue) dtDueDate.Value = dueDate.Value;
+                txtTotalPayment.Text = string.Format("Rp. {0:N0}", item.Paid);
+                txtTotal.Text = string.Format("Rp. {0:N0}", item.Total);
+
+                InvoiceDetail detail = new InvoiceDetail();
+                detail.CatalogName = "Total";
+                detail.TotalAmount = string.Format("Rp. {0:N0}", item.TotalDetail);
+                item.Details.Add(detail);
+                grid.DataSource = item.Details;
+            }
         }
 
         private void cboBuyer_SelectedIndexChanged(object sender, EventArgs e)
@@ -73,22 +99,51 @@ namespace Sendang.Rejeki.Transaction
             txtAddress.Text = cust != null ? cust.Address : string.Empty;
             txtCompany.Text = cust.FullName;
             txtTel.Text = cust.Phone;
-
-            NewInvoiceDetails = SaleItem.GetDetailInvoice(cust.ID);
-            grid.DataSource = NewInvoiceDetails;
-            if (NewInvoiceDetails.Count > 0)
+            if (string.Format("{0}", InvoceNo).Length > 0)
             {
-                //txtTotal.Top = (this.Height - txtTotal.Height) / 2;
-                txtTotal.Text = string.Format("Rp. {0:N0}", NewInvoiceDetails.Sum(t => t.Amount));
-                btnPrint.Enabled = true;
-                btnSave.Enabled = true;
             }
             else
             {
-                //txtTotal.Top = (this.Height - txtTotal.Height) / 2;
-                txtTotal.Text = string.Format("Rp. {0:N0}", 0);
-                btnPrint.Enabled = false;
-                btnSave.Enabled = false;
+                NewInvoiceDetails = SaleItem.GetDetailInvoice(cust.ID);
+                if (NewInvoiceDetails.Count > 0)
+                {
+                    DateTime? dueDate = NewInvoiceDetails.Select(t => t.DueDate).Max();
+                    if (dueDate.HasValue) dtDueDate.Value = dueDate.Value;
+
+                    var totalPayment = (from item in NewInvoiceDetails
+                                        select new { item.TotalPayment, item.TransactionID }
+                                       ).Where(t => t.TotalPayment > 0).Distinct().ToList();
+
+                    if (totalPayment.Count > 0)
+                    {
+                        txtTotalPayment.Text = string.Format("Rp. {0:N0}", totalPayment.Sum(t => t.TotalPayment));
+                    }
+                    else
+                    {
+                        txtTotalPayment.Text = string.Format("Rp. {0:N0}", 0);
+                    }
+
+                    txtTotal.Text = string.Format("Rp. {0:N0}", NewInvoiceDetails.Sum(t => t.Amount) - totalPayment.Sum(t => t.TotalPayment));
+                    btnPrint.Enabled = true;
+                    //btnSave.Enabled = true;
+
+                    CstmInvoiceDetail detail = new CstmInvoiceDetail();
+                    detail.CatalogName = "Total";
+                    detail.TotalAmount = string.Format("Rp. {0:N0}", NewInvoiceDetails.Sum(t => t.Amount));
+                    NewInvoiceDetails.Add(detail);
+
+
+                    grid.DataSource = NewInvoiceDetails;
+                }
+                else
+                {
+                    //txtTotal.Top = (this.Height - txtTotal.Height) / 2;
+                    txtTotalPayment.Text = string.Format("Rp. {0:N0}", 0);
+                    txtTotal.Text = string.Format("Rp. {0:N0}", 0);
+                    btnPrint.Enabled = false;
+                    //btnSave.Enabled = false;
+                    grid.DataSource = NewInvoiceDetails;
+                }
             }
 
         }
@@ -105,7 +160,7 @@ namespace Sendang.Rejeki.Transaction
             return true;
         }
 
-        private void btnSave_Click(object sender, EventArgs e)
+        private void btnPrint_Click(object sender, EventArgs e)
         {
             if (!IsValid())
             {
@@ -125,31 +180,61 @@ namespace Sendang.Rejeki.Transaction
             item.Shipment = string.Format("{0}", cboShipment.SelectedValue);
             item.Status = "";
             item.To = txtTo.Text;
+            item.CreatedBy = Utilities.Username;
             if (NewInvoiceDetails.Count > 0)
             {
-                item.Total = NewInvoiceDetails.Sum(t => t.Amount);
+                item.TotalDetail = NewInvoiceDetails.Sum(t => t.Amount);
             }
             item.Tradeterm = string.Format("{0}", cboTrade.SelectedValue);
+
+            var totalPayment = (from t in NewInvoiceDetails
+                                select new { t.TotalPayment, t.TransactionID }
+                                  ).Where(t => t.TotalPayment > 0).Distinct().ToList();
+
+            if (totalPayment.Count > 0)
+            {
+                item.Paid = totalPayment.Sum(t => t.TotalPayment);
+            }
+            else
+            {
+                item.Paid = 0;
+            }
+
+            item.Total = NewInvoiceDetails.Sum(t => t.Amount) - totalPayment.Sum(t => t.TotalPayment);
+            btnPrint.Enabled = true;
+            //btnSave.Enabled = true;
 
             List<InvoiceDetail> details = new List<InvoiceDetail>();
             foreach (var newDetail in NewInvoiceDetails)
             {
-                InvoiceDetail detail = new InvoiceDetail();
-                detail.InvoiceID = item.InvoiceID;
-                detail.CatalogID = newDetail.CatalogId;
-
-                detail.Price = newDetail.Price;
-                detail.Quantity = newDetail.Quantity;
-                detail.Sequence = newDetail.RowIndex;
-                detail.TotalPrice = newDetail.Amount;
-                detail.TransactionID = newDetail.TransactionID;
-
-
-                details.Add(detail);
+                if (newDetail.CatalogName.ToLower() == "Total".ToLower()) continue;
+                InvoiceDetail detailItem = new InvoiceDetail();
+                detailItem.InvoiceID = item.InvoiceID;
+                detailItem.CatalogID = newDetail.CatalogId;
+                detailItem.Price = newDetail.Price;
+                detailItem.Quantity = newDetail.Quantity;
+                detailItem.Sequence = newDetail.RowIndex;
+                detailItem.TotalPrice = newDetail.Amount;
+                detailItem.TransactionID = newDetail.TransactionID;
+                detailItem.PrintDate = newDetail.PrintDate;
+                detailItem.NoNota = newDetail.NoNota;
+                details.Add(detailItem);
             }
 
-            InvoiceItem.Insert(item, details);
+            //var temps = details.Where(t => t.CatalogName != "Total").ToList();
+            Invoice result = InvoiceItem.Insert(item, details);
+            if (result != null)
+            {
+                if (string.Format("{0}", InvoceNo).Length > 0)
+                    Log.Update(string.Format("{0}-{1}", this.Text, JsonConvert.SerializeObject(result)));
+                else Log.Insert(string.Format("{0}-{1}", this.Text, JsonConvert.SerializeObject(result)));
+                this.DialogResult = System.Windows.Forms.DialogResult.OK;
+            }
         }
 
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            this.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+        }
     }
 }

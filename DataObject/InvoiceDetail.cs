@@ -41,7 +41,16 @@ namespace DataObject
         //[Column("Sequence")]
         public Int32? Sequence { get; set; }
 
+        //[Column("PrintDate")]
+        public DateTime? PrintDate { get; set; }
 
+        //[Column("NoNota",60)] 
+        public string NoNota { get; set; }
+
+        public DateTime CreatedDate { get; set; }
+        public string CreatedBy { get; set; }
+        public DateTime? ModifiedDate { get; set; }
+        public string ModifiedBy { get; set; }
         public List<InvoiceDetail> DatasetToDto(System.Data.DataSet ds)
         {
             List<InvoiceDetail> results = new List<InvoiceDetail>();
@@ -61,6 +70,9 @@ namespace DataObject
                     helper.TotalPrice = (dr["TotalPrice"] != null) ? Convert.ToDecimal(dr["TotalPrice"]) : 0;
                     helper.coli = (dr["coli"] != null) ? Convert.ToDecimal(dr["coli"]) : 0;
                     helper.Sequence = Convert.ToInt32(dr["Sequence"]);
+                    helper.PrintDate = (dr["PrintDate"] != null) ? Convert.ToDateTime(dr["PrintDate"]) : new DateTime(1900, 1, 1);
+                    helper.CatalogName = string.Format("{0}", dr["CatalogName"]);
+                    helper.TotalAmount = string.Format("{0}", dr["TotalAmount"]);
                     results.Add(helper);
                 }
             }
@@ -82,11 +94,23 @@ namespace DataObject
             helper.TotalPrice = (reader["TotalPrice"] is System.DBNull) ? 0 : Convert.ToDecimal(reader["TotalPrice"]);
             helper.coli = (reader["coli"] is System.DBNull) ? 0 : Convert.ToDecimal(reader["coli"]);
             helper.Sequence = Convert.ToInt32(reader["Sequence"]);
-
+            helper.PrintDate = (reader["PrintDate"] is System.DBNull) ? (DateTime?)null : Convert.ToDateTime(reader["PrintDate"]);
+            helper.NoNota = string.Format("{0}", reader["NoNota"]);
+            helper.CatalogName = string.Format("{0}", reader["CatalogName"]);
+            helper.TotalAmount = string.Format("{0}", reader["TotalAmount"]);
+            helper.CreatedDate = (reader["CreatedDate"] != null) ? new DateTime(1900, 1, 1) : Convert.ToDateTime(reader["CreatedDate"]);
+            helper.CreatedBy = reader["CreatedBy"].ToString();
+            helper.ModifiedDate = (reader["ModifiedDate"] is System.DBNull) ? (DateTime?)null : Convert.ToDateTime(reader["ModifiedDate"]);
+            helper.ModifiedBy = reader["ModifiedBy"].ToString();
             return helper;
         }
 
 
+
+        public string CatalogName { get; set; }
+
+        public string TotalAmount { get; set; }
     }
+
 
 }

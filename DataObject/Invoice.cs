@@ -16,6 +16,8 @@ namespace DataObject
         //[Key()]
         //[Column("CustomerID")]
         public Int32 CustomerID { get; set; }
+        public string CustomerCode { get; set; }
+        public string CustomerName { get; set; }
 
         //[Column("InvoiceNo",50)] 
         public string InvoiceNo { get; set; }
@@ -53,7 +55,15 @@ namespace DataObject
         //[Column("Payment",200)] 
         public string Payment { get; set; }
 
+        public decimal Paid { get; set; }
 
+        public decimal TotalDetail { get; set; }
+
+        public List<InvoiceDetail> Details { get; set; }
+        public DateTime CreatedDate { get; set; }
+        public string CreatedBy { get; set; }
+        public DateTime? ModifiedDate { get; set; }
+        public string ModifiedBy { get; set; }
         public List<Invoice> DatasetToDto(System.Data.DataSet ds)
         {
             List<Invoice> results = new List<Invoice>();
@@ -65,6 +75,8 @@ namespace DataObject
                     var helper = new Invoice();
                     helper.InvoiceID = (dr["InvoiceID"] != null) ? Convert.ToInt32(dr["InvoiceID"]) : 0;
                     helper.CustomerID = (dr["CustomerID"] != null) ? Convert.ToInt32(dr["CustomerID"]) : 0;
+                    helper.CustomerCode = string.Format("{0}", dr["CustomerCode"]);
+                    helper.CustomerName = string.Format("{0}", dr["CustomerName"]);
                     helper.InvoiceNo = string.Format("{0}", dr["InvoiceNo"]);
                     helper.InvoiceDate = Convert.ToDateTime(dr["InvoiceDate"]);
                     helper.DueDate = Convert.ToDateTime(dr["DueDate"]);
@@ -77,6 +89,8 @@ namespace DataObject
                     helper.To = string.Format("{0}", dr["To"]);
                     helper.Tradeterm = string.Format("{0}", dr["Tradeterm"]);
                     helper.Payment = string.Format("{0}", dr["Payment"]);
+                    helper.Paid = (dr["Paid"] != null) ? 0 : Convert.ToDecimal(dr["Paid"]);
+                    helper.TotalDetail = (dr["TotalDetail"] != null) ? 0 : Convert.ToDecimal(dr["TotalDetail"]);
                     results.Add(helper);
                 }
             }
@@ -90,6 +104,8 @@ namespace DataObject
             var helper = new Invoice();
             helper.InvoiceID = (reader["InvoiceID"] is System.DBNull) ? 0 : Convert.ToInt32(reader["InvoiceID"]);
             helper.CustomerID = (reader["CustomerID"] is System.DBNull) ? 0 : Convert.ToInt32(reader["CustomerID"]);
+            helper.CustomerCode = string.Format("{0}", reader["CustomerCode"]);
+            helper.CustomerName = string.Format("{0}", reader["CustomerName"]);
             helper.InvoiceNo = string.Format("{0}", reader["InvoiceNo"]);
             helper.InvoiceDate = Convert.ToDateTime(reader["InvoiceDate"]);
             helper.DueDate = Convert.ToDateTime(reader["DueDate"]);
@@ -102,6 +118,12 @@ namespace DataObject
             helper.To = string.Format("{0}", reader["To"]);
             helper.Tradeterm = string.Format("{0}", reader["Tradeterm"]);
             helper.Payment = string.Format("{0}", reader["Payment"]);
+            helper.Paid = (reader["Paid"] != null) ? 0 : Convert.ToDecimal(reader["Paid"]);
+            helper.TotalDetail = (reader["TotalDetail"] != null) ? 0 : Convert.ToDecimal(reader["TotalDetail"]);
+            helper.CreatedDate = (reader["CreatedDate"] != null) ? new DateTime(1900, 1, 1) : Convert.ToDateTime(reader["CreatedDate"]);
+            helper.CreatedBy = reader["CreatedBy"].ToString();
+            helper.ModifiedDate = (reader["ModifiedDate"] is System.DBNull) ? (DateTime?)null : Convert.ToDateTime(reader["ModifiedDate"]);
+            helper.ModifiedBy = reader["ModifiedBy"].ToString();
 
             return helper;
         }

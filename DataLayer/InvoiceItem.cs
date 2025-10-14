@@ -10,6 +10,21 @@ namespace DataLayer
 {
     public class InvoiceItem
     {
+
+        public static List<DataObject.Invoice> GetPaging(string text, int pageIndex, int pageSize, out int totalRecord)
+        {
+            IDBHelper context = new DBHelper();
+            context.CommandText = "Usp_GetInvoicePaging";
+            context.CommandType = CommandType.StoredProcedure;
+            context.AddParameter("@text", text);
+            context.AddParameter("@pageSize", pageSize);
+            context.AddParameter("@pageIndex", pageIndex);
+            context.AddParameter("@totalRecord", 0, ParameterDirection.Output);
+            List<Invoice> list = DBUtil.ExecuteMapper<Invoice>(context, new Invoice(), out totalRecord);
+            return list;
+        }
+
+
         public static Invoice Insert(Invoice item, List<InvoiceDetail> details)
         {
             IDBHelper ictx = new DBHelper();
@@ -31,11 +46,15 @@ namespace DataLayer
                 ictx.AddParameter("@To", item.To);
                 ictx.AddParameter("@Tradeterm", item.Tradeterm);
                 ictx.AddParameter("@Payment", item.Payment);
+                ictx.AddParameter("@Paid", item.Paid);
+                ictx.AddParameter("@TotalDetail", item.TotalDetail);
+                ictx.AddParameter("@CreatedBy", item.CreatedBy);
+                
                 Invoice result = DBUtil.ExecuteMapper<Invoice>(ictx, new Invoice()).FirstOrDefault();
                 if (result != null)
                 {
                     foreach (InvoiceDetail detail in details)
-                    {
+                    {                        
                         ictx.CommandType = CommandType.StoredProcedure;
                         ictx.CommandText = @"Usp_InsertInvoiceDetail";
                         ictx.AddParameter("@InvoiceID", result.InvoiceID);
@@ -47,6 +66,9 @@ namespace DataLayer
                         ictx.AddParameter("@TotalPrice", detail.TotalPrice);
                         ictx.AddParameter("@coli", detail.coli);
                         ictx.AddParameter("@Sequence", detail.Sequence);
+                        ictx.AddParameter("@PrintDate", detail.PrintDate);
+                        ictx.AddParameter("@NoNota", detail.NoNota);
+                        ictx.AddParameter("@CreatedBy", item.CreatedBy);
                         int detailResult = DBUtil.ExecuteNonQuery(ictx);
                         if (detailResult <= 0)
                         {
@@ -54,7 +76,7 @@ namespace DataLayer
                             return null;
                         }
                     }
-                    ictx.CommitTransaction();                    
+                    ictx.CommitTransaction();
                 }
 
                 return result;
@@ -97,7 +119,13 @@ namespace DataLayer
             context.AddParameter("@InvoiceNo", invoiceNo);
             context.CommandText = "Usp_GetInvoiceByNo";
             context.CommandType = CommandType.StoredProcedure;
-            return DBUtil.ExecuteMapper<Invoice>(context, new Invoice()).FirstOrDefault();
+            Invoice result = DBUtil.ExecuteMapper<Invoice>(context, new Invoice()).FirstOrDefault();
+            if (result != null)
+            {
+                result.Details = InvoiceDetailItem.GetByInvoiceNo(invoiceNo);
+            }
+
+            return result;
         }
 
     }

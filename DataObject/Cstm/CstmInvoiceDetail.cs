@@ -8,7 +8,7 @@ namespace DataObject.Cstm
 {
     public class CstmInvoiceDetail : IDataMapper<CstmInvoiceDetail>
     {
-        public int RowIndex { get; set; }
+        public int? RowIndex { get; set; }
         public int CatalogId { get; set; }
         public string CatalogName { get; set; }
         public string TransactionID { get; set; }
@@ -21,16 +21,22 @@ namespace DataObject.Cstm
         public string FullName { get; set; }
         public string NoNota { get; set; }
         public string Delivery { get; set; }
+        public DateTime? DueDate { get; set; }
+        public DateTime? PrintDate { get; set; }
+        public decimal TotalPayment { get; set; }
+
         public CstmInvoiceDetail Map(System.Data.IDataReader reader)
         {
             CstmInvoiceDetail obj = new CstmInvoiceDetail();
-            obj.RowIndex = (reader["RowIndex"] is System.DBNull) ? 0 : Convert.ToInt32(reader["RowIndex"]);
+            obj.RowIndex = (reader["RowIndex"] is System.DBNull) ? (int?)null : Convert.ToInt32(reader["RowIndex"]);
             obj.CatalogId = (reader["CatalogId"] is System.DBNull) ? 0 : Convert.ToInt32(reader["CatalogId"]);
 
             obj.Price = (reader["Price"] is System.DBNull) ? 0 : Convert.ToDecimal(reader["Price"]);
             obj.Quantity = (reader["Quantity"] is System.DBNull) ? 0 : Convert.ToDecimal(reader["Quantity"]);
             obj.Amount = (reader["Amount"] is System.DBNull) ? 0 : Convert.ToDecimal(reader["Amount"]);
-
+            obj.TotalPayment = (reader["TotalPayment"] is System.DBNull) ? 0 : Convert.ToDecimal(reader["TotalPayment"]);
+            obj.DueDate = (reader["DueDate"] is System.DBNull) ? (DateTime?)null : Convert.ToDateTime(reader["DueDate"]);
+            obj.PrintDate = (reader["PrintDate"] is System.DBNull) ? (DateTime?)null : Convert.ToDateTime(reader["PrintDate"]);
             obj.TransactionID = string.Format("{0}", reader["TransactionID"]);
             obj.CatalogName = string.Format("{0}", reader["CatalogName"]);
             obj.UnitPrice = string.Format("{0}", reader["UnitPrice"]);
