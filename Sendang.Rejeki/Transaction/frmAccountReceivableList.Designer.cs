@@ -36,6 +36,8 @@
             this.colInvoiceNo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colCustomerName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colCustomerCode = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colAction = new System.Windows.Forms.DataGridViewButtonColumn();
             ((System.ComponentModel.ISupportInitialize)(this.grid)).BeginInit();
             this.SuspendLayout();
             // 
@@ -78,7 +80,9 @@
             this.Code,
             this.colInvoiceNo,
             this.colCustomerName,
-            this.colCustomerCode});
+            this.colCustomerCode,
+            this.colStatus,
+            this.colAction});
             this.grid.Dock = System.Windows.Forms.DockStyle.Fill;
             this.grid.Location = new System.Drawing.Point(0, 25);
             this.grid.MultiSelect = false;
@@ -88,6 +92,8 @@
             this.grid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.grid.Size = new System.Drawing.Size(833, 345);
             this.grid.TabIndex = 4;
+            this.grid.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.grid_CellContentClick);
+            this.grid.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.grid_CellFormatting);
             // 
             // Code
             // 
@@ -122,6 +128,21 @@
             this.colCustomerCode.Name = "colCustomerCode";
             this.colCustomerCode.ReadOnly = true;
             // 
+            // colStatus
+            // 
+            this.colStatus.DataPropertyName = "StatusDesc";
+            this.colStatus.HeaderText = "Status";
+            this.colStatus.Name = "colStatus";
+            this.colStatus.ReadOnly = true;
+            // 
+            // colAction
+            // 
+            this.colAction.HeaderText = "Action";
+            this.colAction.Name = "colAction";
+            this.colAction.ReadOnly = true;
+            this.colAction.Text = "";
+            this.colAction.Width = 150;
+            // 
             // frmAccountReceivableList
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -131,6 +152,7 @@
             this.Controls.Add(this.ctlHeader1);
             this.Controls.Add(this.ctlFooter1);
             this.Name = "frmAccountReceivableList";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "frmAccountReceivableList";
             this.Load += new System.EventHandler(this.frmAccountReceivableList_Load);
             ((System.ComponentModel.ISupportInitialize)(this.grid)).EndInit();
@@ -147,5 +169,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colInvoiceNo;
         private System.Windows.Forms.DataGridViewTextBoxColumn colCustomerName;
         private System.Windows.Forms.DataGridViewTextBoxColumn colCustomerCode;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colStatus;
+        private System.Windows.Forms.DataGridViewButtonColumn colAction;
     }
 }

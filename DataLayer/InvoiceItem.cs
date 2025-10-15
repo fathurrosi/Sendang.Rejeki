@@ -11,7 +11,7 @@ namespace DataLayer
     public class InvoiceItem
     {
 
-        public static List<DataObject.Invoice> GetPaging(string text, int pageIndex, int pageSize, out int totalRecord)
+        public static List<Invoice> GetPaging(string text, int pageIndex, int pageSize, out int totalRecord)
         {
             IDBHelper context = new DBHelper();
             context.CommandText = "Usp_GetInvoicePaging";
@@ -49,12 +49,12 @@ namespace DataLayer
                 ictx.AddParameter("@Paid", item.Paid);
                 ictx.AddParameter("@TotalDetail", item.TotalDetail);
                 ictx.AddParameter("@CreatedBy", item.CreatedBy);
-                
+
                 Invoice result = DBUtil.ExecuteMapper<Invoice>(ictx, new Invoice()).FirstOrDefault();
                 if (result != null)
                 {
                     foreach (InvoiceDetail detail in details)
-                    {                        
+                    {
                         ictx.CommandType = CommandType.StoredProcedure;
                         ictx.CommandText = @"Usp_InsertInvoiceDetail";
                         ictx.AddParameter("@InvoiceID", result.InvoiceID);
@@ -65,7 +65,7 @@ namespace DataLayer
                         ictx.AddParameter("@Quantity", detail.Quantity);
                         ictx.AddParameter("@TotalPrice", detail.TotalPrice);
                         ictx.AddParameter("@coli", detail.coli);
-                        ictx.AddParameter("@Sequence", detail.Sequence);
+                        ictx.AddParameter("@Sequence", detail.RowIndex);
                         ictx.AddParameter("@PrintDate", detail.PrintDate);
                         ictx.AddParameter("@NoNota", detail.NoNota);
                         ictx.AddParameter("@CreatedBy", item.CreatedBy);
@@ -89,6 +89,25 @@ namespace DataLayer
             return null;
         }
 
+        public static Invoice Update(Invoice item)
+        {
+            IDBHelper context = new DBHelper();
+            context.CommandText = @"Usp_UpdateInvoice";
+            context.CommandType = CommandType.StoredProcedure;
+            context.AddParameter("@InvoiceNo", item.InvoiceNo);
+            context.AddParameter("@DueDate", item.DueDate);
+            context.AddParameter("@Total", item.Total);
+            context.AddParameter("@Status", item.Status);
+            context.AddParameter("@Delivery", item.Delivery);
+            context.AddParameter("@Remark", item.Remark);
+            context.AddParameter("@Attn", item.Attn);
+            context.AddParameter("@Shipment", item.Shipment);
+            context.AddParameter("@To", item.To);
+            context.AddParameter("@Tradeterm", item.Tradeterm);
+            context.AddParameter("@Payment", item.Payment);
+            context.AddParameter("@CreatedBy", item.CreatedBy);
+            return DBUtil.ExecuteMapper<Invoice>(context, new Invoice()).FirstOrDefault();
+        }
 
         public static int UpdatePayment(Invoice item)
         {
@@ -127,6 +146,17 @@ namespace DataLayer
 
             return result;
         }
+
+
+        public static int Delete(string invoiceNo)
+        {
+            IDBHelper context = new DBHelper();
+            context.AddParameter("@InvoiceNo", invoiceNo);
+            context.CommandText = "Usp_DeleteInvoice";
+            context.CommandType = CommandType.StoredProcedure;
+            return DBUtil.ExecuteNonQuery(context);
+        }
+
 
     }
 }

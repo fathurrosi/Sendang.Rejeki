@@ -91,6 +91,11 @@ namespace LogicLayer
 
             return false;
         }
+
+        public static DialogResult Confirmation(string text)
+        {
+            return MessageBox.Show(text, "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+        }
         public static DialogResult ShowInformation(string text)
         {
             return MessageBox.Show(text, "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);

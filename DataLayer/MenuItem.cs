@@ -51,6 +51,15 @@ namespace DataLayer
         //            return result;
         //        }
 
+        public static Menu GetMenuByCode(string code)
+        {
+            IDBHelper context = new DBHelper();
+            context.CommandText = @"Usp_GetMenuByCode";
+            context.AddParameter("@code", code);
+            context.CommandType = CommandType.StoredProcedure;
+            return DBUtil.ExecuteMapper<Menu>(context, new Menu()).FirstOrDefault();
+        }
+
         public static Menu GetMenuByID(int ID)
         {
             IDBHelper context = new DBHelper();

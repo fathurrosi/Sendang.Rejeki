@@ -14,7 +14,7 @@ namespace DataLayer
         public static List<CstmInvoiceDetail> GetDetailInvoice(int customerID)
         {
             IDBHelper ictx = new DBHelper();
-            ictx.CommandText = "[Us_GetDetailInvoice]";
+            ictx.CommandText = "[Usp_GetDetailInvoice]";
             ictx.AddParameter("@MemberID", customerID);
             ictx.CommandType = CommandType.StoredProcedure;
             return DBUtil.ExecuteMapper<CstmInvoiceDetail>(ictx, new CstmInvoiceDetail());

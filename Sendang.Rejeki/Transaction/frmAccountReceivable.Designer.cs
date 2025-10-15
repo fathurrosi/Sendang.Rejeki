@@ -288,11 +288,11 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(52, 265);
+            this.label9.Location = new System.Drawing.Point(28, 264);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(54, 13);
+            this.label9.Size = new System.Drawing.Size(81, 13);
             this.label9.TabIndex = 61;
-            this.label9.Text = "Payment :";
+            this.label9.Text = "Payment Type :";
             // 
             // label12
             // 
@@ -343,6 +343,7 @@
             // dtTanggal
             // 
             this.dtTanggal.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.dtTanggal.CalendarMonthBackground = System.Drawing.SystemColors.Info;
             this.dtTanggal.Location = new System.Drawing.Point(580, 89);
             this.dtTanggal.Name = "dtTanggal";
             this.dtTanggal.Size = new System.Drawing.Size(254, 20);
@@ -358,6 +359,7 @@
             // txtNoInvoice
             // 
             this.txtNoInvoice.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtNoInvoice.BackColor = System.Drawing.SystemColors.Info;
             this.txtNoInvoice.Location = new System.Drawing.Point(580, 66);
             this.txtNoInvoice.Name = "txtNoInvoice";
             this.txtNoInvoice.Size = new System.Drawing.Size(254, 20);
@@ -401,8 +403,10 @@
             // 
             // txtTel
             // 
+            this.txtTel.BackColor = System.Drawing.SystemColors.Info;
             this.txtTel.Location = new System.Drawing.Point(112, 138);
             this.txtTel.Name = "txtTel";
+            this.txtTel.ReadOnly = true;
             this.txtTel.Size = new System.Drawing.Size(227, 20);
             this.txtTel.TabIndex = 54;
             // 
@@ -433,15 +437,19 @@
             // 
             // txtAddress
             // 
+            this.txtAddress.BackColor = System.Drawing.SystemColors.Info;
             this.txtAddress.Location = new System.Drawing.Point(112, 114);
             this.txtAddress.Name = "txtAddress";
+            this.txtAddress.ReadOnly = true;
             this.txtAddress.Size = new System.Drawing.Size(227, 20);
             this.txtAddress.TabIndex = 50;
             // 
             // txtCompany
             // 
+            this.txtCompany.BackColor = System.Drawing.SystemColors.Info;
             this.txtCompany.Location = new System.Drawing.Point(112, 90);
             this.txtCompany.Name = "txtCompany";
+            this.txtCompany.ReadOnly = true;
             this.txtCompany.Size = new System.Drawing.Size(227, 20);
             this.txtCompany.TabIndex = 49;
             // 
@@ -722,6 +730,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.panel2);
             this.Name = "frmAccountReceivable";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Invoice Account Receivable";
             this.Load += new System.EventHandler(this.frmAccountReceivable_Load);
             ((System.ComponentModel.ISupportInitialize)(this.grid)).EndInit();

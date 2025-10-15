@@ -317,6 +317,12 @@
     <Compile Include="Transaction\frmAccountReceivableList.Designer.cs">
       <DependentUpon>frmAccountReceivableList.cs</DependentUpon>
     </Compile>
+    <Compile Include="Transaction\frmAccountReceivablePayment.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Transaction\frmAccountReceivablePayment.Designer.cs">
+      <DependentUpon>frmAccountReceivablePayment.cs</DependentUpon>
+    </Compile>
     <Compile Include="Transaction\frmCatalogPriceList.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -617,6 +623,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Transaction\frmAccountReceivableList.resx">
       <DependentUpon>frmAccountReceivableList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Transaction\frmAccountReceivablePayment.resx">
+      <DependentUpon>frmAccountReceivablePayment.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Transaction\frmCatalogPriceList.resx">
       <DependentUpon>frmCatalogPriceList.cs</DependentUpon>

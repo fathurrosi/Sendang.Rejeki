@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using LogicLayer;
 using DataObject;
 using DataLayer;
+using Newtonsoft.Json;
 
 namespace Sendang.Rejeki.Transaction
 {
@@ -58,23 +59,47 @@ namespace Sendang.Rejeki.Transaction
         }
 
 
+        private void grid_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex == 5) 
+            {
+                var row = grid.Rows[e.RowIndex];
+                var f = new frmAccountReceivablePayment();
+                f.InvoceNo = string.Format("{0}", grid["colInvoiceNo", e.RowIndex].Value);
+                if (f.ShowDialog() == System.Windows.Forms.DialogResult.OK) {
+                    Search();
+                }
+            }
+        }
+
+        private void grid_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            if (e.ColumnIndex == 5)
+            {
+                var cell = grid.Rows[e.RowIndex].Cells[e.ColumnIndex];
+                cell.Value = "Update Pembayaran";
+            }
+        }
+
         public void Delete()
         {
-            //if (grid.CurrentRow == null) return;
-            //int Row = grid.CurrentRow.Index;
-            //DialogResult dialogResult = MessageBox.Show("Are you sure want to delete this?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            //if (dialogResult == System.Windows.Forms.DialogResult.Yes)
-            //{
-            //    int ID = 0;
-            //    int.TryParse(grid["Code", Row].Value.ToString(), out ID);
-            //    Catalog item = CatalogItem.GetByID(ID);
-            //    int result = CatalogItem.Delete(ID);
-            //    if (result > 0)
-            //    {
-            //        Log.Delete(JsonConvert.SerializeObject(item));
-            //        Search();
-            //    }
-            //}
+            if (grid.CurrentRow == null) return;
+            int Row = grid.CurrentRow.Index;
+            DialogResult dialogResult = MessageBox.Show("Are you sure want to delete this?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (dialogResult == System.Windows.Forms.DialogResult.Yes)
+            {
+                string invoiceCode = string.Format("{0}", grid["colInvoiceNo", Row].Value);
+                Invoice item = InvoiceItem.GetOptionsByKey(invoiceCode);
+                if (item != null)
+                {
+                    int result = InvoiceItem.Delete(item.InvoiceNo);
+                    if (result > 0)
+                    {
+                        Log.Delete(JsonConvert.SerializeObject(item));
+                        Search();
+                    }
+                }
+            }
         }
 
 

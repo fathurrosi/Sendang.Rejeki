@@ -78,16 +78,29 @@ namespace Sendang.Rejeki.Transaction
             if (item != null)
             {
                 cboBuyer.SelectedValue = item.CustomerID;
+                cboBuyer.Enabled = false;
                 txtNoInvoice.Text = item.InvoiceNo;
                 DateTime? dueDate = item.DueDate;
                 if (dueDate.HasValue) dtDueDate.Value = dueDate.Value;
                 txtTotalPayment.Text = string.Format("Rp. {0:N0}", item.Paid);
                 txtTotal.Text = string.Format("Rp. {0:N0}", item.Total);
 
-                InvoiceDetail detail = new InvoiceDetail();
-                detail.CatalogName = "Total";
-                detail.TotalAmount = string.Format("Rp. {0:N0}", item.TotalDetail);
-                item.Details.Add(detail);
+                cboTrade.SelectedValue = item.Tradeterm;
+                cboShipment.SelectedValue = item.Shipment;
+                cboPayment.SelectedValue = item.Payment;
+                dtTanggal.Value = item.InvoiceDate;
+                txtTo.Text = item.To;
+                txtRemarks.Text = item.Remark;
+                txtDelivery.Text = item.Delivery;
+                txtAttn.Text = item.Attn;
+
+                if (item.Details != null && item.Details.Count > 0)
+                {
+                    InvoiceDetail detail = new InvoiceDetail();
+                    detail.CatalogName = "Total";
+                    detail.TotalAmount = string.Format("Rp. {0:N0}", item.TotalDetail);
+                    item.Details.Add(detail);
+                }
                 grid.DataSource = item.Details;
             }
         }
@@ -149,23 +162,18 @@ namespace Sendang.Rejeki.Transaction
         }
 
 
-        public bool IsValid()
-        {
-            if (cboBuyer.SelectedIndex == -1)
-            {
-                Utilities.ShowValidation("Buyer tidak boleh kosong");
-                cboBuyer.Focus();
-                return false;
-            }
-            return true;
-        }
-
+     
         private void btnPrint_Click(object sender, EventArgs e)
         {
             if (!IsValid())
             {
                 return;
             }
+
+            DataObject.Menu menuItem = DataLayer.MenuItem.GetMenuByCode("cst_invoice_list");
+            DialogResult dialog = Utilities.Confirmation(string.Format("Are you sure you want to print and save this invoice to your menu \"{0}\"?", menuItem == null ? "Invoice List" : menuItem.Name));
+            if (dialog != System.Windows.Forms.DialogResult.Yes)
+                return;
 
             Customer cust = (Customer)cboBuyer.SelectedItem;
             Invoice item = new Invoice();
@@ -178,7 +186,7 @@ namespace Sendang.Rejeki.Transaction
             item.InvoiceNo = InvoceNo;
             item.Remark = txtRemarks.Text;
             item.Shipment = string.Format("{0}", cboShipment.SelectedValue);
-            item.Status = "";
+            item.Status = "IS001"; // belom dibayar
             item.To = txtTo.Text;
             item.CreatedBy = Utilities.Username;
             if (NewInvoiceDetails.Count > 0)
@@ -192,18 +200,11 @@ namespace Sendang.Rejeki.Transaction
                                   ).Where(t => t.TotalPayment > 0).Distinct().ToList();
 
             if (totalPayment.Count > 0)
-            {
                 item.Paid = totalPayment.Sum(t => t.TotalPayment);
-            }
-            else
-            {
-                item.Paid = 0;
-            }
+            else item.Paid = 0;
 
             item.Total = NewInvoiceDetails.Sum(t => t.Amount) - totalPayment.Sum(t => t.TotalPayment);
             btnPrint.Enabled = true;
-            //btnSave.Enabled = true;
-
             List<InvoiceDetail> details = new List<InvoiceDetail>();
             foreach (var newDetail in NewInvoiceDetails)
             {
@@ -213,28 +214,57 @@ namespace Sendang.Rejeki.Transaction
                 detailItem.CatalogID = newDetail.CatalogId;
                 detailItem.Price = newDetail.Price;
                 detailItem.Quantity = newDetail.Quantity;
-                detailItem.Sequence = newDetail.RowIndex;
+                detailItem.RowIndex = newDetail.RowIndex;
                 detailItem.TotalPrice = newDetail.Amount;
                 detailItem.TransactionID = newDetail.TransactionID;
                 detailItem.PrintDate = newDetail.PrintDate;
                 detailItem.NoNota = newDetail.NoNota;
+                detailItem.Delivery = newDetail.Delivery;
                 details.Add(detailItem);
             }
 
-            //var temps = details.Where(t => t.CatalogName != "Total").ToList();
-            Invoice result = InvoiceItem.Insert(item, details);
+            Invoice result = null;
+            if (string.Format("{0}", InvoceNo).Length > 0)
+            {
+                result = InvoiceItem.Update(item);
+            }
+            else
+            {
+                result = InvoiceItem.Insert(item, details);
+            }
             if (result != null)
             {
+                btnCancel.Text = "Close";
                 if (string.Format("{0}", InvoceNo).Length > 0)
                     Log.Update(string.Format("{0}-{1}", this.Text, JsonConvert.SerializeObject(result)));
                 else Log.Insert(string.Format("{0}-{1}", this.Text, JsonConvert.SerializeObject(result)));
                 this.DialogResult = System.Windows.Forms.DialogResult.OK;
             }
         }
+        public bool IsValid()
+        {
+            if (cboBuyer.SelectedIndex == -1)
+            {
+                Utilities.ShowValidation("Buyer tidak boleh kosong");
+                cboBuyer.Focus();
+                return false;
+            }
+            if (dtDueDate.Value <= new DateTime(1900, 1, 1))
+            {
+
+                Utilities.ShowValidation("Due Date harus valid");
+                dtDueDate.Focus();
+                return false;
+            }
+            return true;
+        }
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
-            this.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            if (this.Modal)
+                this.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            else
+                this.Close();
         }
     }
 }

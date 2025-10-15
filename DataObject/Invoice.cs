@@ -33,6 +33,7 @@ namespace DataObject
 
         //[Column("Status",50)] 
         public string Status { get; set; }
+        public string StatusDesc { get; set; }
 
         //[Column("Delivery",1000)] 
         public string Delivery { get; set; }
@@ -111,6 +112,8 @@ namespace DataObject
             helper.DueDate = Convert.ToDateTime(reader["DueDate"]);
             helper.Total = Convert.ToDecimal(reader["Total"]);
             helper.Status = string.Format("{0}", reader["Status"]);
+            helper.StatusDesc = string.Format("{0}", reader["StatusDesc"]);
+            
             helper.Delivery = string.Format("{0}", reader["Delivery"]);
             helper.Remark = string.Format("{0}", reader["Remark"]);
             helper.Attn = string.Format("{0}", reader["Attn"]);
@@ -118,9 +121,9 @@ namespace DataObject
             helper.To = string.Format("{0}", reader["To"]);
             helper.Tradeterm = string.Format("{0}", reader["Tradeterm"]);
             helper.Payment = string.Format("{0}", reader["Payment"]);
-            helper.Paid = (reader["Paid"] != null) ? 0 : Convert.ToDecimal(reader["Paid"]);
-            helper.TotalDetail = (reader["TotalDetail"] != null) ? 0 : Convert.ToDecimal(reader["TotalDetail"]);
-            helper.CreatedDate = (reader["CreatedDate"] != null) ? new DateTime(1900, 1, 1) : Convert.ToDateTime(reader["CreatedDate"]);
+            helper.Paid = (reader["Paid"] is System.DBNull) ? 0 : Convert.ToDecimal(reader["Paid"]);
+            helper.TotalDetail = (reader["TotalDetail"] is System.DBNull) ? 0 : Convert.ToDecimal(reader["TotalDetail"]);
+            helper.CreatedDate = (reader["CreatedDate"] is System.DBNull) ? new DateTime(1900, 1, 1) : Convert.ToDateTime(reader["CreatedDate"]);
             helper.CreatedBy = reader["CreatedBy"].ToString();
             helper.ModifiedDate = (reader["ModifiedDate"] is System.DBNull) ? (DateTime?)null : Convert.ToDateTime(reader["ModifiedDate"]);
             helper.ModifiedBy = reader["ModifiedBy"].ToString();

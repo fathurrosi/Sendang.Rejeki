@@ -18,7 +18,7 @@ using System.Drawing.Printing;
 
 namespace Sendang.Rejeki.Transaction
 {
-    //    public partial class frmPos : Form
+    //public partial class frmPos : Form
     public partial class frmPos : SendangRejekiForm
     {
         public class PosHelper

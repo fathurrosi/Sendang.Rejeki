@@ -39,7 +39,7 @@ namespace DataObject
         public decimal coli { get; set; }
 
         //[Column("Sequence")]
-        public Int32? Sequence { get; set; }
+        public Int32? RowIndex { get; set; }
 
         //[Column("PrintDate")]
         public DateTime? PrintDate { get; set; }
@@ -51,6 +51,11 @@ namespace DataObject
         public string CreatedBy { get; set; }
         public DateTime? ModifiedDate { get; set; }
         public string ModifiedBy { get; set; }
+
+        public string Delivery { get; set; }
+        public string UnitPrice { get; set; }
+        public string UnitQty { get; set; }
+
         public List<InvoiceDetail> DatasetToDto(System.Data.DataSet ds)
         {
             List<InvoiceDetail> results = new List<InvoiceDetail>();
@@ -69,7 +74,7 @@ namespace DataObject
                     helper.Quantity = (dr["Quantity"] != null) ? Convert.ToDecimal(dr["Quantity"]) : 0;
                     helper.TotalPrice = (dr["TotalPrice"] != null) ? Convert.ToDecimal(dr["TotalPrice"]) : 0;
                     helper.coli = (dr["coli"] != null) ? Convert.ToDecimal(dr["coli"]) : 0;
-                    helper.Sequence = Convert.ToInt32(dr["Sequence"]);
+                    helper.RowIndex = Convert.ToInt32(dr["RowIndex"]);
                     helper.PrintDate = (dr["PrintDate"] != null) ? Convert.ToDateTime(dr["PrintDate"]) : new DateTime(1900, 1, 1);
                     helper.CatalogName = string.Format("{0}", dr["CatalogName"]);
                     helper.TotalAmount = string.Format("{0}", dr["TotalAmount"]);
@@ -93,7 +98,7 @@ namespace DataObject
             helper.Quantity = (reader["Quantity"] is System.DBNull) ? 0 : Convert.ToDecimal(reader["Quantity"]);
             helper.TotalPrice = (reader["TotalPrice"] is System.DBNull) ? 0 : Convert.ToDecimal(reader["TotalPrice"]);
             helper.coli = (reader["coli"] is System.DBNull) ? 0 : Convert.ToDecimal(reader["coli"]);
-            helper.Sequence = Convert.ToInt32(reader["Sequence"]);
+            helper.RowIndex = Convert.ToInt32(reader["RowIndex"]);
             helper.PrintDate = (reader["PrintDate"] is System.DBNull) ? (DateTime?)null : Convert.ToDateTime(reader["PrintDate"]);
             helper.NoNota = string.Format("{0}", reader["NoNota"]);
             helper.CatalogName = string.Format("{0}", reader["CatalogName"]);
@@ -102,6 +107,10 @@ namespace DataObject
             helper.CreatedBy = reader["CreatedBy"].ToString();
             helper.ModifiedDate = (reader["ModifiedDate"] is System.DBNull) ? (DateTime?)null : Convert.ToDateTime(reader["ModifiedDate"]);
             helper.ModifiedBy = reader["ModifiedBy"].ToString();
+
+            helper.UnitPrice = string.Format("{0}", reader["UnitPrice"]);
+            helper.UnitQty = string.Format("{0}", reader["UnitQty"]);
+            helper.Delivery = string.Format("{0}", reader["Delivery"]);
             return helper;
         }
 
