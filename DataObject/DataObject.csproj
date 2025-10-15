@@ -59,6 +59,7 @@
     <Compile Include="GrossProfit.cs" />
     <Compile Include="Invoice.cs" />
     <Compile Include="InvoiceDetail.cs" />
+    <Compile Include="InvoicePayment.cs" />
     <Compile Include="Log.cs" />
     <Compile Include="Menu.cs" />
     <Compile Include="Options.cs" />

@@ -171,7 +171,7 @@ namespace Sendang.Rejeki.Transaction
             }
 
             DataObject.Menu menuItem = DataLayer.MenuItem.GetMenuByCode("cst_invoice_list");
-            DialogResult dialog = Utilities.Confirmation(string.Format("Are you sure you want to print and save this invoice to your menu \"{0}\"?", menuItem == null ? "Invoice List" : menuItem.Name));
+            DialogResult dialog = Utilities.Confirmation(string.Format("Are you sure you want to print and save this invoice to your \"{0}\"?", menuItem == null ? "Invoice List" : menuItem.Name));
             if (dialog != System.Windows.Forms.DialogResult.Yes)
                 return;
 

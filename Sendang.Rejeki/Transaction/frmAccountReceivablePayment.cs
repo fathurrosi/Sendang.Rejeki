@@ -64,7 +64,28 @@ namespace Sendang.Rejeki.Transaction
         }
         public void Save()
         {
-            throw new NotImplementedException();
+            if (!IsValid()) return;
+
+            DialogResult dialog = Utilities.Confirmation(string.Format("Are you sure you want to update this invoice payment?\nUpdating this will impact to sales payment"));
+            if (dialog != System.Windows.Forms.DialogResult.Yes)
+                return;
+
+            decimal paymentAmount = 0;
+            decimal totalPayment = 0;
+            decimal totalReturn = 0;
+            decimal.TryParse(txtPaymentAmount.Text, out paymentAmount);
+
+            decimal.TryParse(txtTotalPaidInfo.Text, out totalPayment);
+            decimal.TryParse(txtTotalReturnInfo.Text, out totalReturn);
+
+            var result = InvoicePaymentItem.UpdateInvoicePayment(txtNoInvoice.Text, totalPayment, totalReturn, paymentAmount, Utilities.Username);
+            if (result != null)
+            {
+                if (this.Modal)
+                    this.DialogResult = System.Windows.Forms.DialogResult.OK;
+                else
+                    this.Close();
+            }
         }
 
         public void Cancel()
@@ -96,6 +117,14 @@ namespace Sendang.Rejeki.Transaction
                 txtRemarks.Text = item.Remark;
                 txtDelivery.Text = item.Delivery;
                 txtAttn.Text = item.Attn;
+
+                InvoicePayment paymentItem = InvoicePaymentItem.GetByInvoiceNo(invoiceNo);
+                if (paymentItem != null)
+                {
+                    txtTotalPaidInfo.Text = Utilities.ToString(paymentItem.TotalPayment);
+                    txtTotalReturnInfo.Text = Utilities.ToString(paymentItem.TotalReturn);
+                    txtPaymentAmount.Text = Utilities.ToString(paymentItem.PaymentAmount);
+                }
             }
         }
 
@@ -106,7 +135,6 @@ namespace Sendang.Rejeki.Transaction
             txtAddress.Text = cust != null ? cust.Address : string.Empty;
             txtCompany.Text = cust.FullName;
             txtTel.Text = cust.Phone;
-
         }
 
 
@@ -121,7 +149,19 @@ namespace Sendang.Rejeki.Transaction
             if (txtPaymentAmount.Text.Trim().Length == 0)
             {
                 Utilities.ShowValidation("Payment Amount tidak boleh kosong");
-                dtDueDate.Focus();
+                txtPaymentAmount.Focus();
+                return false;
+            }
+
+            decimal paymentAmount = 0;
+            decimal totalToPay = 0;
+            decimal.TryParse(txtPaymentAmount.Text, out paymentAmount);
+            decimal.TryParse(txtTotal.Text, out totalToPay);
+
+            if (paymentAmount < totalToPay)
+            {
+                Utilities.ShowValidation("Payment Amount harus sejumlah total invoice");
+                txtPaymentAmount.Focus();
                 return false;
             }
             return true;

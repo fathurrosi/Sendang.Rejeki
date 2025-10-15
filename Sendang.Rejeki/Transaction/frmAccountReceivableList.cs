@@ -15,6 +15,9 @@ namespace Sendang.Rejeki.Transaction
 {
     public partial class frmAccountReceivableList : Form, IMasterHeader, IMasterFooter
     {
+        const string InvoiceStatus_BelumDibayar = "IS001";//	Belum Dibayar	InvoiceStatus
+        const string InvoiceStatus_LUNAS = "IS002";//	Sudah Dibayar/LUNAS	InvoiceStatus
+
         public frmAccountReceivableList()
         {
             InitializeComponent();
@@ -61,13 +64,23 @@ namespace Sendang.Rejeki.Transaction
 
         private void grid_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.ColumnIndex == 5) 
+            if (e.ColumnIndex == 5)
             {
                 var row = grid.Rows[e.RowIndex];
                 var f = new frmAccountReceivablePayment();
                 f.InvoceNo = string.Format("{0}", grid["colInvoiceNo", e.RowIndex].Value);
-                if (f.ShowDialog() == System.Windows.Forms.DialogResult.OK) {
-                    Search();
+                var existingItem = InvoiceItem.GetOptionsByKey(f.InvoceNo);
+                if (existingItem.Status == InvoiceStatus_LUNAS)
+                {
+                    Utilities.ShowInformation("Invoice ini sudah lunas!");
+                    return;
+                }
+                else
+                {
+                    if (f.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                    {
+                        Search();
+                    }
                 }
             }
         }
@@ -89,16 +102,24 @@ namespace Sendang.Rejeki.Transaction
             if (dialogResult == System.Windows.Forms.DialogResult.Yes)
             {
                 string invoiceCode = string.Format("{0}", grid["colInvoiceNo", Row].Value);
-                Invoice item = InvoiceItem.GetOptionsByKey(invoiceCode);
-                if (item != null)
+                try
                 {
-                    int result = InvoiceItem.Delete(item.InvoiceNo);
-                    if (result > 0)
+                    Invoice item = InvoiceItem.GetOptionsByKey(invoiceCode);
+                    if (item != null)
                     {
-                        Log.Delete(JsonConvert.SerializeObject(item));
-                        Search();
+                        int result = InvoiceItem.Delete(item.InvoiceNo);
+                        if (result > 0)
+                        {
+                            Log.Delete(JsonConvert.SerializeObject(item));
+                            Search();
+                        }
                     }
                 }
+                catch (Exception)
+                {
+                    Utilities.ShowInformation(string.Format("Invoice dengan no.\"{0}\" tidak bisa di hapus karena sudah melakukan payment", invoiceCode));
+                }
+               
             }
         }
 

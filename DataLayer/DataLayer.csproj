@@ -49,6 +49,7 @@
     <Compile Include="HPPItem.cs" />
     <Compile Include="InvoiceDetailItem.cs" />
     <Compile Include="InvoiceItem.cs" />
+    <Compile Include="InvoicePaymentItem.cs" />
     <Compile Include="LogItem.cs" />
     <Compile Include="MenuItem.cs" />
     <Compile Include="OptionItem.cs" />
