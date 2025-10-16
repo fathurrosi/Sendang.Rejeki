@@ -20,23 +20,26 @@ namespace Sendang.Rejeki.Transaction
         }
 
         public string InvoceNo { get; set; }
-        //public decimal TotalPrice { get; set; }
+
+        private List<Options> paymentList;
+        private List<Options> tradeTermsList;
+        private List<Options> shipmentList;
 
         private void frmAccountReceivablePayment_Load(object sender, EventArgs e)
         {
-            List<Options> paymentList = OptionItem.GetOptionsByName("Payment");
+            paymentList = OptionItem.GetOptionsByName("Payment");
             paymentList.Insert(0, new Options() { ValueMember = "", DisplayMember = "--Pilih Payment--", Name = "Payment" });
             cboPayment.DataSource = paymentList;
             cboPayment.ValueMember = "ValueMember";
             cboPayment.DisplayMember = "DisplayMember";
 
-            List<Options> tradeTermsList = OptionItem.GetOptionsByName("TradeTerms");
+            tradeTermsList = OptionItem.GetOptionsByName("TradeTerms");
             tradeTermsList.Insert(0, new Options() { ValueMember = "", DisplayMember = "--Pilih Trade Terms--", Name = "TradeTerms" });
             cboTrade.DataSource = tradeTermsList;
             cboTrade.ValueMember = "ValueMember";
             cboTrade.DisplayMember = "DisplayMember";
 
-            List<Options> shipmentList = OptionItem.GetOptionsByName("Shipment");
+            shipmentList = OptionItem.GetOptionsByName("Shipment");
             shipmentList.Insert(0, new Options() { ValueMember = "", DisplayMember = "--Pilih Shipment--", Name = "Shipment" });
             cboShipment.DataSource = shipmentList;
             cboShipment.ValueMember = "ValueMember";
@@ -108,6 +111,15 @@ namespace Sendang.Rejeki.Transaction
                 if (dueDate.HasValue) dtDueDate.Value = dueDate.Value;
                 txtTotal.Text = Utilities.ToString(item.Total);
                 //TotalPrice = item.Total;
+
+                if (shipmentList.Where(t => t.ValueMember == item.Shipment).Count() == 0)
+                    shipmentList.Add(new Options() { ValueMember = item.Shipment, DisplayMember = item.Shipment, Name = "Shipment" });
+
+                if (paymentList.Where(t => t.ValueMember == item.Payment).Count() == 0)
+                    paymentList.Add(new Options() { ValueMember = item.Payment, DisplayMember = item.Payment, Name = "Payment" });
+
+                if (tradeTermsList.Where(t => t.ValueMember == item.Tradeterm).Count() == 0)
+                    paymentList.Add(new Options() { ValueMember = item.Tradeterm, DisplayMember = item.Tradeterm, Name = "TradeTerms" });
 
                 cboTrade.SelectedValue = item.Tradeterm;
                 cboShipment.SelectedValue = item.Shipment;

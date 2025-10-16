@@ -109,6 +109,7 @@
             this.colInvoiceNo.HeaderText = "Invoice No";
             this.colInvoiceNo.Name = "colInvoiceNo";
             this.colInvoiceNo.ReadOnly = true;
+            this.colInvoiceNo.Width = 120;
             // 
             // colCustomerName
             // 

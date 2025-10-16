@@ -24,31 +24,41 @@ namespace Sendang.Rejeki.Transaction
             NewInvoiceDetails = new List<CstmInvoiceDetail>();
         }
 
+        private List<Options> paymentList;
+        private List<Options> tradeTermsList;
+        private List<Options> shipmentList;
+
+        const string InvoiceStatus_BelumDibayar = "IS001";//	Belum Dibayar	InvoiceStatus
+        const string InvoiceStatus_LUNAS = "IS002";//	Sudah Dibayar/LUNAS	InvoiceStatus
         private void frmAccountReceivable_Load(object sender, EventArgs e)
         {
-            List<Options> paymentList = OptionItem.GetOptionsByName("Payment");
-            paymentList.Insert(0, new Options() { ValueMember = "", DisplayMember = "--Pilih Payment--", Name = "Payment" });
-            cboPayment.DataSource = paymentList;
-            cboPayment.ValueMember = "ValueMember";
-            cboPayment.DisplayMember = "DisplayMember";
-
-            List<Options> tradeTermsList = OptionItem.GetOptionsByName("TradeTerms");
-            tradeTermsList.Insert(0, new Options() { ValueMember = "", DisplayMember = "--Pilih Trade Terms--", Name = "TradeTerms" });
-            cboTrade.DataSource = tradeTermsList;
-            cboTrade.ValueMember = "ValueMember";
-            cboTrade.DisplayMember = "DisplayMember";
-
-            List<Options> shipmentList = OptionItem.GetOptionsByName("Shipment");
-            shipmentList.Insert(0, new Options() { ValueMember = "", DisplayMember = "--Pilih Shipment--", Name = "Shipment" });
-            cboShipment.DataSource = shipmentList;
-            cboShipment.ValueMember = "ValueMember";
-            cboShipment.DisplayMember = "DisplayMember";
-
             List<Customer> list = CustomerItem.GetAll();
             list.Insert(0, new Customer(0, "", "--Pilih Buyer--"));
             cboBuyer.DataSource = list;
             cboBuyer.DisplayMember = "Code";
             cboBuyer.ValueMember = "ID";
+
+            paymentList = OptionItem.GetOptionsByName("Payment");
+            paymentList.Insert(0, new Options() { ValueMember = "", DisplayMember = "--Pilih Payment--", Name = "Payment" });
+
+            tradeTermsList = OptionItem.GetOptionsByName("TradeTerms");
+            tradeTermsList.Insert(0, new Options() { ValueMember = "", DisplayMember = "--Pilih Trade Terms--", Name = "TradeTerms" });
+
+            shipmentList = OptionItem.GetOptionsByName("Shipment");
+            shipmentList.Insert(0, new Options() { ValueMember = "", DisplayMember = "--Pilih Shipment--", Name = "Shipment" });
+
+            cboPayment.DataSource = paymentList;
+            cboPayment.ValueMember = "ValueMember";
+            cboPayment.DisplayMember = "DisplayMember";
+
+            cboTrade.DataSource = tradeTermsList;
+            cboTrade.ValueMember = "ValueMember";
+            cboTrade.DisplayMember = "DisplayMember";
+
+            cboShipment.DataSource = shipmentList;
+            cboShipment.ValueMember = "ValueMember";
+            cboShipment.DisplayMember = "DisplayMember";
+
 
             cboBuyer.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
             cboBuyer.AutoCompleteSource = AutoCompleteSource.CustomSource;
@@ -85,6 +95,32 @@ namespace Sendang.Rejeki.Transaction
                 txtTotalPayment.Text = string.Format("Rp. {0:N0}", item.Paid);
                 txtTotal.Text = string.Format("Rp. {0:N0}", item.Total);
 
+                if (shipmentList.Where(t => t.ValueMember == item.Shipment).Count() == 0)
+                    shipmentList.Add(new Options() { ValueMember = item.Shipment, DisplayMember = item.Shipment, Name = "Shipment" });
+
+                if (paymentList.Where(t => t.ValueMember == item.Payment).Count() == 0)
+                    paymentList.Add(new Options() { ValueMember = item.Payment, DisplayMember = item.Payment, Name = "Payment" });
+
+                if (tradeTermsList.Where(t => t.ValueMember == item.Tradeterm).Count() == 0)
+                    tradeTermsList.Add(new Options() { ValueMember = item.Tradeterm, DisplayMember = item.Tradeterm, Name = "TradeTerms" });
+
+                cboPayment.DataSource = null;
+                cboTrade.DataSource = null;
+                cboShipment.DataSource = null;
+
+                cboPayment.DataSource = paymentList;
+                cboPayment.ValueMember = "ValueMember";
+                cboPayment.DisplayMember = "DisplayMember";
+
+                cboTrade.DataSource = tradeTermsList;
+                cboTrade.ValueMember = "ValueMember";
+                cboTrade.DisplayMember = "DisplayMember";
+
+                cboShipment.DataSource = shipmentList;
+                cboShipment.ValueMember = "ValueMember";
+                cboShipment.DisplayMember = "DisplayMember";
+
+
                 cboTrade.SelectedValue = item.Tradeterm;
                 cboShipment.SelectedValue = item.Shipment;
                 cboPayment.SelectedValue = item.Payment;
@@ -94,6 +130,9 @@ namespace Sendang.Rejeki.Transaction
                 txtDelivery.Text = item.Delivery;
                 txtAttn.Text = item.Attn;
 
+                txtTotalPayment.Text = string.Format("Rp. {0:N0}", item.Paid);
+                txtTotal.Text = string.Format("Rp. {0:N0}", item.Total);
+
                 if (item.Details != null && item.Details.Count > 0)
                 {
                     InvoiceDetail detail = new InvoiceDetail();
@@ -102,6 +141,13 @@ namespace Sendang.Rejeki.Transaction
                     item.Details.Add(detail);
                 }
                 grid.DataSource = item.Details;
+
+                if (item.Status == InvoiceStatus_LUNAS)
+                {
+                    btnPrint.Enabled = false;
+                    btnCancel.Text = "Close";
+                }
+
             }
         }
 
@@ -162,7 +208,7 @@ namespace Sendang.Rejeki.Transaction
         }
 
 
-     
+
         private void btnPrint_Click(object sender, EventArgs e)
         {
             if (!IsValid())
@@ -177,7 +223,6 @@ namespace Sendang.Rejeki.Transaction
 
             Customer cust = (Customer)cboBuyer.SelectedItem;
             Invoice item = new Invoice();
-            item.Payment = string.Format("{0}", cboPayment.SelectedValue);
             item.Attn = txtAttn.Text;
             item.InvoiceDate = dtTanggal.Value;
             item.DueDate = dtDueDate.Value;
@@ -185,43 +230,12 @@ namespace Sendang.Rejeki.Transaction
             item.Delivery = txtDelivery.Text;
             item.InvoiceNo = InvoceNo;
             item.Remark = txtRemarks.Text;
-            item.Shipment = string.Format("{0}", cboShipment.SelectedValue);
-            item.Status = "IS001"; // belom dibayar
+            item.Payment = string.Format("{0}", cboPayment.SelectedValue != null ? cboPayment.SelectedValue : cboPayment.Text);
+            item.Shipment = string.Format("{0}", cboShipment.SelectedValue != null ? cboShipment.SelectedValue : cboShipment.Text);
+            item.Tradeterm = string.Format("{0}", cboTrade.SelectedValue != null ? cboTrade.SelectedValue : cboTrade.Text);
             item.To = txtTo.Text;
             item.CreatedBy = Utilities.Username;
-            if (NewInvoiceDetails.Count > 0)
-            {
-                item.TotalDetail = NewInvoiceDetails.Sum(t => t.Amount);
-            }
-            item.Tradeterm = string.Format("{0}", cboTrade.SelectedValue);
-
-            var totalPayment = (from t in NewInvoiceDetails
-                                select new { t.TotalPayment, t.TransactionID }
-                                  ).Where(t => t.TotalPayment > 0).Distinct().ToList();
-
-            if (totalPayment.Count > 0)
-                item.Paid = totalPayment.Sum(t => t.TotalPayment);
-            else item.Paid = 0;
-
-            item.Total = NewInvoiceDetails.Sum(t => t.Amount) - totalPayment.Sum(t => t.TotalPayment);
-            btnPrint.Enabled = true;
-            List<InvoiceDetail> details = new List<InvoiceDetail>();
-            foreach (var newDetail in NewInvoiceDetails)
-            {
-                if (newDetail.CatalogName.ToLower() == "Total".ToLower()) continue;
-                InvoiceDetail detailItem = new InvoiceDetail();
-                detailItem.InvoiceID = item.InvoiceID;
-                detailItem.CatalogID = newDetail.CatalogId;
-                detailItem.Price = newDetail.Price;
-                detailItem.Quantity = newDetail.Quantity;
-                detailItem.RowIndex = newDetail.RowIndex;
-                detailItem.TotalPrice = newDetail.Amount;
-                detailItem.TransactionID = newDetail.TransactionID;
-                detailItem.PrintDate = newDetail.PrintDate;
-                detailItem.NoNota = newDetail.NoNota;
-                detailItem.Delivery = newDetail.Delivery;
-                details.Add(detailItem);
-            }
+            btnPrint.Enabled = false;
 
             Invoice result = null;
             if (string.Format("{0}", InvoceNo).Length > 0)
@@ -230,6 +244,39 @@ namespace Sendang.Rejeki.Transaction
             }
             else
             {
+                if (NewInvoiceDetails.Count > 0)
+                {
+                    item.TotalDetail = NewInvoiceDetails.Sum(t => t.Amount);
+                }
+
+                var totalPayment = (from t in NewInvoiceDetails
+                                    select new { t.TotalPayment, t.TransactionID }
+                                      ).Where(t => t.TotalPayment > 0).Distinct().ToList();
+
+                if (totalPayment.Count > 0)
+                    item.Paid = totalPayment.Sum(t => t.TotalPayment);
+                else item.Paid = 0;
+
+                item.Total = NewInvoiceDetails.Sum(t => t.Amount) - totalPayment.Sum(t => t.TotalPayment);
+                item.Status = "IS001"; // belom dibayar
+
+                List<InvoiceDetail> details = new List<InvoiceDetail>();
+                foreach (var newDetail in NewInvoiceDetails)
+                {
+                    if (newDetail.CatalogName.ToLower() == "Total".ToLower()) continue;
+                    InvoiceDetail detailItem = new InvoiceDetail();
+                    detailItem.InvoiceID = item.InvoiceID;
+                    detailItem.CatalogID = newDetail.CatalogId;
+                    detailItem.Price = newDetail.Price;
+                    detailItem.Quantity = newDetail.Quantity;
+                    detailItem.RowIndex = newDetail.RowIndex;
+                    detailItem.TotalPrice = newDetail.Amount;
+                    detailItem.TransactionID = newDetail.TransactionID;
+                    detailItem.PrintDate = newDetail.PrintDate;
+                    detailItem.NoNota = newDetail.NoNota;
+                    detailItem.Delivery = newDetail.Delivery;
+                    details.Add(detailItem);
+                }
                 result = InvoiceItem.Insert(item, details);
             }
             if (result != null)

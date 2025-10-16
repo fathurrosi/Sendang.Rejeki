@@ -96,8 +96,8 @@ namespace DataLayer
             context.CommandType = CommandType.StoredProcedure;
             context.AddParameter("@InvoiceNo", item.InvoiceNo);
             context.AddParameter("@DueDate", item.DueDate);
-            context.AddParameter("@Total", item.Total);
-            context.AddParameter("@Status", item.Status);
+            //context.AddParameter("@Total", item.Total);
+            //context.AddParameter("@Status", item.Status);
             context.AddParameter("@Delivery", item.Delivery);
             context.AddParameter("@Remark", item.Remark);
             context.AddParameter("@Attn", item.Attn);
