@@ -69,7 +69,7 @@ namespace Sendang.Rejeki.Transaction
         {
             if (!IsValid()) return;
 
-            DialogResult dialog = Utilities.Confirmation(string.Format("Are you sure you want to update this invoice payment?\nUpdating this will impact to sales payment"));
+            DialogResult dialog = Utilities.Confirmation(string.Format("Are you sure you want to update this invoice payment?\nUpdating this will impact to sales payment and can not be repeated"));
             if (dialog != System.Windows.Forms.DialogResult.Yes)
                 return;
 

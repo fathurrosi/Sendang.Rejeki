@@ -11,6 +11,9 @@ using DataLayer;
 using DataObject.Cstm;
 using LogicLayer;
 using Newtonsoft.Json;
+using Sendang.Rejeki.Report;
+using System.IO;
+using Microsoft.Reporting.WinForms;
 
 namespace Sendang.Rejeki.Transaction
 {
@@ -281,11 +284,37 @@ namespace Sendang.Rejeki.Transaction
             }
             if (result != null)
             {
-                btnCancel.Text = "Close";
                 if (string.Format("{0}", InvoceNo).Length > 0)
                     Log.Update(string.Format("{0}-{1}", this.Text, JsonConvert.SerializeObject(result)));
                 else Log.Insert(string.Format("{0}-{1}", this.Text, JsonConvert.SerializeObject(result)));
-                this.DialogResult = System.Windows.Forms.DialogResult.OK;
+                this.Hide();
+                frmReportViewer rptViewer = new frmReportViewer();
+                rptViewer.ReportName = "Invoice";
+                rptViewer.ReportPath = string.Format("{0}\\Report\\Invoice.rdlc", Directory.GetCurrentDirectory());
+                rptViewer.Icon = Properties.Resources.sendangrejeki32x32;
+                List<ReportParameter> parameters = new List<ReportParameter>();
+                parameters.Add(new ReportParameter("paramBuyerCode", string.Format("{0} ", result.CustomerCode), true));
+                parameters.Add(new ReportParameter("paramCompany", string.Format("{0} ", result.CustomerName), true));
+                parameters.Add(new ReportParameter("paramAddress", string.Format("{0} ", cust.Address), true));
+                parameters.Add(new ReportParameter("paramTel", string.Format("{0} ", cust.Phone), true));
+                parameters.Add(new ReportParameter("paramAttn", string.Format("{0} ", result.Attn), true));
+                parameters.Add(new ReportParameter("paramShipmentMethod", string.Format("{0} ", result.Shipment), true));
+                parameters.Add(new ReportParameter("paramTo", string.Format("{0} ", result.To), true));
+                parameters.Add(new ReportParameter("paramTradeTerms", string.Format("{0} ", result.Tradeterm), true));
+                parameters.Add(new ReportParameter("paramPayment", string.Format("{0} ", result.Payment), true));
+                parameters.Add(new ReportParameter("paramInvoiceNo", string.Format("{0} ", result.InvoiceNo), true));
+                parameters.Add(new ReportParameter("paramInvoiceDate", string.Format("{0:dd-MMM-yyyy}", result.InvoiceDate), true));
+                parameters.Add(new ReportParameter("paramDelivery", string.Format("{0} ", result.Delivery), true));
+                parameters.Add(new ReportParameter("paramRemark", string.Format("{0} ", result.Remark), true));
+                parameters.Add(new ReportParameter("paramDueDate", string.Format("{0:dd-MMM-yyyy}", result.DueDate), true));
+                rptViewer.Params = parameters;
+                rptViewer.DataSource = result.Details;
+                DialogResult reportDialog = rptViewer.ShowDialog();
+                if (reportDialog == System.Windows.Forms.DialogResult.Cancel)
+                {
+                    this.Close();
+                    this.DialogResult = System.Windows.Forms.DialogResult.OK;
+                }
             }
         }
         public bool IsValid()

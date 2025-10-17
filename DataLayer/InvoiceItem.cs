@@ -79,6 +79,7 @@ namespace DataLayer
                     ictx.CommitTransaction();
                 }
 
+                result.Details = InvoiceDetailItem.GetByInvoiceNo(result.InvoiceNo);
                 return result;
             }
             catch (Exception ex)
@@ -106,7 +107,13 @@ namespace DataLayer
             context.AddParameter("@Tradeterm", item.Tradeterm);
             context.AddParameter("@Payment", item.Payment);
             context.AddParameter("@CreatedBy", item.CreatedBy);
-            return DBUtil.ExecuteMapper<Invoice>(context, new Invoice()).FirstOrDefault();
+            Invoice result = DBUtil.ExecuteMapper<Invoice>(context, new Invoice()).FirstOrDefault();
+            if (result != null)
+            {
+                result.Details = InvoiceDetailItem.GetByInvoiceNo(result.InvoiceNo);
+            }
+
+            return result;
         }
 
         public static int UpdatePayment(Invoice item)

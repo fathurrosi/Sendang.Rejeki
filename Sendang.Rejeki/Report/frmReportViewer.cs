@@ -29,22 +29,32 @@ namespace Sendang.Rejeki.Report
         public string ReportText { get; set; }
         private void frmReportViewer_Load(object sender, EventArgs e)
         {
-            this.Text = string.Format("{0}", ReportText).Length > 0 ? ReportText : ReportName;
-            this.ClientSize = new System.Drawing.Size(950, 600);
+            try
+            {
 
-            // Set Processing Mode.
-            reportViewer.ProcessingMode = ProcessingMode.Local;
+                this.Text = string.Format("{0}", ReportText).Length > 0 ? ReportText : ReportName;
+                this.ClientSize = new System.Drawing.Size(950, 600);
 
-            // Set RDL file.
-            reportViewer.LocalReport.ReportPath = ReportPath;
-            BindingSource bindingSource = new BindingSource();
-            bindingSource.DataSource = DataSource;
-            ReportDataSource rptSource = new ReportDataSource(ReportName, bindingSource);
-            if (Params != null)
-                reportViewer.LocalReport.SetParameters(Params);
-            reportViewer.LocalReport.DataSources.Add(rptSource);
+                // Set Processing Mode.
+                reportViewer.ProcessingMode = ProcessingMode.Local;
 
-            this.reportViewer.RefreshReport();
+                // Set RDL file.
+                reportViewer.LocalReport.ReportPath = ReportPath;
+                BindingSource bindingSource = new BindingSource();
+                bindingSource.DataSource = DataSource;
+                ReportDataSource rptSource = new ReportDataSource(ReportName, bindingSource);
+                if (Params != null)
+                    reportViewer.LocalReport.SetParameters(Params);
+                reportViewer.LocalReport.DataSources.Add(rptSource);
+
+                this.reportViewer.RefreshReport();
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
         }
 
 
