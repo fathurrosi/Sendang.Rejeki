@@ -55,10 +55,11 @@ namespace Sendang.Rejeki.Control
             }
         }
 
+        public string SaveButtonText { get; set; }
+        public string CancelButtonText { get; set; }
 
         public ctlTransButton()
         {
-
             InitializeComponent();
         }
 
@@ -87,7 +88,13 @@ namespace Sendang.Rejeki.Control
 
         private void ctlTransButton_Load(object sender, EventArgs e)
         {
-#if(!DEBUG)
+            if (!string.IsNullOrEmpty(SaveButtonText))
+                btnSave.Text = SaveButtonText;
+
+            if (!string.IsNullOrEmpty(CancelButtonText))
+                btnCancel.Text = CancelButtonText;
+
+            //#if(!DEBUG)
             User user = Utilities.CurrentUser;
             List<int> roles = user.Roles.Select(t => t.ID).ToList();
             List<Previllage> previllages = PrevillageItem.GetAll();
@@ -120,21 +127,19 @@ namespace Sendang.Rejeki.Control
             }
             else if (allowCreate || allowUpdate)
             {
-                btnSave.Text = "Save";
+                btnSave.Text = string.IsNullOrEmpty(SaveButtonText) ? "Save" : SaveButtonText;
                 btnSave.Enabled = true;
             }
             else
             {
-                btnSave.Text = "Save";
+                btnSave.Text = string.IsNullOrEmpty(SaveButtonText) ? "Save" : SaveButtonText;
                 btnSave.Enabled = false;
                 btnCancel.Text = "Close";
             }
-#endif
-           
+            //#endif
+
         }
 
-        public string SaveButtonText { get; set; }
-        public string CancelButtonText { get; set; }
 
     }
 }

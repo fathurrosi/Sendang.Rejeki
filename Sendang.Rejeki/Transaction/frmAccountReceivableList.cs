@@ -42,6 +42,7 @@ namespace Sendang.Rejeki.Transaction
         {
             frmAccountReceivable f = new frmAccountReceivable();
             f.Tag = this.Tag;
+            f.WindowState = FormWindowState.Maximized;
             if (f.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 Search();
@@ -55,6 +56,7 @@ namespace Sendang.Rejeki.Transaction
             int Row = grid.CurrentRow.Index;
             f.Tag = this.Tag;
             f.InvoceNo = string.Format("{0}", grid["colInvoiceNo", Row].Value);
+            f.WindowState = FormWindowState.Maximized;
             if (f.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 Search();
@@ -64,10 +66,11 @@ namespace Sendang.Rejeki.Transaction
 
         private void grid_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.ColumnIndex == 5)
+            if (e.ColumnIndex == 8)
             {
                 var row = grid.Rows[e.RowIndex];
                 var f = new frmAccountReceivablePayment();
+                f.Tag = this.Tag;
                 f.InvoceNo = string.Format("{0}", grid["colInvoiceNo", e.RowIndex].Value);
                 var existingItem = InvoiceItem.GetOptionsByKey(f.InvoceNo);
                 if (existingItem.Status == InvoiceStatus_LUNAS)
@@ -87,7 +90,7 @@ namespace Sendang.Rejeki.Transaction
 
         private void grid_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
-            if (e.ColumnIndex == 5)
+            if (e.ColumnIndex == 8)
             {
                 var cell = grid.Rows[e.RowIndex].Cells[e.ColumnIndex];
                 cell.Value = "Update Pembayaran";

@@ -30,7 +30,7 @@ namespace Sendang.Rejeki.Master
                 txtName.Focus();
                 return false;
             }
-            if (txtName.Text.Length == 0)
+            else if (txtName.Text.Length == 0)
             {
                 Utilities.ShowValidation("Nama tidak boleh kosong");
                 txtName.Focus();
@@ -38,12 +38,22 @@ namespace Sendang.Rejeki.Master
             }
             else
             {
-                List<Customer> custList = CustomerItem.GetByName(txtName.Text.Trim());
-                if (custList.Count > 0 && !(ID > 0))
+                List<Customer> custList = CustomerItem.GetByCode(txtCode.Text.Trim());
+                if (ID > 0)
                 {
-                    //string message = string.Format("Ada {0} nama yang sama didalam database.", custList.Count);
-                    Utilities.ShowValidation(string.Format("Maaf, Nama \"{0}\" sudah ada dalam database kami.\nSilahkan input dengan nama yang berbeda", txtName.Text.Trim()));
-                    txtName.Focus();
+                    //Customer item = CustomerItem.GetByID(ID);
+                    Customer itemOther = custList.Where(t => t.ID != ID).FirstOrDefault();
+                    if (itemOther != null)
+                    {
+                        Utilities.ShowValidation(string.Format("Maaf, Kode \"{0}\" sudah dipakai oleh customer {1}.\nSilahkan input dengan Kode yang berbeda", txtCode.Text.Trim(), itemOther.FullName));
+                        txtCode.Focus();
+                        return false;
+                    }
+                }
+                else if (custList.Count > 0)
+                {
+                    Utilities.ShowValidation(string.Format("Maaf, Kode \"{0}\" sudah ada dalam database.\nSilahkan input dengan Kode yang berbeda", txtCode.Text.Trim()));
+                    txtCode.Focus();
                     return false;
                 }
             }
@@ -57,7 +67,7 @@ namespace Sendang.Rejeki.Master
             int result = -1;
             if (ID > 0)
             {
-                result = CustomerItem.Update(ID,txtCode.Text, txtName.Text, txtAddress.Text, txtPhone.Text, Utilities.Username);
+                result = CustomerItem.Update(ID, txtCode.Text, txtName.Text, txtAddress.Text, txtPhone.Text, Utilities.Username);
             }
             else
             {
@@ -67,8 +77,8 @@ namespace Sendang.Rejeki.Master
             {
 
                 if (ID > 0)
-                    Log.Update(string.Format("{0}-{1}", this.Text,JsonConvert.SerializeObject(new Customer() { ID = ID, FullName = txtName.Text, Address = txtAddress.Text, Phone = txtPhone.Text })));
-                else Log.Insert(string.Format("{0}-{1}", this.Text,JsonConvert.SerializeObject(new Customer() { ID = ID, FullName = txtName.Text, Address = txtAddress.Text, Phone = txtPhone.Text })));
+                    Log.Update(string.Format("{0}-{1}", this.Text, JsonConvert.SerializeObject(new Customer() { ID = ID, FullName = txtName.Text, Address = txtAddress.Text, Phone = txtPhone.Text })));
+                else Log.Insert(string.Format("{0}-{1}", this.Text, JsonConvert.SerializeObject(new Customer() { ID = ID, FullName = txtName.Text, Address = txtAddress.Text, Phone = txtPhone.Text })));
 
                 this.DialogResult = System.Windows.Forms.DialogResult.OK;
             }

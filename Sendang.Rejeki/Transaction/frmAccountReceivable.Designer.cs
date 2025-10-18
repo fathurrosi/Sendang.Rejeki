@@ -28,29 +28,15 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panel2 = new System.Windows.Forms.Panel();
             this.grid = new System.Windows.Forms.DataGridView();
-            this.colNo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colTotalPayment = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colCatalogId = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colCatalogName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colUnitPrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colUnitQty = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colTotalAmount = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colNoNota = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colDelivery = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colPrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colQuantity = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colAmount = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colFullname = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colDueDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label13 = new System.Windows.Forms.Label();
             this.cboPayment = new System.Windows.Forms.ComboBox();
             this.txtRemarks = new System.Windows.Forms.TextBox();
@@ -77,8 +63,6 @@
             this.label2 = new System.Windows.Forms.Label();
             this.cboBuyer = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.btnCancel = new System.Windows.Forms.Button();
-            this.btnPrint = new System.Windows.Forms.Button();
             this.txtTotal = new System.Windows.Forms.TextBox();
             this.label14 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
@@ -98,6 +82,22 @@
             this.dataGridViewTextBoxColumn11 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn12 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn13 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn14 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colNo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colTotalPayment = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colCatalogId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colCatalogName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colUnitPrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colUnitQty = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colTotalAmount = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colNoNota = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colDelivery = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colPrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colQuantity = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colAmount = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colFullname = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colDueDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ctlTransButton1 = new Sendang.Rejeki.Control.ctlTransButton();
             ((System.ComponentModel.ISupportInitialize)(this.grid)).BeginInit();
             this.SuspendLayout();
             // 
@@ -140,123 +140,8 @@
             this.grid.Name = "grid";
             this.grid.ReadOnly = true;
             this.grid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.grid.Size = new System.Drawing.Size(962, 168);
+            this.grid.Size = new System.Drawing.Size(962, 202);
             this.grid.TabIndex = 63;
-            // 
-            // colNo
-            // 
-            this.colNo.DataPropertyName = "RowIndex";
-            this.colNo.HeaderText = "No";
-            this.colNo.Name = "colNo";
-            this.colNo.ReadOnly = true;
-            this.colNo.Width = 50;
-            // 
-            // colTotalPayment
-            // 
-            this.colTotalPayment.DataPropertyName = "TotalPayment";
-            this.colTotalPayment.HeaderText = "TotalPayment";
-            this.colTotalPayment.Name = "colTotalPayment";
-            this.colTotalPayment.ReadOnly = true;
-            this.colTotalPayment.Visible = false;
-            // 
-            // colCatalogId
-            // 
-            this.colCatalogId.DataPropertyName = "CatalogId";
-            this.colCatalogId.HeaderText = "CatalogId";
-            this.colCatalogId.Name = "colCatalogId";
-            this.colCatalogId.ReadOnly = true;
-            this.colCatalogId.Visible = false;
-            // 
-            // colCatalogName
-            // 
-            this.colCatalogName.DataPropertyName = "CatalogName";
-            this.colCatalogName.HeaderText = "Item";
-            this.colCatalogName.Name = "colCatalogName";
-            this.colCatalogName.ReadOnly = true;
-            this.colCatalogName.Width = 200;
-            // 
-            // colUnitPrice
-            // 
-            this.colUnitPrice.DataPropertyName = "UnitPrice";
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            this.colUnitPrice.DefaultCellStyle = dataGridViewCellStyle8;
-            this.colUnitPrice.HeaderText = "Unit Price";
-            this.colUnitPrice.Name = "colUnitPrice";
-            this.colUnitPrice.ReadOnly = true;
-            this.colUnitPrice.Width = 120;
-            // 
-            // colUnitQty
-            // 
-            this.colUnitQty.DataPropertyName = "UnitQty";
-            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            this.colUnitQty.DefaultCellStyle = dataGridViewCellStyle9;
-            this.colUnitQty.HeaderText = "Qty";
-            this.colUnitQty.Name = "colUnitQty";
-            this.colUnitQty.ReadOnly = true;
-            // 
-            // colTotalAmount
-            // 
-            this.colTotalAmount.DataPropertyName = "TotalAmount";
-            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            this.colTotalAmount.DefaultCellStyle = dataGridViewCellStyle10;
-            this.colTotalAmount.HeaderText = "Amount";
-            this.colTotalAmount.Name = "colTotalAmount";
-            this.colTotalAmount.ReadOnly = true;
-            this.colTotalAmount.Width = 150;
-            // 
-            // colNoNota
-            // 
-            this.colNoNota.DataPropertyName = "NoNota";
-            this.colNoNota.HeaderText = "No Nota";
-            this.colNoNota.Name = "colNoNota";
-            this.colNoNota.ReadOnly = true;
-            // 
-            // colDelivery
-            // 
-            this.colDelivery.DataPropertyName = "Delivery";
-            this.colDelivery.HeaderText = "Delivery";
-            this.colDelivery.Name = "colDelivery";
-            this.colDelivery.ReadOnly = true;
-            // 
-            // colPrice
-            // 
-            this.colPrice.DataPropertyName = "Price";
-            this.colPrice.HeaderText = "Price";
-            this.colPrice.Name = "colPrice";
-            this.colPrice.ReadOnly = true;
-            this.colPrice.Visible = false;
-            // 
-            // colQuantity
-            // 
-            this.colQuantity.DataPropertyName = "Quantity";
-            this.colQuantity.HeaderText = "Quantity";
-            this.colQuantity.Name = "colQuantity";
-            this.colQuantity.ReadOnly = true;
-            this.colQuantity.Visible = false;
-            // 
-            // colAmount
-            // 
-            this.colAmount.DataPropertyName = "Amount";
-            this.colAmount.HeaderText = "Amount";
-            this.colAmount.Name = "colAmount";
-            this.colAmount.ReadOnly = true;
-            this.colAmount.Visible = false;
-            // 
-            // colFullname
-            // 
-            this.colFullname.DataPropertyName = "Fullname";
-            this.colFullname.HeaderText = "Fullname";
-            this.colFullname.Name = "colFullname";
-            this.colFullname.ReadOnly = true;
-            this.colFullname.Visible = false;
-            // 
-            // colDueDate
-            // 
-            this.colDueDate.DataPropertyName = "DueDate";
-            this.colDueDate.HeaderText = "DueDate";
-            this.colDueDate.Name = "colDueDate";
-            this.colDueDate.ReadOnly = true;
-            this.colDueDate.Visible = false;
             // 
             // label13
             // 
@@ -489,34 +374,12 @@
             this.label1.TabIndex = 42;
             this.label1.Text = "Buyer :";
             // 
-            // btnCancel
-            // 
-            this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnCancel.Location = new System.Drawing.Point(899, 494);
-            this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(75, 23);
-            this.btnCancel.TabIndex = 64;
-            this.btnCancel.Text = "Cancel";
-            this.btnCancel.UseVisualStyleBackColor = true;
-            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
-            // 
-            // btnPrint
-            // 
-            this.btnPrint.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnPrint.Location = new System.Drawing.Point(818, 494);
-            this.btnPrint.Name = "btnPrint";
-            this.btnPrint.Size = new System.Drawing.Size(75, 23);
-            this.btnPrint.TabIndex = 65;
-            this.btnPrint.Text = "Print";
-            this.btnPrint.UseVisualStyleBackColor = true;
-            this.btnPrint.Click += new System.EventHandler(this.btnPrint_Click);
-            // 
             // txtTotal
             // 
             this.txtTotal.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.txtTotal.BackColor = System.Drawing.SystemColors.Info;
             this.txtTotal.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtTotal.Location = new System.Drawing.Point(137, 491);
+            this.txtTotal.Location = new System.Drawing.Point(137, 525);
             this.txtTotal.Name = "txtTotal";
             this.txtTotal.ReadOnly = true;
             this.txtTotal.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
@@ -529,7 +392,7 @@
             this.label14.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label14.AutoSize = true;
             this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label14.Location = new System.Drawing.Point(10, 494);
+            this.label14.Location = new System.Drawing.Point(10, 528);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(121, 20);
             this.label14.TabIndex = 67;
@@ -558,7 +421,7 @@
             this.txtTotalPayment.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.txtTotalPayment.BackColor = System.Drawing.SystemColors.Info;
             this.txtTotalPayment.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtTotalPayment.Location = new System.Drawing.Point(137, 462);
+            this.txtTotalPayment.Location = new System.Drawing.Point(137, 496);
             this.txtTotalPayment.Name = "txtTotalPayment";
             this.txtTotalPayment.ReadOnly = true;
             this.txtTotalPayment.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
@@ -571,7 +434,7 @@
             this.label16.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label16.AutoSize = true;
             this.label16.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label16.Location = new System.Drawing.Point(32, 465);
+            this.label16.Location = new System.Drawing.Point(32, 499);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(99, 20);
             this.label16.TabIndex = 71;
@@ -604,8 +467,8 @@
             // dataGridViewTextBoxColumn4
             // 
             this.dataGridViewTextBoxColumn4.DataPropertyName = "UnitPrice";
-            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            this.dataGridViewTextBoxColumn4.DefaultCellStyle = dataGridViewCellStyle11;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.dataGridViewTextBoxColumn4.DefaultCellStyle = dataGridViewCellStyle4;
             this.dataGridViewTextBoxColumn4.HeaderText = "Unit Price";
             this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
             this.dataGridViewTextBoxColumn4.ReadOnly = true;
@@ -614,8 +477,8 @@
             // dataGridViewTextBoxColumn5
             // 
             this.dataGridViewTextBoxColumn5.DataPropertyName = "UnitQty";
-            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            this.dataGridViewTextBoxColumn5.DefaultCellStyle = dataGridViewCellStyle12;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.dataGridViewTextBoxColumn5.DefaultCellStyle = dataGridViewCellStyle5;
             this.dataGridViewTextBoxColumn5.HeaderText = "Qty";
             this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
             this.dataGridViewTextBoxColumn5.ReadOnly = true;
@@ -624,8 +487,8 @@
             // dataGridViewTextBoxColumn6
             // 
             this.dataGridViewTextBoxColumn6.DataPropertyName = "TotalAmount";
-            dataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            this.dataGridViewTextBoxColumn6.DefaultCellStyle = dataGridViewCellStyle13;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.dataGridViewTextBoxColumn6.DefaultCellStyle = dataGridViewCellStyle6;
             this.dataGridViewTextBoxColumn6.HeaderText = "Amount";
             this.dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
             this.dataGridViewTextBoxColumn6.ReadOnly = true;
@@ -634,8 +497,8 @@
             // dataGridViewTextBoxColumn7
             // 
             this.dataGridViewTextBoxColumn7.DataPropertyName = "NoNota";
-            dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            this.dataGridViewTextBoxColumn7.DefaultCellStyle = dataGridViewCellStyle14;
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.dataGridViewTextBoxColumn7.DefaultCellStyle = dataGridViewCellStyle7;
             this.dataGridViewTextBoxColumn7.HeaderText = "No Nota";
             this.dataGridViewTextBoxColumn7.Name = "dataGridViewTextBoxColumn7";
             this.dataGridViewTextBoxColumn7.ReadOnly = true;
@@ -688,19 +551,153 @@
             this.dataGridViewTextBoxColumn13.ReadOnly = true;
             this.dataGridViewTextBoxColumn13.Visible = false;
             // 
+            // dataGridViewTextBoxColumn14
+            // 
+            this.dataGridViewTextBoxColumn14.DataPropertyName = "DueDate";
+            this.dataGridViewTextBoxColumn14.HeaderText = "DueDate";
+            this.dataGridViewTextBoxColumn14.Name = "dataGridViewTextBoxColumn14";
+            this.dataGridViewTextBoxColumn14.Visible = false;
+            // 
+            // colNo
+            // 
+            this.colNo.DataPropertyName = "RowIndex";
+            this.colNo.HeaderText = "No";
+            this.colNo.Name = "colNo";
+            this.colNo.ReadOnly = true;
+            this.colNo.Width = 50;
+            // 
+            // colTotalPayment
+            // 
+            this.colTotalPayment.DataPropertyName = "TotalPayment";
+            this.colTotalPayment.HeaderText = "TotalPayment";
+            this.colTotalPayment.Name = "colTotalPayment";
+            this.colTotalPayment.ReadOnly = true;
+            this.colTotalPayment.Visible = false;
+            // 
+            // colCatalogId
+            // 
+            this.colCatalogId.DataPropertyName = "CatalogId";
+            this.colCatalogId.HeaderText = "CatalogId";
+            this.colCatalogId.Name = "colCatalogId";
+            this.colCatalogId.ReadOnly = true;
+            this.colCatalogId.Visible = false;
+            // 
+            // colCatalogName
+            // 
+            this.colCatalogName.DataPropertyName = "CatalogName";
+            this.colCatalogName.HeaderText = "Item";
+            this.colCatalogName.Name = "colCatalogName";
+            this.colCatalogName.ReadOnly = true;
+            this.colCatalogName.Width = 200;
+            // 
+            // colUnitPrice
+            // 
+            this.colUnitPrice.DataPropertyName = "UnitPrice";
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.colUnitPrice.DefaultCellStyle = dataGridViewCellStyle1;
+            this.colUnitPrice.HeaderText = "Unit Price";
+            this.colUnitPrice.Name = "colUnitPrice";
+            this.colUnitPrice.ReadOnly = true;
+            this.colUnitPrice.Width = 120;
+            // 
+            // colUnitQty
+            // 
+            this.colUnitQty.DataPropertyName = "UnitQty";
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.colUnitQty.DefaultCellStyle = dataGridViewCellStyle2;
+            this.colUnitQty.HeaderText = "Qty";
+            this.colUnitQty.Name = "colUnitQty";
+            this.colUnitQty.ReadOnly = true;
+            // 
+            // colTotalAmount
+            // 
+            this.colTotalAmount.DataPropertyName = "TotalAmount";
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.colTotalAmount.DefaultCellStyle = dataGridViewCellStyle3;
+            this.colTotalAmount.HeaderText = "Amount";
+            this.colTotalAmount.Name = "colTotalAmount";
+            this.colTotalAmount.ReadOnly = true;
+            this.colTotalAmount.Width = 150;
+            // 
+            // colNoNota
+            // 
+            this.colNoNota.DataPropertyName = "NoNota";
+            this.colNoNota.HeaderText = "No Nota";
+            this.colNoNota.Name = "colNoNota";
+            this.colNoNota.ReadOnly = true;
+            // 
+            // colDelivery
+            // 
+            this.colDelivery.DataPropertyName = "Delivery";
+            this.colDelivery.HeaderText = "Delivery";
+            this.colDelivery.Name = "colDelivery";
+            this.colDelivery.ReadOnly = true;
+            // 
+            // colPrice
+            // 
+            this.colPrice.DataPropertyName = "Price";
+            this.colPrice.HeaderText = "Price";
+            this.colPrice.Name = "colPrice";
+            this.colPrice.ReadOnly = true;
+            this.colPrice.Visible = false;
+            // 
+            // colQuantity
+            // 
+            this.colQuantity.DataPropertyName = "Quantity";
+            this.colQuantity.HeaderText = "Quantity";
+            this.colQuantity.Name = "colQuantity";
+            this.colQuantity.ReadOnly = true;
+            this.colQuantity.Visible = false;
+            // 
+            // colAmount
+            // 
+            this.colAmount.DataPropertyName = "Amount";
+            this.colAmount.HeaderText = "Amount";
+            this.colAmount.Name = "colAmount";
+            this.colAmount.ReadOnly = true;
+            this.colAmount.Visible = false;
+            // 
+            // colFullname
+            // 
+            this.colFullname.DataPropertyName = "Fullname";
+            this.colFullname.HeaderText = "Fullname";
+            this.colFullname.Name = "colFullname";
+            this.colFullname.ReadOnly = true;
+            this.colFullname.Visible = false;
+            // 
+            // colDueDate
+            // 
+            this.colDueDate.DataPropertyName = "DueDate";
+            this.colDueDate.HeaderText = "DueDate";
+            this.colDueDate.Name = "colDueDate";
+            this.colDueDate.ReadOnly = true;
+            this.colDueDate.Visible = false;
+            // 
+            // ctlTransButton1
+            // 
+            this.ctlTransButton1.CancelButtonEnabled = true;
+            this.ctlTransButton1.CancelButtonText = null;
+            this.ctlTransButton1.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.ctlTransButton1.IsLookup = false;
+            this.ctlTransButton1.Location = new System.Drawing.Point(0, 551);
+            this.ctlTransButton1.Name = "ctlTransButton1";
+            this.ctlTransButton1.SaveButtonEnabled = true;
+            this.ctlTransButton1.SaveButtonText = "Print";
+            this.ctlTransButton1.Size = new System.Drawing.Size(986, 45);
+            this.ctlTransButton1.TabIndex = 73;
+            // 
             // frmAccountReceivable
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(986, 526);
+            this.ClientSize = new System.Drawing.Size(986, 596);
+            this.Controls.Add(this.ctlTransButton1);
             this.Controls.Add(this.txtTotalPayment);
             this.Controls.Add(this.label16);
             this.Controls.Add(this.label15);
             this.Controls.Add(this.dtDueDate);
             this.Controls.Add(this.txtTotal);
             this.Controls.Add(this.label14);
-            this.Controls.Add(this.btnPrint);
-            this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.grid);
             this.Controls.Add(this.label13);
             this.Controls.Add(this.cboPayment);
@@ -768,8 +765,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ComboBox cboBuyer;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button btnCancel;
-        private System.Windows.Forms.Button btnPrint;
         private System.Windows.Forms.DataGridView grid;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
@@ -804,6 +799,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colFullname;
         private System.Windows.Forms.DataGridViewTextBoxColumn colDueDate;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn13;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn14;
+        private Control.ctlTransButton ctlTransButton1;
 
     }
 }

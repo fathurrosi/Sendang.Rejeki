@@ -17,7 +17,7 @@ using Microsoft.Reporting.WinForms;
 
 namespace Sendang.Rejeki.Transaction
 {
-    public partial class frmAccountReceivable : Form
+    public partial class frmAccountReceivable : Form, ITransButton
     {
         public string InvoceNo { get; set; }
         public List<CstmInvoiceDetail> NewInvoiceDetails { get; set; }
@@ -147,8 +147,8 @@ namespace Sendang.Rejeki.Transaction
 
                 if (item.Status == InvoiceStatus_LUNAS)
                 {
-                    btnPrint.Enabled = false;
-                    btnCancel.Text = "Close";
+                    ctlTransButton1.SaveButtonEnabled = false;
+                    ctlTransButton1.CancelButtonText = "Close";
                 }
 
             }
@@ -187,8 +187,7 @@ namespace Sendang.Rejeki.Transaction
                     }
 
                     txtTotal.Text = string.Format("Rp. {0:N0}", NewInvoiceDetails.Sum(t => t.Amount) - totalPayment.Sum(t => t.TotalPayment));
-                    btnPrint.Enabled = true;
-                    //btnSave.Enabled = true;
+                    //ctlTransButton1.SaveButtonEnabled = true;
 
                     CstmInvoiceDetail detail = new CstmInvoiceDetail();
                     detail.CatalogName = "Total";
@@ -200,26 +199,44 @@ namespace Sendang.Rejeki.Transaction
                 }
                 else
                 {
-                    //txtTotal.Top = (this.Height - txtTotal.Height) / 2;
                     txtTotalPayment.Text = string.Format("Rp. {0:N0}", 0);
                     txtTotal.Text = string.Format("Rp. {0:N0}", 0);
-                    btnPrint.Enabled = false;
-                    //btnSave.Enabled = false;
+                    //ctlTransButton1.SaveButtonEnabled = false;
                     grid.DataSource = NewInvoiceDetails;
                 }
             }
 
         }
 
-
-
-        private void btnPrint_Click(object sender, EventArgs e)
+        public bool IsValid()
         {
-            if (!IsValid())
+            if (cboBuyer.SelectedIndex <= 0)
             {
-                return;
+                Utilities.ShowValidation("Buyer tidak boleh kosong");
+                cboBuyer.Focus();
+                return false;
+            }
+            if (dtDueDate.Value <= new DateTime(1900, 1, 1))
+            {
+                Utilities.ShowValidation("Due Date harus valid");
+                dtDueDate.Focus();
+                return false;
             }
 
+            int customerId = 0;
+            int.TryParse(string.Format("{0}", cboBuyer.SelectedValue), out customerId);
+            var invoiceCandidat = SaleItem.GetDetailInvoice(customerId);
+            if (invoiceCandidat.Count == 0)
+            {
+                Utilities.ShowValidation(string.Format("Buyer \"{0}\" tidak punya hutang!", txtCompany.Text));
+                return false;
+            }
+
+            return true;
+        }
+
+        public void Save()
+        {
             DataObject.Menu menuItem = DataLayer.MenuItem.GetMenuByCode("cst_invoice_list");
             DialogResult dialog = Utilities.Confirmation(string.Format("Are you sure you want to print and save this invoice to your \"{0}\"?", menuItem == null ? "Invoice List" : menuItem.Name));
             if (dialog != System.Windows.Forms.DialogResult.Yes)
@@ -239,7 +256,7 @@ namespace Sendang.Rejeki.Transaction
             item.Tradeterm = string.Format("{0}", cboTrade.SelectedValue != null ? cboTrade.SelectedValue : cboTrade.Text);
             item.To = txtTo.Text;
             item.CreatedBy = Utilities.Username;
-            btnPrint.Enabled = false;
+            ctlTransButton1.SaveButtonEnabled = false;
 
             Invoice result = null;
             if (string.Format("{0}", InvoceNo).Length > 0)
@@ -327,6 +344,7 @@ namespace Sendang.Rejeki.Transaction
                 parameters.Add(new ReportParameter("paramTotalDetail", string.Format("Rp. {0:N0}", result.TotalDetail), true));
                 rptViewer.Params = parameters;
                 rptViewer.DataSource = result.Details;
+                rptViewer.WindowState = FormWindowState.Maximized;
                 DialogResult reportDialog = rptViewer.ShowDialog();
                 if (reportDialog == System.Windows.Forms.DialogResult.Cancel)
                 {
@@ -334,30 +352,9 @@ namespace Sendang.Rejeki.Transaction
                     this.DialogResult = System.Windows.Forms.DialogResult.OK;
                 }
             }
-
         }
 
-
-
-        public bool IsValid()
-        {
-            if (cboBuyer.SelectedIndex == -1)
-            {
-                Utilities.ShowValidation("Buyer tidak boleh kosong");
-                cboBuyer.Focus();
-                return false;
-            }
-            if (dtDueDate.Value <= new DateTime(1900, 1, 1))
-            {
-
-                Utilities.ShowValidation("Due Date harus valid");
-                dtDueDate.Focus();
-                return false;
-            }
-            return true;
-        }
-
-        private void btnCancel_Click(object sender, EventArgs e)
+        public void Cancel()
         {
             if (this.Modal)
                 this.DialogResult = System.Windows.Forms.DialogResult.Cancel;

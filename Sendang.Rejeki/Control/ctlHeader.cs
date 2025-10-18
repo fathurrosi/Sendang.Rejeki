@@ -86,7 +86,7 @@ namespace Sendang.Rejeki.Control
         protected override void OnLoad(EventArgs e)
         {
 
-#if (!DEBUG)
+//#if (!DEBUG)
             User user = Utilities.CurrentUser;
             List<int> roles = user.Roles.Select(t => t.ID).ToList();
             List<Previllage> previllages = PrevillageItem.GetAll();
@@ -111,7 +111,7 @@ namespace Sendang.Rejeki.Control
                 btnAdd.Enabled = allowCreate;
                 btnDelete.Enabled = allowDelete;
                 btnPrint.Enabled = allowPrint;
-                btnEdit.Enabled = allowUpdate || allowCreate;
+                btnEdit.Enabled = allowUpdate;// || allowCreate;
                 if (!btnEdit.Enabled && allowRead)
                 {
                     EditButtonText = "View";
@@ -132,7 +132,7 @@ namespace Sendang.Rejeki.Control
                 btnPrint.Enabled = allowPrint;
                 btnEdit.Enabled = allowUpdate || allowCreate;
             }
-#endif
+//#endif
 
             base.OnLoad(e);
         }

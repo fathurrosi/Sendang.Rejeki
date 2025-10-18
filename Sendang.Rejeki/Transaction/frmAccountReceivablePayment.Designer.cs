@@ -487,7 +487,7 @@
             this.Controls.Add(this.label1);
             this.Name = "frmAccountReceivablePayment";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "frmAccountReceivablePayment";
+            this.Text = "Uppdare Payment";
             this.Load += new System.EventHandler(this.frmAccountReceivablePayment_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
