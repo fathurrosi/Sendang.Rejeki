@@ -156,6 +156,7 @@ namespace Sendang.Rejeki.Transaction
 
         private void cboBuyer_SelectedIndexChanged(object sender, EventArgs e)
         {
+            grid.AutoGenerateColumns = false;
             ComboBox cbo = (ComboBox)sender;
             Customer cust = (Customer)cbo.SelectedItem;
             txtAddress.Text = cust != null ? cust.Address : string.Empty;
@@ -298,25 +299,46 @@ namespace Sendang.Rejeki.Transaction
                 parameters.Add(new ReportParameter("paramAddress", string.Format("{0} ", cust.Address), true));
                 parameters.Add(new ReportParameter("paramTel", string.Format("{0} ", cust.Phone), true));
                 parameters.Add(new ReportParameter("paramAttn", string.Format("{0} ", result.Attn), true));
-                parameters.Add(new ReportParameter("paramShipmentMethod", string.Format("{0} ", result.Shipment), true));
+
                 parameters.Add(new ReportParameter("paramTo", string.Format("{0} ", result.To), true));
-                parameters.Add(new ReportParameter("paramTradeTerms", string.Format("{0} ", result.Tradeterm), true));
-                parameters.Add(new ReportParameter("paramPayment", string.Format("{0} ", result.Payment), true));
+
+                string Shipment = "";
+                string Tradeterm = "";
+                string Payment = "";
+                if (shipmentList.Where(t => t.ValueMember == item.Shipment && t.Name == "Shipment").Count() > 0)
+                    Shipment = shipmentList.Where(t => t.ValueMember == item.Shipment && t.Name == "Shipment").Select(t => t.DisplayMember).FirstOrDefault();
+                else Shipment = item.Shipment;
+                if (paymentList.Where(t => t.ValueMember == item.Payment && t.Name == "Payment").Count() > 0)
+                    Payment = paymentList.Where(t => t.ValueMember == item.Payment && t.Name == "Payment").Select(t => t.DisplayMember).FirstOrDefault();
+                else Payment = item.Payment;
+                if (tradeTermsList.Where(t => t.ValueMember == item.Tradeterm && t.Name == "TradeTerms").Count() > 0)
+                    Tradeterm = tradeTermsList.Where(t => t.ValueMember == item.Tradeterm && t.Name == "TradeTerms").Select(t => t.DisplayMember).FirstOrDefault();
+                else Tradeterm = item.Tradeterm;
+
+                parameters.Add(new ReportParameter("paramShipmentMethod", string.Format("{0} ", Shipment), true));
+                parameters.Add(new ReportParameter("paramTradeTerms", string.Format("{0} ", Tradeterm), true));
+                parameters.Add(new ReportParameter("paramPayment", string.Format("{0} ", Payment), true));
+
                 parameters.Add(new ReportParameter("paramInvoiceNo", string.Format("{0} ", result.InvoiceNo), true));
                 parameters.Add(new ReportParameter("paramInvoiceDate", string.Format("{0:dd-MMM-yyyy}", result.InvoiceDate), true));
                 parameters.Add(new ReportParameter("paramDelivery", string.Format("{0} ", result.Delivery), true));
                 parameters.Add(new ReportParameter("paramRemark", string.Format("{0} ", result.Remark), true));
                 parameters.Add(new ReportParameter("paramDueDate", string.Format("{0:dd-MMM-yyyy}", result.DueDate), true));
+                parameters.Add(new ReportParameter("paramTotalDetail", string.Format("Rp. {0:N0}", result.TotalDetail), true));
                 rptViewer.Params = parameters;
                 rptViewer.DataSource = result.Details;
                 DialogResult reportDialog = rptViewer.ShowDialog();
                 if (reportDialog == System.Windows.Forms.DialogResult.Cancel)
                 {
-                    this.Close();
+                    this.Close(); ;
                     this.DialogResult = System.Windows.Forms.DialogResult.OK;
                 }
             }
+
         }
+
+
+
         public bool IsValid()
         {
             if (cboBuyer.SelectedIndex == -1)
