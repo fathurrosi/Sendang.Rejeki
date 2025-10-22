@@ -197,7 +197,7 @@ namespace DataLayer
                         saleItem.TotalPayment = saleDetail.TotalPrice;
 
                         saleItem.Details = saleDetails;
-                        Sale saleItemResult = SaleItem.Insert(saleItem);
+                        Sale saleItemResult = SaleItem.InsertReconcile(saleItem);
 
                         ictx.CommandText = "Usp_UpdateReconcile";
                         ictx.CommandType = CommandType.StoredProcedure;

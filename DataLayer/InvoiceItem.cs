@@ -49,6 +49,8 @@ namespace DataLayer
                 ictx.AddParameter("@Paid", item.Paid);
                 ictx.AddParameter("@TotalDetail", item.TotalDetail);
                 ictx.AddParameter("@CreatedBy", item.CreatedBy);
+                ictx.AddParameter("@DateFrom", item.DateFrom);
+                ictx.AddParameter("@DateTo", item.DateTo);
 
                 Invoice result = DBUtil.ExecuteMapper<Invoice>(ictx, new Invoice()).FirstOrDefault();
                 if (result != null)
@@ -107,6 +109,8 @@ namespace DataLayer
             context.AddParameter("@Tradeterm", item.Tradeterm);
             context.AddParameter("@Payment", item.Payment);
             context.AddParameter("@CreatedBy", item.CreatedBy);
+            context.AddParameter("@DateFrom", item.DateFrom);
+            context.AddParameter("@DateTo", item.DateTo);
             Invoice result = DBUtil.ExecuteMapper<Invoice>(context, new Invoice()).FirstOrDefault();
             if (result != null)
             {

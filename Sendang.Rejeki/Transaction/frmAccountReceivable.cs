@@ -36,9 +36,9 @@ namespace Sendang.Rejeki.Transaction
         private void frmAccountReceivable_Load(object sender, EventArgs e)
         {
             List<Customer> list = CustomerItem.GetAll();
-            list.Insert(0, new Customer(0, "", "--Pilih Buyer--"));
+            list.Insert(0, new Customer(0, "--Pilih Buyer--", ""));
             cboBuyer.DataSource = list;
-            cboBuyer.DisplayMember = "Code";
+            cboBuyer.DisplayMember = "FullName";
             cboBuyer.ValueMember = "ID";
 
             paymentList = OptionItem.GetOptionsByName("Payment");
@@ -72,10 +72,13 @@ namespace Sendang.Rejeki.Transaction
             cboPayment.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
             cboPayment.AutoCompleteSource = AutoCompleteSource.CustomSource;
 
+            DateTime today = DateTime.Now;
             txtNoInvoice.Text = "Auto Generate";
-            dtTanggal.Value = DateTime.Now;
+            dtTanggal.Value = today;
             dtTanggal.Enabled = false;
             dtDueDate.Value = dtTanggal.Value.AddDays(30);
+            dtFrom.Value = new DateTime(today.Year, today.Month, 1);
+            dtTo.Value = today;
             txtNoInvoice.Enabled = false;
 
             if (string.Format("{0}", InvoceNo).Length > 0)
@@ -90,8 +93,20 @@ namespace Sendang.Rejeki.Transaction
             Invoice item = InvoiceItem.GetOptionsByKey(invoiceNo);
             if (item != null)
             {
+                Customer cust = CustomerItem.GetByID(item.CustomerID);
                 cboBuyer.SelectedValue = item.CustomerID;
                 cboBuyer.Enabled = false;
+                dtFrom.Value = item.DateFrom;
+                dtTo.Value = item.DateTo;
+
+                dtFrom.Enabled = false;
+                dtTo.Enabled = false;
+
+                btnSearch.Enabled = false;
+
+
+                txtKode.Text = cust == null ? "" : cust.Code;
+
                 txtNoInvoice.Text = item.InvoiceNo;
                 DateTime? dueDate = item.DueDate;
                 if (dueDate.HasValue) dtDueDate.Value = dueDate.Value;
@@ -122,7 +137,6 @@ namespace Sendang.Rejeki.Transaction
                 cboShipment.DataSource = shipmentList;
                 cboShipment.ValueMember = "ValueMember";
                 cboShipment.DisplayMember = "DisplayMember";
-
 
                 cboTrade.SelectedValue = item.Tradeterm;
                 cboShipment.SelectedValue = item.Shipment;
@@ -159,52 +173,20 @@ namespace Sendang.Rejeki.Transaction
             grid.AutoGenerateColumns = false;
             ComboBox cbo = (ComboBox)sender;
             Customer cust = (Customer)cbo.SelectedItem;
-            txtAddress.Text = cust != null ? cust.Address : string.Empty;
-            txtCompany.Text = cust.FullName;
-            txtTel.Text = cust.Phone;
-            if (string.Format("{0}", InvoceNo).Length > 0)
+            if (cust != null)
             {
+                txtAddress.Text = cust != null ? cust.Address : string.Empty;
+                txtCompany.Text = cust.FullName;
+                txtTel.Text = cust.Phone;
+                txtKode.Text = cust.Code;
             }
             else
             {
-                NewInvoiceDetails = SaleItem.GetDetailInvoice(cust.ID);
-                if (NewInvoiceDetails.Count > 0)
-                {
-                    DateTime? dueDate = NewInvoiceDetails.Select(t => t.DueDate).Max();
-                    if (dueDate.HasValue) dtDueDate.Value = dueDate.Value;
-
-                    var totalPayment = (from item in NewInvoiceDetails
-                                        select new { item.TotalPayment, item.TransactionID }
-                                       ).Where(t => t.TotalPayment > 0).Distinct().ToList();
-
-                    if (totalPayment.Count > 0)
-                    {
-                        txtTotalPayment.Text = string.Format("Rp. {0:N0}", totalPayment.Sum(t => t.TotalPayment));
-                    }
-                    else
-                    {
-                        txtTotalPayment.Text = string.Format("Rp. {0:N0}", 0);
-                    }
-
-                    txtTotal.Text = string.Format("Rp. {0:N0}", NewInvoiceDetails.Sum(t => t.Amount) - totalPayment.Sum(t => t.TotalPayment));
-                    //ctlTransButton1.SaveButtonEnabled = true;
-
-                    CstmInvoiceDetail detail = new CstmInvoiceDetail();
-                    detail.CatalogName = "Total";
-                    detail.TotalAmount = string.Format("Rp. {0:N0}", NewInvoiceDetails.Sum(t => t.Amount));
-                    NewInvoiceDetails.Add(detail);
-
-
-                    grid.DataSource = NewInvoiceDetails;
-                }
-                else
-                {
-                    txtTotalPayment.Text = string.Format("Rp. {0:N0}", 0);
-                    txtTotal.Text = string.Format("Rp. {0:N0}", 0);
-                    //ctlTransButton1.SaveButtonEnabled = false;
-                    grid.DataSource = NewInvoiceDetails;
-                }
+                txtAddress.Text = "";
+                txtCompany.Text = "";
+                txtTel.Text = "";
             }
+
 
         }
 
@@ -223,9 +205,24 @@ namespace Sendang.Rejeki.Transaction
                 return false;
             }
 
+            if (dtFrom.Value <= new DateTime(1900, 1, 1))
+            {
+                Utilities.ShowValidation("Date From harus valid");
+                dtFrom.Focus();
+                return false;
+            }
+
+            if (dtTo.Value <= new DateTime(1900, 1, 1))
+            {
+                Utilities.ShowValidation("Date To harus valid");
+                dtTo.Focus();
+                return false;
+            }
+
+
             int customerId = 0;
             int.TryParse(string.Format("{0}", cboBuyer.SelectedValue), out customerId);
-            var invoiceCandidat = SaleItem.GetDetailInvoice(customerId);
+            var invoiceCandidat = SaleItem.GetDetailInvoice(customerId, dtFrom.Value, dtTo.Value);
             if (invoiceCandidat.Count == 0)
             {
                 Utilities.ShowValidation(string.Format("Buyer \"{0}\" tidak punya hutang!", txtCompany.Text));
@@ -246,6 +243,8 @@ namespace Sendang.Rejeki.Transaction
             Invoice item = new Invoice();
             item.Attn = txtAttn.Text;
             item.InvoiceDate = dtTanggal.Value;
+            item.DateFrom = dtFrom.Value;
+            item.DateTo = dtTo.Value;
             item.DueDate = dtDueDate.Value;
             item.CustomerID = cust.ID;
             item.Delivery = txtDelivery.Text;
@@ -360,6 +359,86 @@ namespace Sendang.Rejeki.Transaction
                 this.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             else
                 this.Close();
+        }
+
+        private void btnSearch_Click(object sender, EventArgs e)
+        {
+            if (dtFrom.Value <= new DateTime(1900, 1, 1))
+            {
+                Utilities.ShowValidation("Date From harus valid");
+                dtFrom.Focus();
+                return;
+            }
+
+            if (dtTo.Value <= new DateTime(1900, 1, 1))
+            {
+                Utilities.ShowValidation("Date To harus valid");
+                dtTo.Focus();
+                return;
+            }
+
+            if (cboBuyer.SelectedIndex <= 0)
+            {
+                Utilities.ShowValidation("Buyer tidak boleh kosong");
+                cboBuyer.Focus();
+                return;
+            }
+
+            int customerId = 0;
+            int.TryParse(cboBuyer.SelectedValue.ToString(), out customerId);
+            Customer cust = CustomerItem.GetByID(customerId);
+            if (cust == null)
+            {
+                Utilities.ShowValidation("Buyer tidak valid. Pastikan Buyer terdaftar di menu Master Data --> Customer ");
+                cboBuyer.Focus();
+                return;
+            }
+
+
+            if (string.Format("{0}", InvoceNo).Length > 0)
+            {
+            }
+            else
+            {
+
+                NewInvoiceDetails = SaleItem.GetDetailInvoice(cust.ID, dtFrom.Value, dtTo.Value);
+                if (NewInvoiceDetails.Count > 0)
+                {
+                    DateTime? dueDate = NewInvoiceDetails.Select(t => t.DueDate).Max();
+                    if (dueDate.HasValue) dtDueDate.Value = dueDate.Value;
+
+                    var totalPayment = (from item in NewInvoiceDetails
+                                        select new { item.TotalPayment, item.TransactionID }
+                                       ).Where(t => t.TotalPayment > 0).Distinct().ToList();
+
+                    if (totalPayment.Count > 0)
+                    {
+                        txtTotalPayment.Text = string.Format("Rp. {0:N0}", totalPayment.Sum(t => t.TotalPayment));
+                    }
+                    else
+                    {
+                        txtTotalPayment.Text = string.Format("Rp. {0:N0}", 0);
+                    }
+
+                    txtTotal.Text = string.Format("Rp. {0:N0}", NewInvoiceDetails.Sum(t => t.Amount) - totalPayment.Sum(t => t.TotalPayment));
+                    //ctlTransButton1.SaveButtonEnabled = true;
+
+                    CstmInvoiceDetail detail = new CstmInvoiceDetail();
+                    detail.CatalogName = "Total";
+                    detail.TotalAmount = string.Format("Rp. {0:N0}", NewInvoiceDetails.Sum(t => t.Amount));
+                    NewInvoiceDetails.Add(detail);
+
+
+                    grid.DataSource = NewInvoiceDetails;
+                }
+                else
+                {
+                    txtTotalPayment.Text = string.Format("Rp. {0:N0}", 0);
+                    txtTotal.Text = string.Format("Rp. {0:N0}", 0);
+                    //ctlTransButton1.SaveButtonEnabled = false;
+                    grid.DataSource = NewInvoiceDetails;
+                }
+            }
         }
     }
 }

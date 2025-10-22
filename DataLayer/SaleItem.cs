@@ -11,11 +11,13 @@ namespace DataLayer
 {
     public class SaleItem
     {
-        public static List<CstmInvoiceDetail> GetDetailInvoice(int customerID)
+        public static List<CstmInvoiceDetail> GetDetailInvoice(int customerID, DateTime from, DateTime to)
         {
             IDBHelper ictx = new DBHelper();
             ictx.CommandText = "[Usp_GetDetailInvoice]";
             ictx.AddParameter("@MemberID", customerID);
+            ictx.AddParameter("@DateFrom", from);
+            ictx.AddParameter("@DateTo", to);
             ictx.CommandType = CommandType.StoredProcedure;
             return DBUtil.ExecuteMapper<CstmInvoiceDetail>(ictx, new CstmInvoiceDetail());
         }
@@ -228,6 +230,61 @@ namespace DataLayer
             return DBUtil.ExecuteNonQuery(ictx);
         }
 
+        public static Sale InsertReconcile(Sale item)
+        {
+            Sale itemResult = null;
+            IDBHelper ictx = new DBHelper();
+            try
+            {
+                ictx.BeginTransaction();
+                ictx.CommandText = "[Usp_InsertSaleReconcile]";
+                ictx.CommandType = CommandType.StoredProcedure;
+                ictx.AddParameter("@TransactionID", item.TransactionID);
+                ictx.AddParameter("@TotalPrice", item.TotalPrice);
+                ictx.AddParameter("@TotalQty", item.TotalQty);
+                ictx.AddParameter("@TransactionDate", item.TransactionDate);
+                ictx.AddParameter("@Username", item.Username);
+                ictx.AddParameter("@MemberID", item.MemberID);
+                ictx.AddParameter("@Terminal", item.Terminal);
+                ictx.AddParameter("@TotalPayment", item.TotalPayment);
+                ictx.AddParameter("@TotalPaymentReturn", item.TotalPaymentReturn);
+                ictx.AddParameter("@Notes", item.Notes);
+                ictx.AddParameter("@PaymentType", item.PaymentType);
+                ictx.AddParameter("@ExpiredDate", item.ExpiredDate);
+                itemResult = DBUtil.ExecuteMapper<Sale>(ictx, new Sale()).FirstOrDefault();
+                if (itemResult != null)
+                {
+
+                    foreach (SaleDetail detail in item.Details)
+                    {
+                        ictx.CommandType = CommandType.StoredProcedure;
+                        ictx.CommandText = "[Usp_InsertSaleDetailWithColi]";
+                        ictx.AddParameter("@TransactionID", itemResult.TransactionID);
+                        ictx.AddParameter("@CatalogID", detail.CatalogID);
+                        ictx.AddParameter("@Price", detail.Price);
+                        ictx.AddParameter("@Discount", detail.Discount);
+                        ictx.AddParameter("@Quantity", detail.Quantity);
+                        ictx.AddParameter("@TotalPrice", detail.TotalPrice);
+                        ictx.AddParameter("@Sequence", detail.Sequence);
+                        ictx.AddParameter("@Coli", detail.Coli);
+
+                        int result = DBUtil.ExecuteNonQuery(ictx);
+                    }
+                    ictx.CommitTransaction();
+                }
+
+                itemResult.Details = SaleDetailItem.GetTransID(itemResult.TransactionID);
+            }
+            catch (Exception ex)
+            {
+                itemResult = null;
+                ictx.RollbackTransaction();
+                LogItem.Error(ex);
+            }
+            return itemResult;
+        }
+
+
         public static Sale Insert(Sale item)
         {
             Sale itemResult = null;
@@ -270,6 +327,8 @@ namespace DataLayer
                     }
                     ictx.CommitTransaction();
                 }
+
+                itemResult.Details = SaleDetailItem.GetTransID(itemResult.TransactionID);
             }
             catch (Exception ex)
             {

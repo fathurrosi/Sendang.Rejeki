@@ -136,6 +136,12 @@ namespace Sendang.Rejeki.Encryptor
             #endregion
         }
 
+        private void button1_Click(object sender, EventArgs e)
+        {
+
+            textBox4.Text = Security.DecryptRijndael(textBoxConstring.Text, textBoxCipherText.Text, textBoxSalt.Text);
+        }
+
 
     }
 }

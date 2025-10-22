@@ -67,13 +67,22 @@ namespace DataLayer
             return DBUtil.ExecuteMapper<Customer>(context, new Customer()).FirstOrDefault();
         }
 
-        public static List<Customer> GetByCode(string code)
+        //public static List<Customer> GetAllByCode(string code)
+        //{
+        //    IDBHelper context = new DBHelper();
+        //    context.CommandText = @"[Usp_GetCustomerByCode]";
+        //    context.CommandType = CommandType.StoredProcedure;
+        //    context.AddParameter("@code", code);
+        //    return DBUtil.ExecuteMapper<Customer>(context, new Customer()).FirstOrDefault();
+        //}
+
+        public static Customer GetByCode(string code)
         {
             IDBHelper context = new DBHelper();
             context.CommandText = @"[Usp_GetCustomerByCode]";
             context.CommandType = CommandType.StoredProcedure;
             context.AddParameter("@code", code);
-            return DBUtil.ExecuteMapper<Customer>(context, new Customer());
+            return DBUtil.ExecuteMapper<Customer>(context, new Customer()).FirstOrDefault();
         }
 
         public static List<Customer> GetByName(string fullname)

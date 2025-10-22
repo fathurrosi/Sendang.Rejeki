@@ -38,11 +38,11 @@ namespace Sendang.Rejeki.Master
             }
             else
             {
-                List<Customer> custList = CustomerItem.GetByCode(txtCode.Text.Trim());
-                if (ID > 0)
+                Customer itemOther = CustomerItem.GetByCode(txtCode.Text.Trim());
+                if (ID > 0 && itemOther != null && itemOther.ID != ID)
                 {
                     //Customer item = CustomerItem.GetByID(ID);
-                    Customer itemOther = custList.Where(t => t.ID != ID).FirstOrDefault();
+                    //Customer itemOther = custList.Where(t => t.ID != ID).FirstOrDefault();
                     if (itemOther != null)
                     {
                         Utilities.ShowValidation(string.Format("Maaf, Kode \"{0}\" sudah dipakai oleh customer {1}.\nSilahkan input dengan Kode yang berbeda", txtCode.Text.Trim(), itemOther.FullName));
@@ -50,12 +50,12 @@ namespace Sendang.Rejeki.Master
                         return false;
                     }
                 }
-                else if (custList.Count > 0)
-                {
-                    Utilities.ShowValidation(string.Format("Maaf, Kode \"{0}\" sudah ada dalam database.\nSilahkan input dengan Kode yang berbeda", txtCode.Text.Trim()));
-                    txtCode.Focus();
-                    return false;
-                }
+                //else if (itemOther != null)
+                //{
+                //    Utilities.ShowValidation(string.Format("Maaf, Kode \"{0}\" sudah ada dalam database.\nSilahkan input dengan Kode yang berbeda", txtCode.Text.Trim()));
+                //    txtCode.Focus();
+                //    return false;
+                //}
             }
             //else if (txtDesc.Text.Length == 0) return false;
             //else if (txtNote.Text..cou == 0) return false;

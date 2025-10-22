@@ -65,6 +65,9 @@ namespace DataObject
         public string CreatedBy { get; set; }
         public DateTime? ModifiedDate { get; set; }
         public string ModifiedBy { get; set; }
+
+        public DateTime DateFrom { get; set; }
+        public DateTime DateTo { get; set; }
         public List<Invoice> DatasetToDto(System.Data.DataSet ds)
         {
             List<Invoice> results = new List<Invoice>();
@@ -113,7 +116,7 @@ namespace DataObject
             helper.Total = Convert.ToDecimal(reader["Total"]);
             helper.Status = string.Format("{0}", reader["Status"]);
             helper.StatusDesc = string.Format("{0}", reader["StatusDesc"]);
-            
+
             helper.Delivery = string.Format("{0}", reader["Delivery"]);
             helper.Remark = string.Format("{0}", reader["Remark"]);
             helper.Attn = string.Format("{0}", reader["Attn"]);
@@ -126,6 +129,8 @@ namespace DataObject
             helper.CreatedDate = (reader["CreatedDate"] is System.DBNull) ? new DateTime(1900, 1, 1) : Convert.ToDateTime(reader["CreatedDate"]);
             helper.CreatedBy = reader["CreatedBy"].ToString();
             helper.ModifiedDate = (reader["ModifiedDate"] is System.DBNull) ? (DateTime?)null : Convert.ToDateTime(reader["ModifiedDate"]);
+            helper.DateFrom = (reader["DateFrom"] is System.DBNull) ? new DateTime(1900, 1, 1) : Convert.ToDateTime(reader["DateFrom"]);
+            helper.DateTo = (reader["DateTo"] is System.DBNull) ? new DateTime(1900, 1, 1) : Convert.ToDateTime(reader["DateTo"]);
             helper.ModifiedBy = reader["ModifiedBy"].ToString();
 
             return helper;

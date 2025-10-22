@@ -67,15 +67,24 @@ namespace Sendang.Rejeki.Master
             DialogResult dialogResult = MessageBox.Show("Are you sure want to delete this?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (dialogResult == System.Windows.Forms.DialogResult.Yes)
             {
-                int ID = 0;
-                int.TryParse(string.Format("{0}", grid.Rows[rowIndex].Cells["colID"].Value), out ID);
-                Customer item = CustomerItem.GetByID(ID);
-                int result = CustomerItem.Delete(ID);
-                if (result > 0)
+                try
                 {
-                    Log.Delete(JsonConvert.SerializeObject(item));
-                    Search();
+                    int ID = 0;
+                    int.TryParse(string.Format("{0}", grid.Rows[rowIndex].Cells["colID"].Value), out ID);
+                    Customer item = CustomerItem.GetByID(ID);
+                    int result = CustomerItem.Delete(ID);
+                    if (result > 0)
+                    {
+                        Log.Delete(JsonConvert.SerializeObject(item));
+                        Search();
+                    }
                 }
+                catch (Exception ex)
+                {
+                    Log.Info(ex.ToString());
+                    Utilities.ShowInformation("Customer ini tidak bisa di hapus karena sudah digunakan bebagai referensi di module lain");
+                }
+             
             }
         }
         

@@ -592,10 +592,10 @@ namespace Sendang.Rejeki.Transaction
                     {
                         btnCancel.Text = "Close";
                     }
-                    else
-                    {
-                        DialogResult = System.Windows.Forms.DialogResult.OK;
-                    }
+                    //else
+                    //{
+                    //    DialogResult = System.Windows.Forms.DialogResult.OK;
+                    //}
                 }
             }
             else
@@ -805,7 +805,7 @@ namespace Sendang.Rejeki.Transaction
             //        details.Add(sd);
             //    }
             //}
-
+            
             //f.DataSource = details.OrderBy( t => t.Sequence).ToList();
             f.DataSource = sale.Details;
             f.Params = parameters;
@@ -831,7 +831,7 @@ namespace Sendang.Rejeki.Transaction
             parameters.Add(new ReportParameter("TotalPayed", txtTotalPayed.Text, true));
             parameters.Add(new ReportParameter("TotalReturn", txtReturn.Text, true));
             parameters.Add(new ReportParameter("tglCetak", today.ToString("dd MMM yyyy"), true));
-            
+
             f.ReportName = "Sale";
             f.ReportPath = reportPath;
             f.DataSource = sale.Details;
