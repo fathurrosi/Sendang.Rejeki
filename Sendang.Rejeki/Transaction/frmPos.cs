@@ -164,6 +164,7 @@ namespace Sendang.Rejeki.Transaction
                     return;
                 }
 
+                txtTransNo.ReadOnly = true;
                 btnSave.Text = "Update";
                 txtTransDate.Value = sale.TransactionDate;
                 txtNotes.Text = sale.Notes;
@@ -538,7 +539,7 @@ namespace Sendang.Rejeki.Transaction
             }
             item.Details = details;
 
-            int result = -1;
+            //int result = -1;
 
             txtTotalPrice.Text = Utilities.ToString(item.TotalPrice);
             txtReturn.Text = Utilities.ToString(item.TotalPaymentReturn.HasValue ? item.TotalPaymentReturn.Value : 0);
@@ -558,23 +559,21 @@ namespace Sendang.Rejeki.Transaction
                 }
                 else
                 {
-                    result = SaleItem.Delete(TransactionID);
-                    if (result > 0)
+                    //result = SaleItem.Delete(TransactionID);
+                    //if (result > 0)
+                    //{
+                    item.TransactionID = existingItem.TransactionID;
+                    item.TransactionDate = txtTransDate.Value;
+                    item.ExpiredDate = existingItem.ExpiredDate;
+                    sale = SaleItem.Update(item);
+                    if (sale != null)
                     {
-                        item.TransactionID = txtTransNo.Text.Trim();
-                        item.TransactionDate = txtTransDate.Value;
-                        //item.CustomerName = existingItem.CustomerName;
-                        item.ExpiredDate = existingItem.ExpiredDate;
-                        //item.MemberID = existingItem.MemberID;
-                        sale = SaleItem.Insert(item);
-                        if (sale != null)
-                        {
-                            txtTransNo.Text = sale.TransactionID;
-                            SaleItem.Update(sale.TransactionID, DateTime.Now, item.Username);
-                            Log.Update(string.Format("{0}-{1}", this.Text, string.Format("{0}-{1}", this.Text, JsonConvert.SerializeObject(sale))));
-                            //sale = SaleItem.GetByTransID(item.TransactionID);
-                        }
+                        txtTransNo.Text = sale.TransactionID;
+                        //SaleItem.Update(sale.TransactionID, DateTime.Now, item.Username);
+                        Log.Update(string.Format("{0}-{1}", this.Text, string.Format("{0}-{1}", this.Text, JsonConvert.SerializeObject(sale))));
+                        //sale = SaleItem.GetByTransID(item.TransactionID);
                     }
+                    //}
                 }
             }
             catch (Exception ex)
@@ -805,7 +804,7 @@ namespace Sendang.Rejeki.Transaction
             //        details.Add(sd);
             //    }
             //}
-            
+
             //f.DataSource = details.OrderBy( t => t.Sequence).ToList();
             f.DataSource = sale.Details;
             f.Params = parameters;

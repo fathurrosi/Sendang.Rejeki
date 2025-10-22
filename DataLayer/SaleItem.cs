@@ -86,149 +86,150 @@ namespace DataLayer
             }
             return result;
         }
-        public static int Update(Sale item)
-        {
-            List<SaleDetail> existingDetailList = SaleDetailItem.GetTransID(item.TransactionID);
-            int itemResult = 0;
-            IDBHelper ictx = new DBHelper();
-            try
-            {
-                ictx.BeginTransaction();
-                ictx.CommandText = "Usp_UpdateSale";
-                ictx.CommandType = CommandType.StoredProcedure;
-                ictx.AddParameter("@TransactionID", item.TransactionID);
-                ictx.AddParameter("@TotalPrice", item.TotalPrice);
-                ictx.AddParameter("@TotalQty", item.TotalQty);
-                ictx.AddParameter("@UpdatedBy", item.Username);
-                ictx.AddParameter("@Terminal", item.Terminal);
-                ictx.AddParameter("@TotalPayment", item.TotalPayment);
-                ictx.AddParameter("@TotalPaymentReturn", item.TotalPaymentReturn);
-                ictx.AddParameter("@Notes", item.Notes);
-                ictx.AddParameter("@PaymentType", item.PaymentType);
-                ictx.AddParameter("@UpdatedDate", DateTime.Now);
 
-                itemResult = DBUtil.ExecuteNonQuery(ictx);
-                if (itemResult > 0)
-                {
-                    foreach (SaleDetail detail in item.Details)
-                    {
-                        int result = -1;
-                        SaleDetail existingDetail = existingDetailList.Where(t => t.ID == detail.ID).FirstOrDefault();
-                        if (existingDetail != null)
-                        {
-                            ictx.CommandType = CommandType.StoredProcedure;
-                            ictx.CommandText = @"Usp_UpdateSaleDetail";
-                            ictx.AddParameter("@CatalogID", detail.CatalogID);
-                            ictx.AddParameter("@Price", detail.Price);
-                            ictx.AddParameter("@Discount", detail.Discount);
-                            ictx.AddParameter("@Quantity", detail.Quantity);
-                            ictx.AddParameter("@TotalPrice", detail.TotalPrice);
-                            ictx.AddParameter("@Sequence", detail.Sequence);
-                            ictx.AddParameter("@ID", detail.ID);
-                            result = DBUtil.ExecuteNonQuery(ictx);
-                        }
-                        else
-                        {
-                            ictx.CommandText = @"Usp_InsertSaleDetail";
-                            ictx.CommandType = CommandType.StoredProcedure;
-                            ictx.AddParameter("@TransactionID", item.TransactionID);
-                            ictx.AddParameter("@CatalogID", detail.CatalogID);
-                            ictx.AddParameter("@Price", detail.Price);
-                            ictx.AddParameter("@Discount", detail.Discount);
-                            ictx.AddParameter("@Quantity", detail.Quantity);
-                            ictx.AddParameter("@TotalPrice", detail.TotalPrice);
-                            ictx.AddParameter("@Sequence", detail.Sequence);
-                            result = DBUtil.ExecuteNonQuery(ictx);
-                        }
+        //public static int Update(Sale item)
+        //{
+        //    List<SaleDetail> existingDetailList = SaleDetailItem.GetTransID(item.TransactionID);
+        //    int itemResult = 0;
+        //    IDBHelper ictx = new DBHelper();
+        //    try
+        //    {
+        //        ictx.BeginTransaction();
+        //        ictx.CommandText = "Usp_UpdateSale";
+        //        ictx.CommandType = CommandType.StoredProcedure;
+        //        ictx.AddParameter("@TransactionID", item.TransactionID);
+        //        ictx.AddParameter("@TotalPrice", item.TotalPrice);
+        //        ictx.AddParameter("@TotalQty", item.TotalQty);
+        //        ictx.AddParameter("@UpdatedBy", item.Username);
+        //        ictx.AddParameter("@Terminal", item.Terminal);
+        //        ictx.AddParameter("@TotalPayment", item.TotalPayment);
+        //        ictx.AddParameter("@TotalPaymentReturn", item.TotalPaymentReturn);
+        //        ictx.AddParameter("@Notes", item.Notes);
+        //        ictx.AddParameter("@PaymentType", item.PaymentType);
+        //        ictx.AddParameter("@UpdatedDate", DateTime.Now);
 
-                        if (result == -1)
-                        {
-                            ictx.RollbackTransaction();
-                        }
-                        else
-                        {
-                            #region Update Current Stock
-                            ictx.CommandType = CommandType.StoredProcedure;
-                            //                            ictx.CommandText = @" 
-                            //
-                            //SELECT c.ID AS CatalogID, c.Name AS CatalogName, 
-                            //c.Unit, cs.Stock, cs.StockDate
-                            //FROM Catalog c 
-                            //LEFT JOIN CatalogStock cs ON cs.CatalogID = c.ID
-                            //AND IsActive = 1
-                            //where cs.CatalogID=@CatalogID
-                            //";
-                            ictx.CommandText = "Usp_GetAllCatalogStockByCatalogID";
-                            ictx.AddParameter("@CatalogID", detail.CatalogID);
-                            CurrentStock realStock = DBUtil.ExecuteMapper<CurrentStock>(ictx, new CurrentStock()).FirstOrDefault();
+        //        itemResult = DBUtil.ExecuteNonQuery(ictx);
+        //        if (itemResult > 0)
+        //        {
+        //            foreach (SaleDetail detail in item.Details)
+        //            {
+        //                int result = -1;
+        //                SaleDetail existingDetail = existingDetailList.Where(t => t.ID == detail.ID).FirstOrDefault();
+        //                if (existingDetail != null)
+        //                {
+        //                    ictx.CommandType = CommandType.StoredProcedure;
+        //                    ictx.CommandText = @"Usp_UpdateSaleDetail";
+        //                    ictx.AddParameter("@CatalogID", detail.CatalogID);
+        //                    ictx.AddParameter("@Price", detail.Price);
+        //                    ictx.AddParameter("@Discount", detail.Discount);
+        //                    ictx.AddParameter("@Quantity", detail.Quantity);
+        //                    ictx.AddParameter("@TotalPrice", detail.TotalPrice);
+        //                    ictx.AddParameter("@Sequence", detail.Sequence);
+        //                    ictx.AddParameter("@ID", detail.ID);
+        //                    result = DBUtil.ExecuteNonQuery(ictx);
+        //                }
+        //                else
+        //                {
+        //                    ictx.CommandText = @"Usp_InsertSaleDetail";
+        //                    ictx.CommandType = CommandType.StoredProcedure;
+        //                    ictx.AddParameter("@TransactionID", item.TransactionID);
+        //                    ictx.AddParameter("@CatalogID", detail.CatalogID);
+        //                    ictx.AddParameter("@Price", detail.Price);
+        //                    ictx.AddParameter("@Discount", detail.Discount);
+        //                    ictx.AddParameter("@Quantity", detail.Quantity);
+        //                    ictx.AddParameter("@TotalPrice", detail.TotalPrice);
+        //                    ictx.AddParameter("@Sequence", detail.Sequence);
+        //                    result = DBUtil.ExecuteNonQuery(ictx);
+        //                }
 
-                            #endregion
+        //                if (result == -1)
+        //                {
+        //                    ictx.RollbackTransaction();
+        //                }
+        //                else
+        //                {
+        //                    #region Update Current Stock
+        //                    ictx.CommandType = CommandType.StoredProcedure;
+        //                    //                            ictx.CommandText = @" 
+        //                    //
+        //                    //SELECT c.ID AS CatalogID, c.Name AS CatalogName, 
+        //                    //c.Unit, cs.Stock, cs.StockDate
+        //                    //FROM Catalog c 
+        //                    //LEFT JOIN CatalogStock cs ON cs.CatalogID = c.ID
+        //                    //AND IsActive = 1
+        //                    //where cs.CatalogID=@CatalogID
+        //                    //";
+        //                    ictx.CommandText = "Usp_GetAllCatalogStockByCatalogID";
+        //                    ictx.AddParameter("@CatalogID", detail.CatalogID);
+        //                    CurrentStock realStock = DBUtil.ExecuteMapper<CurrentStock>(ictx, new CurrentStock()).FirstOrDefault();
 
-                            #region Update Catalog Stock
-                            // update stock
-                            //                            ictx.CommandText = @" 
-                            //SELECT * FROM catalogstock WHERE CatalogID=@CatalogID AND StockDate=@StockDate
-                            //                            ";
-                            ictx.CommandType = CommandType.StoredProcedure;
-                            ictx.CommandText = "Usp_GetCatalogStockByDate";
-                            ictx.AddParameter("@CatalogID", detail.CatalogID);
-                            ictx.AddParameter("@StockDate", DateTime.Today);
-                            CatalogStock stockItem = DBUtil.ExecuteMapper<CatalogStock>(ictx, new CatalogStock()).FirstOrDefault();
-                            if (stockItem != null)
-                            {
-                                ictx.CommandType = CommandType.StoredProcedure;
-                                ictx.CommandText = @"Usp_UpdateCatalogStockByDate";
-                                ictx.AddParameter("@CatalogID", detail.CatalogID);
-                                ictx.AddParameter("@Username", item.Username);
-                                ictx.AddParameter("@StockDate", item.TransactionDate.Date);
-                                ictx.AddParameter("@Stock", realStock != null ? realStock.Stock - detail.Quantity : 0 - detail.Quantity);
-                                DBUtil.ExecuteNonQuery(ictx);
-                            }
-                            else
-                            {
-                                ictx.CommandType = CommandType.StoredProcedure;
-                                ictx.CommandText = @"Usp_InsertCatalogStock";
-                                ictx.AddParameter("@CatalogID", detail.CatalogID);
-                                ictx.AddParameter("@Username", item.Username);
-                                ictx.AddParameter("@StockDate", item.TransactionDate.Date);
-                                ictx.AddParameter("@Stock", realStock != null ? realStock.Stock - detail.Quantity : 0 - detail.Quantity);
-                                DBUtil.ExecuteNonQuery(ictx);
-                            }
-                            #endregion
-                        }
-                    }
+        //                    #endregion
 
-                    foreach (SaleDetail existing in existingDetailList)
-                    {
-                        if (item.Details.Where(t => t.ID == existing.ID).Count() == 0)
-                        {
-                            ictx.CommandType = CommandType.StoredProcedure;
-                            ictx.CommandText = "Usp_DeleteSaleDetail";
-                            ictx.AddParameter("@ID", existing.ID);
-                            DBUtil.ExecuteNonQuery(ictx);
-                        }
-                    }
-                    ictx.CommitTransaction();
-                }
-            }
-            catch (Exception ex)
-            {
-                itemResult = -1; ictx.RollbackTransaction();
-                LogItem.Error(ex);
-            }
-            return itemResult;
-        }
+        //                    #region Update Catalog Stock
+        //                    // update stock
+        //                    //                            ictx.CommandText = @" 
+        //                    //SELECT * FROM catalogstock WHERE CatalogID=@CatalogID AND StockDate=@StockDate
+        //                    //                            ";
+        //                    ictx.CommandType = CommandType.StoredProcedure;
+        //                    ictx.CommandText = "Usp_GetCatalogStockByDate";
+        //                    ictx.AddParameter("@CatalogID", detail.CatalogID);
+        //                    ictx.AddParameter("@StockDate", DateTime.Today);
+        //                    CatalogStock stockItem = DBUtil.ExecuteMapper<CatalogStock>(ictx, new CatalogStock()).FirstOrDefault();
+        //                    if (stockItem != null)
+        //                    {
+        //                        ictx.CommandType = CommandType.StoredProcedure;
+        //                        ictx.CommandText = @"Usp_UpdateCatalogStockByDate";
+        //                        ictx.AddParameter("@CatalogID", detail.CatalogID);
+        //                        ictx.AddParameter("@Username", item.Username);
+        //                        ictx.AddParameter("@StockDate", item.TransactionDate.Date);
+        //                        ictx.AddParameter("@Stock", realStock != null ? realStock.Stock - detail.Quantity : 0 - detail.Quantity);
+        //                        DBUtil.ExecuteNonQuery(ictx);
+        //                    }
+        //                    else
+        //                    {
+        //                        ictx.CommandType = CommandType.StoredProcedure;
+        //                        ictx.CommandText = @"Usp_InsertCatalogStock";
+        //                        ictx.AddParameter("@CatalogID", detail.CatalogID);
+        //                        ictx.AddParameter("@Username", item.Username);
+        //                        ictx.AddParameter("@StockDate", item.TransactionDate.Date);
+        //                        ictx.AddParameter("@Stock", realStock != null ? realStock.Stock - detail.Quantity : 0 - detail.Quantity);
+        //                        DBUtil.ExecuteNonQuery(ictx);
+        //                    }
+        //                    #endregion
+        //                }
+        //            }
 
-        public static int Update(string transID, DateTime updatedDate, string updatedBy)
-        {
-            IDBHelper ictx = new DBHelper();
-            ictx.CommandText = "Usp_UpdateSaleBySale";
-            ictx.CommandType = CommandType.StoredProcedure;
-            ictx.AddParameter("@TransactionID", transID);
-            ictx.AddParameter("@UpdatedDate", updatedDate);
-            ictx.AddParameter("@UpdatedBy", updatedBy);
-            return DBUtil.ExecuteNonQuery(ictx);
-        }
+        //            foreach (SaleDetail existing in existingDetailList)
+        //            {
+        //                if (item.Details.Where(t => t.ID == existing.ID).Count() == 0)
+        //                {
+        //                    ictx.CommandType = CommandType.StoredProcedure;
+        //                    ictx.CommandText = "Usp_DeleteSaleDetail";
+        //                    ictx.AddParameter("@ID", existing.ID);
+        //                    DBUtil.ExecuteNonQuery(ictx);
+        //                }
+        //            }
+        //            ictx.CommitTransaction();
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        itemResult = -1; ictx.RollbackTransaction();
+        //        LogItem.Error(ex);
+        //    }
+        //    return itemResult;
+        //}
+
+        //public static int Update(string transID, DateTime updatedDate, string updatedBy)
+        //{
+        //    IDBHelper ictx = new DBHelper();
+        //    ictx.CommandText = "Usp_UpdateSaleBySale";
+        //    ictx.CommandType = CommandType.StoredProcedure;
+        //    ictx.AddParameter("@TransactionID", transID);
+        //    ictx.AddParameter("@UpdatedDate", updatedDate);
+        //    ictx.AddParameter("@UpdatedBy", updatedBy);
+        //    return DBUtil.ExecuteNonQuery(ictx);
+        //}
 
         public static Sale InsertReconcile(Sale item)
         {
@@ -271,9 +272,69 @@ namespace DataLayer
                         int result = DBUtil.ExecuteNonQuery(ictx);
                     }
                     ictx.CommitTransaction();
+                    itemResult.Details = SaleDetailItem.GetTransID(itemResult.TransactionID);
+                }
+            }
+            catch (Exception ex)
+            {
+                itemResult = null;
+                ictx.RollbackTransaction();
+                LogItem.Error(ex);
+            }
+            return itemResult;
+        }
+
+
+        public static Sale Update(Sale item)
+        {
+            Sale itemResult = null;
+            IDBHelper ictx = new DBHelper();
+            try
+            {
+                ictx.BeginTransaction();
+                
+                ictx.CommandText = "Usp_DeleteSaledetailByTransactionID";
+                ictx.CommandType = CommandType.StoredProcedure;
+                ictx.AddParameter("@TransactionID", item.TransactionID);
+                int totalDeleted = DBUtil.ExecuteNonQuery(ictx);
+
+                ictx.CommandType = CommandType.StoredProcedure;
+                ictx.CommandText = "[Usp_UpdateSale]";                
+                ictx.AddParameter("@TransactionID", item.TransactionID);
+                ictx.AddParameter("@TotalPrice", item.TotalPrice);
+                ictx.AddParameter("@TotalQty", item.TotalQty);
+                ictx.AddParameter("@TransactionDate", item.TransactionDate);
+                ictx.AddParameter("@Username", item.Username);
+                ictx.AddParameter("@MemberID", item.MemberID);
+                ictx.AddParameter("@Terminal", item.Terminal);
+                ictx.AddParameter("@TotalPayment", item.TotalPayment);
+                ictx.AddParameter("@TotalPaymentReturn", item.TotalPaymentReturn);
+                ictx.AddParameter("@Notes", item.Notes);
+                ictx.AddParameter("@PaymentType", item.PaymentType);
+                ictx.AddParameter("@ExpiredDate", item.ExpiredDate);
+                itemResult = DBUtil.ExecuteMapper<Sale>(ictx, new Sale()).FirstOrDefault();
+                if (itemResult != null)
+                {
+                    foreach (SaleDetail detail in item.Details)
+                    {
+                        ictx.CommandType = CommandType.StoredProcedure;
+                        ictx.CommandText = "[Usp_InsertSaleDetailWithColi]";
+                        ictx.AddParameter("@TransactionID", itemResult.TransactionID);
+                        ictx.AddParameter("@CatalogID", detail.CatalogID);
+                        ictx.AddParameter("@Price", detail.Price);
+                        ictx.AddParameter("@Discount", detail.Discount);
+                        ictx.AddParameter("@Quantity", detail.Quantity);
+                        ictx.AddParameter("@TotalPrice", detail.TotalPrice);
+                        ictx.AddParameter("@Sequence", detail.Sequence);
+                        ictx.AddParameter("@Coli", detail.Coli);
+
+                        int result = DBUtil.ExecuteNonQuery(ictx);
+                    }
+                    ictx.CommitTransaction();
+                    itemResult.Details = SaleDetailItem.GetTransID(itemResult.TransactionID);
                 }
 
-                itemResult.Details = SaleDetailItem.GetTransID(itemResult.TransactionID);
+               
             }
             catch (Exception ex)
             {
@@ -326,9 +387,8 @@ namespace DataLayer
                         int result = DBUtil.ExecuteNonQuery(ictx);
                     }
                     ictx.CommitTransaction();
+                    itemResult.Details = SaleDetailItem.GetTransID(itemResult.TransactionID);
                 }
-
-                itemResult.Details = SaleDetailItem.GetTransID(itemResult.TransactionID);
             }
             catch (Exception ex)
             {
