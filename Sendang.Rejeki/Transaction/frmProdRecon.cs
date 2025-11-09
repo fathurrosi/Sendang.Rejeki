@@ -1,41 +1,53 @@
-﻿using System;
+﻿using DataLayer;
+using DataObject;
+using LogicLayer;
+using Newtonsoft.Json;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using DataLayer;
-using DataObject;
-using LogicLayer;
-using Newtonsoft.Json;
 
 namespace Sendang.Rejeki.Transaction
 {
-    public partial class frmReconcile : Form
+    public partial class frmProdRecon : Form
     {
-        public frmReconcile()
+        public frmProdRecon()
         {
             InitializeComponent();
         }
 
-        private void frmReconcile_Load(object sender, EventArgs e)
+        private void frmProdRecon_Load(object sender, EventArgs e)
         {
+            label13.Text = "Price/Unit = HPP + (HPP x Biaya Penyusutan(1-4)%) + Biaya Produksi" + Environment.NewLine + "Tekan tombol Procces jika anda sudah merasa yakin.";
             //List<Catalog> productList = new List<Catalog>();
             List<Catalog> itemList = CatalogItem.GetItems();
-            List<Catalog> productList = CatalogItem.GetProducts();
-            //productList.AddRange(catalogList);
+            List<Catalog> productList = CatalogItem.GetItems();
+
+            itemList.Insert(0, new Catalog() { ID = 0, Name = "", Type = "Item" });
             cboCatalog.DataSource = null;
             cboCatalog.DisplayMember = "Name"; //Name column of contact datasource
             cboCatalog.ValueMember = "ID";//Value column of contact datasource        
             cboCatalog.DataSource = itemList;
 
-            productList.Insert(0, new Catalog() { ID = 0, Name = "", Type = "Product" });
+            productList.Insert(0, new Catalog() { ID = 0, Name = "", Type = "Item" });
             cboProduct.DataSource = null;
             cboProduct.DisplayMember = "Name"; //Name column of contact datasource
             cboProduct.ValueMember = "ID";//Value column of contact datasource        
             cboProduct.DataSource = productList;
+
+            List<Options> BiayaPenyusutanList = OptionItem.GetOptionsByName("BiayaPenyusutan");
+            BiayaPenyusutanList.Insert(0, new Options() { ValueMember = "0", DisplayMember = "--Pilih--", Name = "BiayaPenyusutan" });
+
+            cboBiayaPenyusutan.DataSource = BiayaPenyusutanList;
+            cboBiayaPenyusutan.ValueMember = "ValueMember";
+            cboBiayaPenyusutan.DisplayMember = "DisplayMember";
+
 
             cboUnit.Items.Clear();
             cboUnit.Items.AddRange(Config.GetCatalogUnit());
@@ -57,7 +69,6 @@ namespace Sendang.Rejeki.Transaction
 
                     txtQty.Text = itemDetail.CatalogQty.ToString();
                     txtPricePerUnit.Text = Utilities.FormatToMoney(itemDetail.CatalogPrice);
-                    txtProductPricePerUnit.Text = Utilities.FormatToMoney(itemDetail.CatalogPrice);
                     Catalog cat = CatalogItem.GetByID(itemDetail.CatalogID);
                     if (cat != null)
                     {
@@ -73,25 +84,19 @@ namespace Sendang.Rejeki.Transaction
                     {
                         cboUnit.SelectedValue = cat.Unit;
                     }
+
+                    cboBiayaPenyusutan.SelectedValue = itemDetail.penyusutan;
+                    txtBiayaPenyusutan.Text = Utilities.ToString(itemDetail.biayapenyusutan, "N2");
+                    txtBiayaProduksi.Text = Utilities.ToString(itemDetail.biayaproduksi, "N2");
+                    txtLastHPP.Text = Utilities.ToString(itemDetail.hpp, "N2");
+
                 }
-
-                //cboCatalog.Enabled = false;
-                //txtDate.Enabled = false;
-                //txtQty.Enabled = false;
-                //txtPricePerUnit.Enabled = false;
-                //txtCatalogSellPricePerUnit.Enabled = false;
-                //txtUnit.Enabled = false;
-                //cboProduct.Enabled = false;
-                //txtProductPricePerUnit.Enabled = false;
-                //txtProductQty.Enabled = false;
-                //txtTransDate.Enabled = false;
-                //cboUnit.Enabled = false;
-
             }
         }
 
         private void cboCatalog_SelectedIndexChanged(object sender, EventArgs e)
         {
+            catalogStock = 0;
             ComboBox cbo = (ComboBox)sender;
             Catalog c = (Catalog)cbo.SelectedItem;
             if (c != null)
@@ -103,15 +108,22 @@ namespace Sendang.Rejeki.Transaction
                     decimal price = list.Sum(t => t.Price) / list.Count;
                     txtPricePerUnit.Text = string.Format("{0:N2}", price);
                     txtDate.Text = string.Format("{0:dd MMM yyyy}", detailItem.PurchaseDate);
-                    txtProductPricePerUnit.Text = string.Format("{0:N2}", price);
+                    //txtProductPricePerUnit.Text = string.Format("{0:N2}", price);
                 }
                 else
                 {
                     txtPricePerUnit.Text = string.Format("{0:N2}", 0);
                     txtDate.Text = string.Format("{0:dd MMM yyyy}", DateTime.Now);
-                    txtProductPricePerUnit.Text = string.Format("{0:N2}", 0);
+                    //txtProductPricePerUnit.Text = string.Format("{0:N2}", 0);
                 }
                 txtUnit.Text = c.Unit;
+
+                CatalogStock cs = CatalogStockItem.GetActiveByCatalogID(c.ID);
+                if (cs != null)
+                {
+                    catalogStock = cs.Stock;
+                }
+                txtStock.Text = catalogStock.ToString();
             }
         }
 
@@ -121,67 +133,114 @@ namespace Sendang.Rejeki.Transaction
             decimal prodQty = 0;
             decimal catalogPricePerUnit = 0;
             decimal productPricePerUnit = 0;
+
+            if (string.Format("{0}", cboCatalog.Text).Length == 0)
+            {
+                Utilities.ShowValidation("Catalog tidak boleh kosong!");
+                cboCatalog.Focus();
+                return;
+            }
+           
+            if (!decimal.TryParse(txtQty.Text, out catQty))
+            {
+                Utilities.ShowValidation(string.Format("Tentukan Quantity {0}!", cboCatalog.SelectedItem.ToString()));
+                txtQty.Focus();
+                return;
+            }
+            if (catQty <= 0)
+            {
+                Utilities.ShowValidation(string.Format("Tentukan Quantity {0}!", cboCatalog.SelectedItem.ToString()));
+                txtQty.Focus();
+                return;
+            }
+
+            if (catalogStock < catQty)
+            {
+                Utilities.ShowValidation("Stok Catalog tidak mencukupi!");
+                txtQty.Focus();
+                return;
+            }
+
             if (string.Format("{0}", cboProduct.Text).Length == 0)
             {
                 Utilities.ShowValidation("Product tidak boleh kosong!");
                 cboProduct.Focus();
                 return;
             }
-            else if (!decimal.TryParse(txtQty.Text, out catQty))
-            {
-                Utilities.ShowValidation(string.Format("Tentukan jumlah {0}!", cboCatalog.SelectedItem.ToString()));
-                txtQty.Focus();
-                return;
-            }
-            else if (catQty <= 0)
-            {
-                Utilities.ShowValidation(string.Format("Tentukan jumlah {0}!", cboCatalog.SelectedItem.ToString()));
-                txtQty.Focus();
-                return;
-            }
-            else if (txtTransDate.Value == null)
+
+            if (txtTransDate.Value == null)
             {
                 Utilities.ShowValidation(string.Format("Pilih Tanggal transaksi {0}!", cboProduct.SelectedItem.ToString()));
                 txtTransDate.Focus();
                 return;
             }
-            else if (cboUnit.Text.Trim().Length == 0)
+            if (cboUnit.Text.Trim().Length == 0)
             {
                 Utilities.ShowValidation(string.Format("Tentukan satuan {0}!", cboProduct.SelectedItem.ToString()));
                 cboUnit.Focus();
                 return;
             }
-            else if (!decimal.TryParse(txtProductPricePerUnit.Text, out catalogPricePerUnit))
+            if (!decimal.TryParse(txtProductPricePerUnit.Text, out catalogPricePerUnit))
             {
                 Utilities.ShowValidation(string.Format("Tentukan harga {0}!", cboCatalog.Text));
                 txtProductPricePerUnit.Focus();
                 return;
             }
 
-            else if (!decimal.TryParse(txtProductQty.Text, out prodQty))
+            if (!decimal.TryParse(txtProductQty.Text, out prodQty))
             {
                 Utilities.ShowValidation(string.Format("Tentukan jumlah {0}!", cboProduct.Text));
                 txtProductQty.Focus();
                 return;
             }
-            else if (prodQty <= 0)
+            if (prodQty <= 0)
             {
                 Utilities.ShowValidation(string.Format("Tentukan jumlah {0}!", cboProduct.Text));
                 txtProductQty.Focus();
                 return;
             }
-            else if (!decimal.TryParse(txtProductPricePerUnit.Text, out productPricePerUnit))
+            if (!decimal.TryParse(txtProductPricePerUnit.Text, out productPricePerUnit))
             {
                 Utilities.ShowValidation(string.Format("Tentukan harga {0}!", cboProduct.Text));
                 txtProductPricePerUnit.Focus();
                 return;
             }
-            else if (productPricePerUnit <= 0)
+            if (productPricePerUnit <= 0)
             {
                 Utilities.ShowValidation(string.Format("Tentukan harga {0}!", cboProduct.Text));
                 txtProductPricePerUnit.Focus();
                 return;
             }
+
+            if (cboCatalog.SelectedValue == null || (int)cboCatalog.SelectedValue == 0)
+            {
+                Utilities.ShowValidation("Pilih Item terlebih dahulu!");
+                cboProduct.SelectedValue = 0;
+                cboProduct.Focus();
+                return;
+            }
+
+            if (cboCatalog.SelectedValue != null && (int)cboCatalog.SelectedValue > 0)
+            {
+                Catalog catSelected = (Catalog)cboCatalog.SelectedItem;
+                Catalog c = (Catalog)cboProduct.SelectedItem;
+                if (c != null && c.ID == catSelected.ID)
+                {
+                    Utilities.ShowValidation("Catalog Tujuan tidak boleh sama dengan Catalog Sumber!");
+                    cboProduct.SelectedValue = 0;
+                    cboProduct.Focus();
+                    return;
+                }
+            }
+
+            if (HPP <= 0)
+            {
+                Utilities.ShowValidation(string.Format("Tentukan HPP {0}!", cboProduct.Text));
+                txtProductPricePerUnit.Focus();
+                return;
+            }
+
+
 
             Catalog product = null;
             if (cboProduct.SelectedValue == null &&
@@ -190,7 +249,7 @@ namespace Sendang.Rejeki.Transaction
                 product = CatalogItem.GetCatalog(cboProduct.Text.Trim(), cboUnit.Text.Trim());
                 if (product == null)
                 {
-                    product = CatalogItem.Insert(cboProduct.Text, cboUnit.Text, string.Empty, string.Empty, null, Utilities.Username, "Product");
+                    product = CatalogItem.Insert(cboProduct.Text, cboUnit.Text, string.Empty, string.Empty, null, Utilities.Username, "Item");
                     Log.Insert(string.Format("{0}-{1}", this.Text, JsonConvert.SerializeObject(product)));
                     List<Catalog> productList = (List<Catalog>)cboProduct.DataSource;
                     productList.Add(product);
@@ -225,6 +284,11 @@ namespace Sendang.Rejeki.Transaction
             detail.ProductPrice = productPricePerUnit;
             detail.ProductQty = prodQty;
             detail.ProductUnit = product.Unit;
+            detail.penyusutan = string.Format("{0}", cboBiayaPenyusutan.SelectedValue);
+            detail.hpp = HPP;
+            detail.biayapenyusutan = HPP * biayaPenyusutan;
+            detail.biayaproduksi = biayaProduksi;
+
             string desc = string.Format("{0:N2}{1} {2} ----> {3:N2}{4} {5}.", catQty, cat.Unit, cat.ToString(), prodQty, product.Unit, product.ToString());
             DialogResult dialogResult = MessageBox.Show("Are you sure want to procces this?\nProccessing this would update current stock", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (dialogResult == System.Windows.Forms.DialogResult.Yes)
@@ -234,7 +298,7 @@ namespace Sendang.Rejeki.Transaction
                     int deleteResult = ReconcileItem.Delete(ReconcileID);
                     if (deleteResult > 0)
                     {
-                        Reconcile result = ReconcileItem.Insert(txtTransDate.Value, desc, detail, 0);
+                        Reconcile result = ReconcileItem.Insert(txtTransDate.Value, desc, detail, 1);
                         if (result != null)
                         {
                             this.DialogResult = System.Windows.Forms.DialogResult.OK;
@@ -250,7 +314,7 @@ namespace Sendang.Rejeki.Transaction
                 else
                 {
 
-                    Reconcile result = ReconcileItem.Insert(txtTransDate.Value, desc, detail, 0);
+                    Reconcile result = ReconcileItem.Insert(txtTransDate.Value, desc, detail, 1);
                     if (result != null)
                     {
                         this.DialogResult = System.Windows.Forms.DialogResult.OK;
@@ -270,20 +334,57 @@ namespace Sendang.Rejeki.Transaction
             this.Close();
         }
 
+        decimal itemPricePerUnit = 0;
+        decimal HPP = 0;
+        decimal biayaPenyusutan = 0;
+        decimal biayaProduksi = 0;
+        decimal catalogStock = 0;
+        void calculatePrice()
+        {
+            /*
+              RUMUS
+              harga price dihitung  = (HPP 0.9(terakhir) * Biaya penyusutan(memilih antar 1 - 4 %)) +Biaya Produksi(bisa ditulis manual))
+              */
+
+            decimal.TryParse(Utilities.RawNumberFormat(txtProductPricePerUnit.Text), out itemPricePerUnit);
+            decimal.TryParse(Utilities.RawNumberFormat(txtLastHPP.Text), out HPP);
+            if (cboBiayaPenyusutan.SelectedValue != null)
+                decimal.TryParse(cboBiayaPenyusutan.SelectedValue.ToString(), out biayaPenyusutan);
+            decimal.TryParse(Utilities.RawNumberFormat(txtBiayaProduksi.Text), out biayaProduksi);
+
+            itemPricePerUnit = HPP + (HPP * biayaPenyusutan) + biayaProduksi;
+
+            txtBiayaPenyusutan.Text = Utilities.ToString(HPP * biayaPenyusutan, "N2");
+
+            txtProductPricePerUnit.Text = Utilities.ToString(itemPricePerUnit);
+        }
+
         private void cboProduct_SelectedIndexChanged(object sender, EventArgs e)
         {
             ComboBox cbo = (ComboBox)sender;
             Catalog c = (Catalog)cbo.SelectedItem;
+
+
+
             if (c != null && c.ID > 0)
             {
+                cstmHPP lastHPP = HPPItem.GetLastHpp(c.ID, DateTime.Now);
+                if (lastHPP == null)
+                {
+                    lastHPP = new cstmHPP() { HPP = 0 };
+                }
+                txtLastHPP.Text = string.Format("{0:N0}", lastHPP.HPP);
                 cboUnit.Text = c.Unit;
                 cboUnit.Enabled = false;
+
             }
             else
             {
+                txtLastHPP.Text = "0";
                 cboUnit.Text = "";
                 cboUnit.Enabled = true;
             }
+            calculatePrice();
         }
 
 
@@ -305,47 +406,27 @@ namespace Sendang.Rejeki.Transaction
         }
         void tb_KeyUp(object sender, KeyEventArgs e)
         {
-            Recalculate();
-        }
-
-        private void Recalculate()
-        {
-            //decimal productQty = 0;
-            //decimal productPricePerUnit = 0;
-            //decimal catalogSellPricePerUnit = 0;
-            //decimal catalogQty = 0;
-            //decimal.TryParse(txtQty.Text, out catalogQty);
-            //decimal.TryParse(txtProductQty.Text, out productQty);
-            ////decimal.TryParse(txtProductPricePerUnit.Text, out productPricePerUnit);
-            //decimal.TryParse(txtCatalogSellPricePerUnit.Text, out catalogSellPricePerUnit);
-
-            //productPricePerUnit = (productQty > 0) ? (catalogSellPricePerUnit * catalogQty) / productQty : 0;
-            //if (productPricePerUnit > 0)
-            //{
-            //    txtProductPricePerUnit.Text = Utilities.CorrectFormat(string.Format("{0}", productPricePerUnit));
-            //}
-
-        }
-        void tb_Leave(object sender, EventArgs e)
-        {
             TextBox tb = (TextBox)sender;
-
             if (tb != null)
             {
-                tb.Text = (string.Format("{0}", tb.Name).ToLower() == "txtProductQty".ToLower() || string.Format("{0}", tb.Name).ToLower() == "txtQty".ToLower()) ? Utilities.CorrectFormat(tb.Text, "N2") : Utilities.CorrectFormat(tb.Text);
-                if (tb.Name == "txtProductQty" || tb.Name == "txtCatalogSellPricePerUnit")
-                {
-                    Recalculate();
-                }
+                calculatePrice();
             }
         }
 
-        private void textBox2_TextChanged(object sender, EventArgs e)
+
+        void tb_Leave(object sender, EventArgs e)
         {
-
+            TextBox tb = (TextBox)sender;
+            if (tb != null)
+            {
+                calculatePrice();
+            }
         }
-
-
         public string ReconcileID { get; set; }
+
+        private void cboBiayaPenyusutan_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            calculatePrice();
+        }
     }
 }

@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Sendang.Rejeki</RootNamespace>
     <AssemblyName>Sendang.Rejeki</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
@@ -37,6 +37,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -46,6 +47,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="DBHelper, Version=1.0.1.4, Culture=neutral, processorArchitecture=MSIL">
@@ -304,6 +306,24 @@
     </Compile>
     <Compile Include="Report\frmTotalSalesPerCustomer .Designer.cs">
       <DependentUpon>frmTotalSalesPerCustomer .cs</DependentUpon>
+    </Compile>
+    <Compile Include="TestBarcode.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TestBarcode.Designer.cs">
+      <DependentUpon>TestBarcode.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Transaction\frmProdRecon.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Transaction\frmProdRecon.Designer.cs">
+      <DependentUpon>frmProdRecon.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Transaction\frmProdReconList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Transaction\frmProdReconList.Designer.cs">
+      <DependentUpon>frmProdReconList.cs</DependentUpon>
     </Compile>
     <Compile Include="Transaction\frmAccountReceivable.cs">
       <SubType>Form</SubType>
@@ -620,6 +640,15 @@
     <EmbeddedResource Include="Report\TotalSalesPerItemPerMonth.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TestBarcode.resx">
+      <DependentUpon>TestBarcode.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Transaction\frmProdRecon.resx">
+      <DependentUpon>frmProdRecon.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Transaction\frmProdReconList.resx">
+      <DependentUpon>frmProdReconList.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Transaction\frmAccountReceivable.resx">
       <DependentUpon>frmAccountReceivable.cs</DependentUpon>

@@ -24,6 +24,12 @@ namespace DataObject
         public DateTime? ModifiedDate { get; set; }
         public int ReconcileID { get; set; }
         public DateTime? CatalogPriceDate { get; set; }
+        public string penyusutan { get; set; }
+
+        public decimal hpp { get; set; }
+        public decimal biayaproduksi { get; set; }
+        public decimal biayapenyusutan { get; set; }        
+
         public ReconcileDetail Map(System.Data.IDataReader reader)
         {
             ReconcileDetail obj = new ReconcileDetail();
@@ -40,6 +46,11 @@ namespace DataObject
             obj.ModifiedDate = reader["ModifiedDate"] is DBNull ? (DateTime?)null : Convert.ToDateTime(reader["ModifiedDate"]);
             obj.CatalogPriceDate = reader["CatalogPriceDate"] is DBNull ? (DateTime?)null : Convert.ToDateTime(reader["CatalogPriceDate"]);
             obj.ReconcileID = Convert.ToInt32(reader["ReconcileID"]);
+
+            obj.penyusutan = string.Format("{0}", reader["penyusutan"]);
+            obj.hpp = reader["hpp"] is DBNull ? 0 : Convert.ToDecimal(reader["hpp"]);
+            obj.biayaproduksi = reader["biayaproduksi"] is DBNull ? 0 : Convert.ToDecimal(reader["biayaproduksi"]);
+            obj.biayapenyusutan = reader["biayapenyusutan"] is DBNull ? 0 : Convert.ToDecimal(reader["biayapenyusutan"]);
             return obj;
         }
     }

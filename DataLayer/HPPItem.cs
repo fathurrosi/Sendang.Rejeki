@@ -376,5 +376,10 @@ namespace DataLayer
             context.CommandType =   CommandType.StoredProcedure;;
             return DBUtil.ExecuteNonQuery(context);
         }
+
+        public static HPPItem GetLastHPPByCatalogID(int iD)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

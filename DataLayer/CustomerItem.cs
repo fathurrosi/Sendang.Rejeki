@@ -118,7 +118,7 @@ namespace DataLayer
             return list;
         }
 
-        //        public static List<Customer> GetPaging(string text, int offset, int pageSize)
+        //        public static List<Customer> GetPagingItemToProduct(string text, int offset, int pageSize)
         //        {
 
         //            string query = @"

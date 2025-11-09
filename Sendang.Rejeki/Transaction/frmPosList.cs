@@ -28,7 +28,7 @@ namespace Sendang.Rejeki.Transaction
 
         //void LoadData(string text, int offset, int pageSize)
         //{
-        //    List<Sale> list = SaleItem.GetPaging(text, offset, pageSize);
+        //    List<Sale> list = SaleItem.GetPagingItemToProduct(text, offset, pageSize);
         //    grid.AutoGenerateColumns = false;
         //    grid.DataSource = list.OrderByDescending( t => t.TransactionDate).ToList();
         //    ctlFooter1.TotalRows = SaleItem.GetRecordCount(text);

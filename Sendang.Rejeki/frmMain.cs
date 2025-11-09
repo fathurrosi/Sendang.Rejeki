@@ -77,6 +77,8 @@ namespace Sendang.Rejeki
                     activeForm = new frmStocks(); break;
                 case "recon":
                     activeForm = new frmReconcileList(); break;
+                case "recon_item":
+                    activeForm = new frmProdReconList(); break;
                 case "hpp":
                     activeForm = new frmRptHPP(); break;
                 case "genhpp":

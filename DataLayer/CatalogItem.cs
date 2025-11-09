@@ -18,6 +18,14 @@ namespace DataLayer
             return DBUtil.ExecuteMapper<Catalog>(context, new Catalog());
         }
 
+        public static List<Catalog> GetProducts()
+        {
+            IDBHelper context = new DBHelper();
+            context.CommandText = "Usp_GetCatalogProduct";
+            context.CommandType = CommandType.StoredProcedure;
+            return DBUtil.ExecuteMapper<Catalog>(context, new Catalog());
+        }
+
         public static List<Catalog> GetAll()
         {
             IDBHelper context = new DBHelper();

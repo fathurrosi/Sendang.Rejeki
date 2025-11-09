@@ -38,7 +38,21 @@ namespace DataLayer
 
 
 
-        public static List<Reconcile> GetPaging(string text, int pageIndex, int pageSize, out int totalRecord)
+        public static List<Reconcile> GetPagingItemToItem(string text, int pageIndex, int pageSize, out int totalRecord)
+        {
+            IDBHelper context = new DBHelper();
+            context.CommandText = "[Usp_GetReconcileItemPaging]";
+            context.CommandType = CommandType.StoredProcedure;
+            context.AddParameter("@text", text);
+            context.AddParameter("@pageSize", pageSize);
+            context.AddParameter("@pageIndex", pageIndex);
+            context.AddParameter("@totalRecord", 0, ParameterDirection.Output);
+            List<Reconcile> list = DBUtil.ExecuteMapper<Reconcile>(context, new Reconcile(), out totalRecord);
+            return list;
+        }
+
+
+        public static List<Reconcile> GetPagingItemToProduct(string text, int pageIndex, int pageSize, out int totalRecord)
         {
             IDBHelper context = new DBHelper();
             context.CommandText = "[Usp_GetReconcilePaging]";
@@ -51,40 +65,9 @@ namespace DataLayer
             return list;
         }
 
-        //        public static int GetRecordCount(string text)
-        //        {
-        //            int result = -1;
-        //            IDBHelper context = new DBHelper();
-        //            context.CommandText = @"SELECT  count(1) FROM reconcile
-        //WHERE Description LIKE CONCAT ('%', @text ,'%') ";
-        //            context.CommandType = CommandType.StoredProcedure;
-        //            context.AddParameter("@text", text);
-
-        //            context.CommandType = CommandType.StoredProcedure;
-        //            object obj = DBUtil.ExecuteScalar(context);
-        //            if (obj != null)
-        //                int.TryParse(obj.ToString(), out result);
-        //            return result;
-        //        }
-
-        public static Reconcile Insert(DateTime ProccessDate, string Description, ReconcileDetail detail)
+        public static Reconcile Insert(DateTime ProccessDate, string Description, ReconcileDetail detail, int reconType)
         {
             Reconcile reconcile = null;
-            //            string sql = @"
-            //
-            //INSERT INTO reconcile 
-            //	( 
-            //	ProccessDate, 
-            //	Description
-            //	)
-            //	VALUES
-            //	(
-            //	@ProccessDate, 
-            //	@Description
-            //	);
-            //
-            //SELECT * FROM reconcile WHERE id = LAST_INSERT_ID();
-            //";
             IDBHelper ictx = new DBHelper();
             try
             {
@@ -97,33 +80,6 @@ namespace DataLayer
                 reconcile = DBUtil.ExecuteMapper<Reconcile>(ictx, new Reconcile()).FirstOrDefault();
                 if (reconcile != null)
                 {
-                    //                    sql = @"
-                    //
-                    //INSERT INTO reconciledetail 
-                    //	(
-                    //	CatalogID, 
-                    //	CatalogQty, 
-                    //	CatalogPrice, 
-                    //	ProductID, 
-                    //	ProductPrice, 
-                    //	ProductQty, 
-                    //	CreatedBy, 
-                    //	CreatedDate, 
-                    //	ReconcileID,CatalogPriceDate
-                    //	)
-                    //	VALUES
-                    //	(
-                    //	@CatalogID, 
-                    //	@CatalogQty, 
-                    //	@CatalogPrice, 
-                    //	@ProductID, 
-                    //	@ProductPrice, 
-                    //	@ProductQty, 
-                    //	@CreatedBy, 
-                    //	@CreatedDate, 
-                    //	@ReconcileID,@CatalogPriceDate
-                    //	);
-                    //";
                     ictx.CommandText = "Usp_InsertReconcileDetail";
                     ictx.CommandType = CommandType.StoredProcedure;
                     ictx.AddParameter("@ReconcileID", reconcile.ID);
@@ -136,7 +92,11 @@ namespace DataLayer
                     ictx.AddParameter("@CreatedBy", detail.CreatedBy);
                     ictx.AddParameter("@CreatedDate", detail.CreatedDate);
                     ictx.AddParameter("@CatalogPriceDate", detail.CatalogPriceDate);
-                    //ictx.AddParameter("@ModifiedDate", detail.ModifiedDate);
+                    ictx.AddParameter("@hpp", detail.hpp);
+                    ictx.AddParameter("@biayaproduksi", detail.biayaproduksi);
+                    ictx.AddParameter("@penyusutan", detail.penyusutan);
+                    ictx.AddParameter("@biayapenyusutan", detail.biayapenyusutan);
+
                     int result = DBUtil.ExecuteNonQuery(ictx);
                     if (result > 0)
                     {
@@ -166,46 +126,53 @@ namespace DataLayer
 
                         PurchaseItem.SaveStock(purchaseItem);
 
-                        //int saleIndex = SaleItem.GetNewIndex(ProccessDate);
-                        string TransNo = string.Format("{0:yyyyMMddHHmmssffff}{1}", DateTime.Now, reconcile.ID); //string.Format((saleIndex <= 1000) ? "{0:ddMMyyyy}{1:000}" : "{0:ddMMyyyy}{1:0000}", ProccessDate, saleIndex);
-                        Sale saleItem = new Sale();
-                        saleItem.TransactionID = TransNo;
-                        saleItem.TransactionDate = ProccessDate;
+                        string TransNo = "";
+                        if (reconType != 1)
+                        {
+                            TransNo = string.Format("{0:yyyyMMddHHmmssffff}{1}", DateTime.Now, reconcile.ID);
+                            Sale saleItem = new Sale();
+                            saleItem.TransactionID = TransNo;
+                            saleItem.TransactionDate = ProccessDate;
 
-                        List<SaleDetail> saleDetails = new List<SaleDetail>();
-                        SaleDetail saleDetail = new SaleDetail();
+                            List<SaleDetail> saleDetails = new List<SaleDetail>();
+                            SaleDetail saleDetail = new SaleDetail();
 
-                        saleDetail.Discount = 0;
-                        saleDetail.Price = detail.CatalogPrice;
-                        saleDetail.Quantity = detail.CatalogQty;
-                        saleDetail.TotalPrice = detail.CatalogPrice * detail.CatalogQty;
-                        saleDetail.TransactionID = TransNo;
-                        saleDetail.CatalogID = detail.CatalogID;
-                        saleDetail.Sequence = 1;
+                            saleDetail.Discount = 0;
+                            saleDetail.Price = detail.CatalogPrice;
+                            saleDetail.Quantity = detail.CatalogQty;
+                            saleDetail.TotalPrice = detail.CatalogPrice * detail.CatalogQty;
+                            saleDetail.TransactionID = TransNo;
+                            saleDetail.CatalogID = detail.CatalogID;
+                            saleDetail.Sequence = 1;
 
-                        saleDetail.Unit = detail.CatalogUnit;
-                        saleDetails.Add(saleDetail);
-                        //saleItem.MemberID = 0;
-                        saleItem.TotalQty = string.Format("{0:N2}({1})", detail.CatalogQty, detail.CatalogUnit);
-                        //saleItem.PaymentType = paymentTipe;
-                        saleItem.Tax = 0;
-                        //saleItem.Terminal = Utilities.GetComputerName();
-                        saleItem.Username = creator;
-                        saleItem.TransactionDate = ProccessDate;
-                        saleItem.TotalPrice = saleDetail.TotalPrice;
-                        saleItem.TotalPaymentReturn = 0;
-                        saleItem.TotalPayment = saleDetail.TotalPrice;
+                            saleDetail.Unit = detail.CatalogUnit;
+                            saleDetails.Add(saleDetail);
+                            saleItem.TotalQty = string.Format("{0:N2}({1})", detail.CatalogQty, detail.CatalogUnit);
+                            saleItem.Tax = 0;
+                            saleItem.Username = creator;
+                            saleItem.TransactionDate = ProccessDate;
+                            saleItem.TotalPrice = saleDetail.TotalPrice;
+                            saleItem.TotalPaymentReturn = 0;
+                            saleItem.TotalPayment = saleDetail.TotalPrice;
 
-                        saleItem.Details = saleDetails;
-                        Sale saleItemResult = SaleItem.InsertReconcile(saleItem);
+                            saleItem.Details = saleDetails;
+                            Sale saleItemResult = SaleItem.InsertReconcile(saleItem);
+                            TransNo = saleItemResult.TransactionID;
+                        }
+                        else
+                        {
+                            KurangiStok(detail.CatalogID, detail.CatalogQty, detail.CreatedBy);
+                        }
 
                         ictx.CommandText = "Usp_UpdateReconcile";
                         ictx.CommandType = CommandType.StoredProcedure;
-                        ictx.AddParameter("@transactionid", saleItemResult.TransactionID);
+                        ictx.AddParameter("@transactionid", TransNo);
                         ictx.AddParameter("@purchaseno", purchaseItem.PurchaseNo);
+                        ictx.AddParameter("@reconType", reconType);
                         ictx.AddParameter("@ID", reconcile.ID);
                         DBUtil.ExecuteNonQuery(ictx);
                         ictx.CommitTransaction();
+
                     }
                 }
             }
@@ -216,6 +183,30 @@ namespace DataLayer
                 LogItem.Error(ex);
             }
             return reconcile;
+        }
+
+        static void KurangiStok(int catalogId, decimal stock, string username)
+        {
+            decimal CurrentStock = 0;
+            decimal CurrentColly = 0;
+            CatalogStock cs = CatalogStockItem.GetActiveByCatalogID(catalogId);
+            if (cs != null)
+            {
+                CurrentStock = cs.Stock - stock;
+                CurrentColly = cs.Colly;
+            }
+            else
+            {
+                CurrentStock = CurrentColly - stock;
+                CurrentColly = 0;
+            }
+
+            int result = CatalogStockItem.UppdateStock(catalogId, CurrentStock, CurrentColly, username);
+            if (result > 0)
+            {
+                //LogItem.Insert(string.Format("{0}-{1}", this.Text, string.Format("Update stock catalogid : {0}, stock :{1}", CatalogID, stock)));           
+            }
+
         }
 
         public static int Delete(string ReconcileID)

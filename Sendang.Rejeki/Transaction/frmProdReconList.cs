@@ -12,9 +12,9 @@ using DataLayer;
 
 namespace Sendang.Rejeki.Transaction
 {
-    public partial class frmReconcileList : Form, IMasterHeader, IMasterFooter
+    public partial class frmProdReconList : Form, IMasterHeader, IMasterFooter
     {
-        public frmReconcileList()
+        public frmProdReconList()
         {
             InitializeComponent();
         }
@@ -28,7 +28,7 @@ namespace Sendang.Rejeki.Transaction
         void LoadData(string text, int pageIndex, int pageSize)
         {
             int totalRecord = 0;
-            List<Reconcile> list = ReconcileItem.GetPagingItemToProduct(text, pageIndex, pageSize, out totalRecord);
+            List<Reconcile> list = ReconcileItem.GetPagingItemToItem(text, pageIndex, pageSize, out totalRecord);
             grid.AutoGenerateColumns = false;
             grid.DataSource = list.OrderByDescending(t => t.ProccessDate).ToList();
             ctlFooter1.TotalRows = totalRecord;// ReconcileItem.GetRecordCount(text);
@@ -36,7 +36,7 @@ namespace Sendang.Rejeki.Transaction
 
         public void Add()
         {
-            frmReconcile f = new frmReconcile();
+            frmProdRecon f = new frmProdRecon();
             //f.Username = Utilities.Username;
             f.ReconcileID = string.Empty;
             f.Tag = this.Tag;
@@ -55,7 +55,7 @@ namespace Sendang.Rejeki.Transaction
             //    f = new frmPosView() { TransactionID = string.Format("{0}", grid[2, Row].Value) };
             //else f = new frmPos() { TransactionID = string.Format("{0}", grid[2, Row].Value) };
 
-            f = new frmReconcile() { ReconcileID = string.Format("{0}", grid["colID", Row].Value) };
+            f = new frmProdRecon() { ReconcileID = string.Format("{0}", grid["colID", Row].Value) };
             f.Tag = this.Tag;
             if (f != null && f.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
@@ -82,7 +82,7 @@ namespace Sendang.Rejeki.Transaction
             //throw new NotImplementedException();
         }
 
-        private void frmReconcileList_Load(object sender, EventArgs e)
+        private void frmProdReconList_Load(object sender, EventArgs e)
         {
             Search();
         }

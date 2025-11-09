@@ -17,6 +17,9 @@ namespace Sendang.Rejeki
         [STAThread]
         public static void Main()
         {
+
+            //Application.Run(new TestBarcode());
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             //Log log = Log.CreateInstance();
