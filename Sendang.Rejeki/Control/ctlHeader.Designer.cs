@@ -30,13 +30,13 @@
         {
             this.toolStripMaterGrid = new System.Windows.Forms.ToolStrip();
             this.btnAdd = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            this.separatorAdd = new System.Windows.Forms.ToolStripSeparator();
             this.btnEdit = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.separatorEdit = new System.Windows.Forms.ToolStripSeparator();
             this.btnDelete = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.separatorDel = new System.Windows.Forms.ToolStripSeparator();
             this.btnPrint = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.separatorPrint = new System.Windows.Forms.ToolStripSeparator();
             this.lblSearch = new System.Windows.Forms.ToolStripLabel();
             this.txtSearch = new System.Windows.Forms.ToolStripTextBox();
             this.btnSearch = new System.Windows.Forms.ToolStripButton();
@@ -47,13 +47,13 @@
             // 
             this.toolStripMaterGrid.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.btnAdd,
-            this.toolStripSeparator4,
+            this.separatorAdd,
             this.btnEdit,
-            this.toolStripSeparator3,
+            this.separatorEdit,
             this.btnDelete,
-            this.toolStripSeparator2,
+            this.separatorDel,
             this.btnPrint,
-            this.toolStripSeparator1,
+            this.separatorPrint,
             this.lblSearch,
             this.txtSearch,
             this.btnSearch});
@@ -73,10 +73,10 @@
             this.btnAdd.ToolTipText = "Add New Record";
             this.btnAdd.Click += new System.EventHandler(this.btn_Click);
             // 
-            // toolStripSeparator4
+            // separatorAdd
             // 
-            this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(6, 25);
+            this.separatorAdd.Name = "separatorAdd";
+            this.separatorAdd.Size = new System.Drawing.Size(6, 25);
             // 
             // btnEdit
             // 
@@ -88,10 +88,10 @@
             this.btnEdit.ToolTipText = "Edit selected record";
             this.btnEdit.Click += new System.EventHandler(this.btn_Click);
             // 
-            // toolStripSeparator3
+            // separatorEdit
             // 
-            this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
+            this.separatorEdit.Name = "separatorEdit";
+            this.separatorEdit.Size = new System.Drawing.Size(6, 25);
             // 
             // btnDelete
             // 
@@ -103,11 +103,11 @@
             this.btnDelete.ToolTipText = "Delete seleted record";
             this.btnDelete.Click += new System.EventHandler(this.btn_Click);
             // 
-            // toolStripSeparator2
+            // separatorDel
             // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
-            this.toolStripSeparator2.Visible = false;
+            this.separatorDel.Name = "separatorDel";
+            this.separatorDel.Size = new System.Drawing.Size(6, 25);
+            this.separatorDel.Visible = false;
             // 
             // btnPrint
             // 
@@ -119,10 +119,10 @@
             this.btnPrint.Visible = false;
             this.btnPrint.Click += new System.EventHandler(this.btn_Click);
             // 
-            // toolStripSeparator1
+            // separatorPrint
             // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            this.separatorPrint.Name = "separatorPrint";
+            this.separatorPrint.Size = new System.Drawing.Size(6, 25);
             // 
             // lblSearch
             // 
@@ -132,6 +132,7 @@
             // 
             // txtSearch
             // 
+            this.txtSearch.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.txtSearch.Name = "txtSearch";
             this.txtSearch.Size = new System.Drawing.Size(200, 25);
             this.txtSearch.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtSearch_KeyUp);
@@ -167,13 +168,13 @@
         private System.Windows.Forms.ToolStripButton btnAdd;
         private System.Windows.Forms.ToolStripButton btnEdit;
         private System.Windows.Forms.ToolStripButton btnDelete;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripSeparator separatorPrint;
         private System.Windows.Forms.ToolStripLabel lblSearch;
         private System.Windows.Forms.ToolStripTextBox txtSearch;
         private System.Windows.Forms.ToolStripButton btnSearch;
         private System.Windows.Forms.ToolStripButton btnPrint;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripSeparator separatorAdd;
+        private System.Windows.Forms.ToolStripSeparator separatorEdit;
+        private System.Windows.Forms.ToolStripSeparator separatorDel;
     }
 }

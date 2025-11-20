@@ -85,5 +85,11 @@ namespace Sendang.Rejeki.Transaction
         {
             throw new NotImplementedException();
         }
+
+        public void Enter()
+        {
+            //throw new NotImplementedException();
+        }
     }
+
 }

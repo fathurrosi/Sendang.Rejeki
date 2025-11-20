@@ -20,7 +20,10 @@ namespace Sendang.Rejeki.Transaction
         {
             InitializeComponent();
         }
-
+        public void Enter()
+        {
+            //throw new NotImplementedException();
+        }
         public void Search()
         {
             //Supplier supplier = cboSupplier.SelectedItem as Supplier;

@@ -13,6 +13,7 @@ namespace LogicLayer
         void Edit();
         void Delete();
         void Print();
+        void Enter();
     }
 
     public interface IMasterFooter

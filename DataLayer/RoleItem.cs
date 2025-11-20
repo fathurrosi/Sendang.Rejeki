@@ -72,19 +72,21 @@ namespace DataLayer
 
 
 
-        public static int Insert(string Name, string Description, string Username)
+        public static int Insert(string Name, string Description, string Username, bool IsSuperAdmin)
         {
             IDBHelper context = new DBHelper();
             context.AddParameter("@Name", Name);
             context.AddParameter("@Description", Description);
             context.AddParameter("@CreatedBy", Username);
+
+            context.AddParameter("@IsSuperAdmin", IsSuperAdmin);
             context.CommandText = @"Usp_InsertRole";
             context.CommandType = CommandType.StoredProcedure;
             return DBUtil.ExecuteNonQuery(context);
         }
 
 
-        public static int Update(int ID, string Name, string Description, string Username)
+        public static int Update(int ID, string Name, string Description, string Username, bool IsSuperAdmin)
         {
             IDBHelper context = new DBHelper();
             context.CommandText = @"Usp_UpdateRole";
@@ -92,6 +94,7 @@ namespace DataLayer
             context.AddParameter("@Name", Name);
             context.AddParameter("@Description", Description);
             context.AddParameter("@ModifiedBy", Username);
+            context.AddParameter("@IsSuperAdmin", IsSuperAdmin);
             context.CommandType = CommandType.StoredProcedure;
             return DBUtil.ExecuteNonQuery(context);
         }

@@ -19,8 +19,10 @@ namespace Sendang.Rejeki.Lookup
         public frmSupplierLookup()
         {
             InitializeComponent();
-            Search();
+            //         this.FormBorderStyle = FormBorderStyle.None
+            this.FormBorderStyle = FormBorderStyle.FixedSingle;
 
+            Search();
         }
 
         public void Search()
@@ -86,5 +88,20 @@ namespace Sendang.Rejeki.Lookup
             //f.DataSource = CatalogItem.GetAll();
             //f.ShowDialog();
         }
+
+        public void Enter()
+        {
+            Save();
+        }
+
+        private void frmSupplierLookup_Paint(object sender, PaintEventArgs e)
+        {
+            ControlPaint.DrawBorder(e.Graphics, this.ClientRectangle, Color.Black, ButtonBorderStyle.Solid);
+        }
+
+        ////private void grid_Enter(object sender, EventArgs e)
+        ////{
+        ////    Enter();
+        ////}
     }
 }

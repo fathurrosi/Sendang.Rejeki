@@ -44,12 +44,12 @@ namespace Sendang.Rejeki.Master
             if (role != null)
             {
                 //update
-                result = RoleItem.Update(role.ID, txtName.Text, txtDesc.Text, Utilities.Username);
+                result = RoleItem.Update(role.ID, txtName.Text, txtDesc.Text, Utilities.Username, checkBoxIsSuperAdmin.Checked);
             }
             else
             {
                 //insert
-                result = RoleItem.Insert(txtName.Text, txtDesc.Text, Utilities.Username);
+                result = RoleItem.Insert(txtName.Text, txtDesc.Text, Utilities.Username, checkBoxIsSuperAdmin.Checked);
             }
 
 
@@ -80,6 +80,7 @@ namespace Sendang.Rejeki.Master
                 {
                     txtName.Text = role.Name;
                     txtDesc.Text = role.Description;
+                    checkBoxIsSuperAdmin.Checked = role.IsSuperAdmin;
                 }
             }
         }

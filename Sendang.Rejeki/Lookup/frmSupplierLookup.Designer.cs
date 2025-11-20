@@ -30,6 +30,7 @@
         {
             this.ctlMaster1 = new Sendang.Rejeki.Control.ctlTransButton();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.panel1 = new System.Windows.Forms.Panel();
             this.grid = new System.Windows.Forms.DataGridView();
             this.Code = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colName = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -37,6 +38,7 @@
             this.ctlFooter1 = new Sendang.Rejeki.Control.ctlFooter();
             this.ctlHeader1 = new Sendang.Rejeki.Control.ctlHeader();
             this.panel2.SuspendLayout();
+            this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grid)).BeginInit();
             this.SuspendLayout();
             // 
@@ -46,23 +48,34 @@
             this.ctlMaster1.CancelButtonText = null;
             this.ctlMaster1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.ctlMaster1.IsLookup = true;
-            this.ctlMaster1.Location = new System.Drawing.Point(0, 251);
+            this.ctlMaster1.Location = new System.Drawing.Point(0, 400);
             this.ctlMaster1.Name = "ctlMaster1";
             this.ctlMaster1.SaveButtonEnabled = true;
             this.ctlMaster1.SaveButtonText = null;
-            this.ctlMaster1.Size = new System.Drawing.Size(513, 39);
-            this.ctlMaster1.TabIndex = 17;
+            this.ctlMaster1.Size = new System.Drawing.Size(828, 33);
+            this.ctlMaster1.TabIndex = 1;
             // 
             // panel2
             // 
-            this.panel2.Controls.Add(this.grid);
-            this.panel2.Controls.Add(this.ctlFooter1);
-            this.panel2.Controls.Add(this.ctlHeader1);
+            this.panel2.Controls.Add(this.panel1);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(0, 0);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(513, 251);
-            this.panel2.TabIndex = 19;
+            this.panel2.Size = new System.Drawing.Size(828, 400);
+            this.panel2.TabIndex = 0;
+            // 
+            // panel1
+            // 
+            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel1.Controls.Add(this.grid);
+            this.panel1.Controls.Add(this.ctlFooter1);
+            this.panel1.Controls.Add(this.ctlHeader1);
+            this.panel1.Location = new System.Drawing.Point(17, 3);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(796, 391);
+            this.panel1.TabIndex = 14;
             // 
             // grid
             // 
@@ -79,10 +92,10 @@
             this.grid.Name = "grid";
             this.grid.ReadOnly = true;
             this.grid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.grid.Size = new System.Drawing.Size(513, 201);
-            this.grid.TabIndex = 13;
-            this.grid.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.grid_CellDoubleClick);
+            this.grid.Size = new System.Drawing.Size(796, 341);
+            this.grid.TabIndex = 1;
             this.grid.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.grid_CellDoubleClick);
+            //this.grid.Enter += new System.EventHandler(this.grid_Enter);
             // 
             // Code
             // 
@@ -111,43 +124,48 @@
             // 
             this.ctlFooter1.BackColor = System.Drawing.SystemColors.Control;
             this.ctlFooter1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.ctlFooter1.Location = new System.Drawing.Point(0, 225);
+            this.ctlFooter1.Location = new System.Drawing.Point(0, 365);
             this.ctlFooter1.Name = "ctlFooter1";
             this.ctlFooter1.Offset = 0;
             this.ctlFooter1.PageIndex = 1;
-            this.ctlFooter1.Size = new System.Drawing.Size(513, 26);
-            this.ctlFooter1.TabIndex = 12;
+            this.ctlFooter1.Size = new System.Drawing.Size(796, 26);
+            this.ctlFooter1.TabIndex = 2;
             this.ctlFooter1.TotalRows = 0;
             // 
             // ctlHeader1
             // 
             this.ctlHeader1.DeleteButton = null;
-            this.ctlHeader1.DeleteButtonEnabled = true;
+            this.ctlHeader1.DeleteButtonEnabled = false;
             this.ctlHeader1.DeleteButtonText = "Delete";
             this.ctlHeader1.Dock = System.Windows.Forms.DockStyle.Top;
             this.ctlHeader1.EditButton = null;
-            this.ctlHeader1.EditButtonEnabled = true;
+            this.ctlHeader1.EditButtonEnabled = false;
             this.ctlHeader1.EditButtonText = "Edit";
             this.ctlHeader1.IsLookup = true;
             this.ctlHeader1.Location = new System.Drawing.Point(0, 0);
             this.ctlHeader1.Name = "ctlHeader1";
             this.ctlHeader1.NewButton = null;
-            this.ctlHeader1.NewButtonEnabled = true;
+            this.ctlHeader1.NewButtonEnabled = false;
             this.ctlHeader1.NewButtonText = "Add";
-            this.ctlHeader1.Size = new System.Drawing.Size(513, 24);
-            this.ctlHeader1.TabIndex = 11;
+            this.ctlHeader1.Size = new System.Drawing.Size(796, 24);
+            this.ctlHeader1.TabIndex = 0;
             this.ctlHeader1.TextToSearch = "";
             // 
             // frmSupplierLookup
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(513, 290);
+            this.ClientSize = new System.Drawing.Size(828, 433);
+            this.ControlBox = false;
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.ctlMaster1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "frmSupplierLookup";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Supplier Lookup";
+            this.Paint += new System.Windows.Forms.PaintEventHandler(this.frmSupplierLookup_Paint);
             this.panel2.ResumeLayout(false);
+            this.panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.grid)).EndInit();
             this.ResumeLayout(false);
 
@@ -157,11 +175,12 @@
 
         private Control.ctlTransButton ctlMaster1;
         private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.DataGridView grid;
-        private Control.ctlFooter ctlFooter1;
         private Control.ctlHeader ctlHeader1;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.DataGridView grid;
         private System.Windows.Forms.DataGridViewTextBoxColumn Code;
         private System.Windows.Forms.DataGridViewTextBoxColumn colName;
         private System.Windows.Forms.DataGridViewTextBoxColumn CompanyAddress;
+        private Control.ctlFooter ctlFooter1;
     }
 }

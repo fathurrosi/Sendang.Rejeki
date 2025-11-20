@@ -22,7 +22,10 @@ namespace Sendang.Rejeki.Transaction
         {
             InitializeComponent();
         }
-
+        public void Enter()
+        {
+            //throw new NotImplementedException();
+        }
         public void Search()
         {
             string textToSearch = ctlHeader1.TextToSearch;
@@ -72,7 +75,7 @@ namespace Sendang.Rejeki.Transaction
                 var f = new frmAccountReceivablePayment();
                 f.Tag = this.Tag;
                 f.InvoceNo = string.Format("{0}", grid["colInvoiceNo", e.RowIndex].Value);
-                var existingItem = InvoiceItem.GetOptionsByKey(f.InvoceNo);
+                var existingItem = InvoiceItem.GetInvoiceByNo(f.InvoceNo);
                 if (existingItem.Status == InvoiceStatus_LUNAS)
                 {
                     Utilities.ShowInformation("Invoice ini sudah lunas!");
@@ -107,7 +110,7 @@ namespace Sendang.Rejeki.Transaction
                 string invoiceCode = string.Format("{0}", grid["colInvoiceNo", Row].Value);
                 try
                 {
-                    Invoice item = InvoiceItem.GetOptionsByKey(invoiceCode);
+                    Invoice item = InvoiceItem.GetInvoiceByNo(invoiceCode);
                     if (item != null)
                     {
                         int result = InvoiceItem.Delete(item.InvoiceNo);

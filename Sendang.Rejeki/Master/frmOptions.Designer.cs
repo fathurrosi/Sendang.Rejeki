@@ -36,6 +36,7 @@
             this.colName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colValueMember = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colDisplayMember = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colDescription = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.CreatedDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.CreatedBy = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ModifiedDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -81,6 +82,7 @@
             this.colName,
             this.colValueMember,
             this.colDisplayMember,
+            this.colDescription,
             this.CreatedDate,
             this.CreatedBy,
             this.ModifiedDate,
@@ -123,6 +125,14 @@
             this.colDisplayMember.Name = "colDisplayMember";
             this.colDisplayMember.ReadOnly = true;
             this.colDisplayMember.Width = 150;
+            // 
+            // colDescription
+            // 
+            this.colDescription.DataPropertyName = "Description";
+            this.colDescription.HeaderText = "Description";
+            this.colDescription.Name = "colDescription";
+            this.colDescription.ReadOnly = true;
+            this.colDescription.Width = 200;
             // 
             // CreatedDate
             // 
@@ -180,6 +190,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colName;
         private System.Windows.Forms.DataGridViewTextBoxColumn colValueMember;
         private System.Windows.Forms.DataGridViewTextBoxColumn colDisplayMember;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colDescription;
         private System.Windows.Forms.DataGridViewTextBoxColumn CreatedDate;
         private System.Windows.Forms.DataGridViewTextBoxColumn CreatedBy;
         private System.Windows.Forms.DataGridViewTextBoxColumn ModifiedDate;

@@ -23,27 +23,6 @@ namespace DataLayer
             return list;
         }
 
-
-        //        public static int GetRecordCount(string text)
-        //        {
-        //            int result = 0;
-        //            IDBHelper context = new DBHelper();
-        //            context.CommandText = @" SELECT count(*)
-        //FROM Supplier 
-        //
-        //WHERE NAME LIKE concat ('%', @text ,'%') 
-        //OR Phone LIKE concat ('%', @text ,'%') 
-        //OR CellPhone LIKE concat ('%', @text ,'%') 
-        //  
-        //            ";
-        //            context.AddParameter("@Text", text);
-        //            context.CommandType =   CommandType.StoredProcedure;
-        //            object obj = DBUtil.ExecuteScalar(context);
-        //            if (obj != null)
-        //                int.TryParse(obj.ToString(), out result);
-        //            return result;
-        //        }
-
         public static Supplier GetByCode(string Code)
         {
             IDBHelper context = new DBHelper();
@@ -75,7 +54,7 @@ namespace DataLayer
             context.AddParameter("@CreatedBy", Username);
             return DBUtil.ExecuteNonQuery(context);
         }
-        
+
         public static Supplier Insert(string code, string name, string Username)
         {
             IDBHelper context = new DBHelper();
@@ -87,20 +66,21 @@ namespace DataLayer
             return DBUtil.ExecuteMapper<Supplier>(context, new Supplier()).FirstOrDefault();
         }
 
-        public static int Update(string Code, string name, string address, string phone, string cellPhone, string Username)
+        public static int Update(string Code, string name, string address, string phone, string cellPhone, string Username, string oldCode)
         {
             IDBHelper context = new DBHelper();
             context.CommandText = @"Usp_UpdateSupplier";
             context.CommandType = CommandType.StoredProcedure;
-            context.AddParameter("@Code", Code);
+            context.AddParameter("@NewCode", Code);
             context.AddParameter("@Name", name);
             context.AddParameter("@Address", address);
             context.AddParameter("@Phone", phone);
             context.AddParameter("@CellPhone", cellPhone);
             context.AddParameter("@ModifiedBy", Username);
+            context.AddParameter("@Code", oldCode);
             return DBUtil.ExecuteNonQuery(context);
         }
-        
+
         public static List<Supplier> GetAll()
         {
             IDBHelper context = new DBHelper();

@@ -97,5 +97,10 @@ namespace Sendang.Rejeki.Lookup
             //f.DataSource = CatalogItem.GetAll();
             //f.ShowDialog();
         }
+
+        public void Enter()
+        {
+            //throw new NotImplementedException();
+        }
     }
 }

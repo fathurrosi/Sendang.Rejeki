@@ -33,6 +33,7 @@
             this.txtName = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.ctlTransButton1 = new Sendang.Rejeki.Control.ctlTransButton();
+            this.checkBoxIsSuperAdmin = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // txtDesc
@@ -74,19 +75,30 @@
             this.ctlTransButton1.CancelButtonText = null;
             this.ctlTransButton1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.ctlTransButton1.IsLookup = false;
-            this.ctlTransButton1.Location = new System.Drawing.Point(0, 126);
+            this.ctlTransButton1.Location = new System.Drawing.Point(0, 214);
             this.ctlTransButton1.Name = "ctlTransButton1";
             this.ctlTransButton1.SaveButtonEnabled = true;
             this.ctlTransButton1.SaveButtonText = null;
             this.ctlTransButton1.Size = new System.Drawing.Size(425, 45);
             this.ctlTransButton1.TabIndex = 12;
             // 
+            // checkBoxIsSuperAdmin
+            // 
+            this.checkBoxIsSuperAdmin.AutoSize = true;
+            this.checkBoxIsSuperAdmin.Location = new System.Drawing.Point(83, 122);
+            this.checkBoxIsSuperAdmin.Name = "checkBoxIsSuperAdmin";
+            this.checkBoxIsSuperAdmin.Size = new System.Drawing.Size(122, 17);
+            this.checkBoxIsSuperAdmin.TabIndex = 13;
+            this.checkBoxIsSuperAdmin.Text = "Enable Super Admin";
+            this.checkBoxIsSuperAdmin.UseVisualStyleBackColor = true;
+            // 
             // frmRole
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(425, 171);
+            this.ClientSize = new System.Drawing.Size(425, 259);
             this.ControlBox = false;
+            this.Controls.Add(this.checkBoxIsSuperAdmin);
             this.Controls.Add(this.ctlTransButton1);
             this.Controls.Add(this.txtDesc);
             this.Controls.Add(this.label3);
@@ -108,5 +120,6 @@
         private System.Windows.Forms.TextBox txtName;
         private System.Windows.Forms.Label label2;
         private Control.ctlTransButton ctlTransButton1;
+        private System.Windows.Forms.CheckBox checkBoxIsSuperAdmin;
     }
 }

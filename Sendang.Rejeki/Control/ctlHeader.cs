@@ -69,13 +69,7 @@ namespace Sendang.Rejeki.Control
         public bool IsLookup
         {
             get { return _IsLookup; }
-            set
-            {
-                _IsLookup = value;
-                //btnAdd.Enabled = !value;
-                //btnEdit.Enabled = !value;
-                //btnDelete.Enabled = !value;
-            }
+            set { _IsLookup = value; }
         }
 
         public ctlHeader()
@@ -85,54 +79,64 @@ namespace Sendang.Rejeki.Control
 
         protected override void OnLoad(EventArgs e)
         {
-
-//#if (!DEBUG)
-            User user = Utilities.CurrentUser;
-            List<int> roles = user.Roles.Select(t => t.ID).ToList();
-            List<Previllage> previllages = PrevillageItem.GetAll();
-
-            bool allowRead = false;
-            bool allowCreate = false;
-            bool allowUpdate = false;
-            bool allowDelete = false;
-            bool allowPrint = false;
-
-            Form form = GetActiveForm(this.Parent);
-            if (form != null)
+            if (!IsLookup)
             {
-                DataObject.Menu currentManu = form.Tag as DataObject.Menu;
-                List<Previllage> selectedPrevillages = previllages.Where(t => t.MenuID == currentManu.ID && roles.Contains(t.RoleID)).ToList();
-                allowRead = selectedPrevillages.Where(t => t.AllowRead).Count() > 0;
-                allowCreate = selectedPrevillages.Where(t => t.AllowCreate).Count() > 0;
-                allowUpdate = selectedPrevillages.Where(t => t.AllowUpdate).Count() > 0;
-                allowDelete = selectedPrevillages.Where(t => t.AllowDelete).Count() > 0;
-                allowPrint = selectedPrevillages.Where(t => t.AllowPrint).Count() > 0;
+                User user = Utilities.CurrentUser;
+                List<int> roles = user.Roles.Select(t => t.ID).ToList();
+                List<Previllage> previllages = PrevillageItem.GetAll();
 
-                btnAdd.Enabled = allowCreate;
-                btnDelete.Enabled = allowDelete;
-                btnPrint.Enabled = allowPrint;
-                btnEdit.Enabled = allowUpdate;// || allowCreate;
-                if (!btnEdit.Enabled && allowRead)
+                bool allowRead = false;
+                bool allowCreate = false;
+                bool allowUpdate = false;
+                bool allowDelete = false;
+                bool allowPrint = false;
+
+                Form form = GetActiveForm(this.Parent);
+                if (form != null)
                 {
-                    EditButtonText = "View";
-                    btnEdit.Enabled = true;
+                    DataObject.Menu currentManu = form.Tag as DataObject.Menu;
+                    List<Previllage> selectedPrevillages = previllages.Where(t => t.MenuID == currentManu.ID && roles.Contains(t.RoleID)).ToList();
+                    allowRead = selectedPrevillages.Where(t => t.AllowRead).Count() > 0;
+                    allowCreate = selectedPrevillages.Where(t => t.AllowCreate).Count() > 0;
+                    allowUpdate = selectedPrevillages.Where(t => t.AllowUpdate).Count() > 0;
+                    allowDelete = selectedPrevillages.Where(t => t.AllowDelete).Count() > 0;
+                    allowPrint = selectedPrevillages.Where(t => t.AllowPrint).Count() > 0;
+
+                    btnAdd.Enabled = allowCreate;
+                    btnDelete.Enabled = allowDelete;
+                    btnPrint.Enabled = allowPrint;
+                    btnEdit.Enabled = allowUpdate;// || allowCreate;
+                    if (!btnEdit.Enabled && allowRead)
+                    {
+                        EditButtonText = "View";
+                        btnEdit.Enabled = true;
+                    }
+
+                    // permanently disable
+                    if (currentManu.Code == "stock")
+                    {
+                        btnAdd.Enabled = false;
+                        btnDelete.Enabled = false;
+                    }
                 }
-
-                // permanently disable
-                if (currentManu.Code == "stock")
+                else
                 {
-                    btnAdd.Enabled = false;
-                    btnDelete.Enabled = false;
+                    btnAdd.Enabled = allowCreate;
+                    btnDelete.Enabled = allowDelete;
+                    btnPrint.Enabled = allowPrint;
+                    btnEdit.Enabled = allowUpdate || allowCreate;
                 }
             }
             else
             {
-                btnAdd.Enabled = allowCreate;
-                btnDelete.Enabled = allowDelete;
-                btnPrint.Enabled = allowPrint;
-                btnEdit.Enabled = allowUpdate || allowCreate;
+                btnAdd.Visible = false;
+                btnDelete.Visible = false;
+                btnEdit.Visible = false;
+                separatorAdd.Visible = false;
+                separatorDel.Visible = false;
+                separatorPrint.Visible = false;
+                separatorEdit.Visible = false;
             }
-//#endif
 
             base.OnLoad(e);
         }
@@ -180,6 +184,9 @@ namespace Sendang.Rejeki.Control
                     case "btnPrint":
                         header.Print();
                         break;
+                    case "enter":
+                        header.Enter();
+                        break;
                     default:
                         header.Search();
                         break;
@@ -189,10 +196,11 @@ namespace Sendang.Rejeki.Control
 
         private void txtSearch_KeyUp(object sender, KeyEventArgs e)
         {
-            //if (e.KeyCode == Keys.Enter)
-            //{
-            Execute(string.Empty);
-            //}
+            if (e.KeyCode == Keys.Enter)
+            {
+                Execute("enter");
+            }
+            else Execute(string.Empty);
         }
     }
 }

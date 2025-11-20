@@ -15,6 +15,10 @@ namespace Sendang.Rejeki.Master
 {
     public partial class frmCustomerList : Form, IMasterHeader, IMasterFooter
     {
+        public void Enter()
+        {
+            //throw new NotImplementedException();
+        }
         public frmCustomerList()
         {
             InitializeComponent();

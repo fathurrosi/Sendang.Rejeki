@@ -59,6 +59,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PurchaseDetailItem.cs" />
     <Compile Include="PurchaseItem.cs" />
+    <Compile Include="PurchaseOrderDetailItem.cs" />
+    <Compile Include="PurchaseOrderItem.cs" />
+    <Compile Include="PurchaseOrderNotesItem.cs" />
     <Compile Include="ReconcileItem.cs" />
     <Compile Include="RoleItem.cs" />
     <Compile Include="SaleDetailItem.cs" />

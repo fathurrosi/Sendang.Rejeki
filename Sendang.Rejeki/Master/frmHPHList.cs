@@ -12,7 +12,10 @@ namespace Sendang.Rejeki.Master
 {
     public partial class frmHPHList : Form, IMasterHeader, IMasterFooter
     {
-
+        public void Enter()
+        {
+            //throw new NotImplementedException();
+        }
         public frmHPHList()
         {
             InitializeComponent();

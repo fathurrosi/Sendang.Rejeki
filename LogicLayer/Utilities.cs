@@ -9,6 +9,7 @@ using System.Globalization;
 using System.Windows.Forms;
 using DataObject;
 using System.Text.RegularExpressions;
+using System.Drawing.Imaging;
 
 namespace LogicLayer
 {
@@ -246,6 +247,36 @@ namespace LogicLayer
             }
 
             return Utilities.Crop(IpAddress, 15);
+        }
+
+        private static string ConvertImageToBase64(Image image,
+ System.Drawing.Imaging.ImageFormat format)
+        {
+            byte[] imageArray;
+
+            using (System.IO.MemoryStream imageStream = new System.IO.MemoryStream())
+            {
+                image.Save(imageStream, format);
+                imageArray = new byte[imageStream.Length];
+                imageStream.Seek(0, System.IO.SeekOrigin.Begin);
+                imageStream.Read(imageArray, 0, (int)imageStream.Length);
+            }
+
+            return Convert.ToBase64String(imageArray);
+        }
+        public static string ImageToBase64(Image image,
+ System.Drawing.Imaging.ImageFormat format)
+        {
+            using (MemoryStream ms = new MemoryStream())
+            {
+                // Convert Image to byte[]
+                image.Save(ms, format);
+                byte[] imageBytes = ms.ToArray();
+
+                // Convert byte[] to Base64 String
+                string base64String = Convert.ToBase64String(imageBytes);
+                return base64String;
+            }
         }
 
 

@@ -93,49 +93,51 @@ namespace Sendang.Rejeki.Control
 
             if (!string.IsNullOrEmpty(CancelButtonText))
                 btnCancel.Text = CancelButtonText;
-
-            //#if(!DEBUG)
-            User user = Utilities.CurrentUser;
-            List<int> roles = user.Roles.Select(t => t.ID).ToList();
-            List<Previllage> previllages = PrevillageItem.GetAll();
-
-            bool allowRead = false;
-            bool allowCreate = false;
-            bool allowUpdate = false;
-            bool allowDelete = false;
-            bool allowPrint = false;
-
-            Form form = GetActiveForm(this.Parent);
-            if (form != null)
+            if (!IsLookup)
             {
-                DataObject.Menu currentManu = form.Tag as DataObject.Menu;
-                if (currentManu != null)
+                User user = Utilities.CurrentUser;
+                List<int> roles = user.Roles.Select(t => t.ID).ToList();
+                List<Previllage> previllages = PrevillageItem.GetAll();
+
+                bool allowRead = false;
+                bool allowCreate = false;
+                bool allowUpdate = false;
+                bool allowDelete = false;
+                bool allowPrint = false;
+
+                Form form = GetActiveForm(this.Parent);
+                if (form != null)
                 {
-                    List<Previllage> selectedPrevillages = previllages.Where(t => t.MenuID == currentManu.ID && roles.Contains(t.RoleID)).ToList();
-                    allowRead = selectedPrevillages.Where(t => t.AllowRead).Count() > 0;
-                    allowCreate = selectedPrevillages.Where(t => t.AllowCreate).Count() > 0;
-                    allowUpdate = selectedPrevillages.Where(t => t.AllowUpdate).Count() > 0;
-                    allowDelete = selectedPrevillages.Where(t => t.AllowDelete).Count() > 0;
-                    allowPrint = selectedPrevillages.Where(t => t.AllowPrint).Count() > 0;
+                    DataObject.Menu currentManu = form.Tag as DataObject.Menu;
+                    if (currentManu != null)
+                    {
+                        List<Previllage> selectedPrevillages = previllages.Where(t => t.MenuID == currentManu.ID && roles.Contains(t.RoleID)).ToList();
+                        allowRead = selectedPrevillages.Where(t => t.AllowRead).Count() > 0;
+                        allowCreate = selectedPrevillages.Where(t => t.AllowCreate).Count() > 0;
+                        allowUpdate = selectedPrevillages.Where(t => t.AllowUpdate).Count() > 0;
+                        allowDelete = selectedPrevillages.Where(t => t.AllowDelete).Count() > 0;
+                        allowPrint = selectedPrevillages.Where(t => t.AllowPrint).Count() > 0;
+                    }
+                }
+
+                if (allowCreate || allowUpdate)
+                {
+                    btnSave.Text = string.IsNullOrEmpty(SaveButtonText) ? "Save" : SaveButtonText;
+                    btnSave.Enabled = true;
+                }
+                else
+                {
+                    btnSave.Text = string.IsNullOrEmpty(SaveButtonText) ? "Save" : SaveButtonText;
+                    btnSave.Enabled = false;
+                    btnCancel.Text = "Close";
                 }
             }
-
-            if (IsLookup)
+            else
             {
                 btnSave.Text = "OK";
                 btnSave.Enabled = true;
             }
-            else if (allowCreate || allowUpdate)
-            {
-                btnSave.Text = string.IsNullOrEmpty(SaveButtonText) ? "Save" : SaveButtonText;
-                btnSave.Enabled = true;
-            }
-            else
-            {
-                btnSave.Text = string.IsNullOrEmpty(SaveButtonText) ? "Save" : SaveButtonText;
-                btnSave.Enabled = false;
-                btnCancel.Text = "Close";
-            }
+
             //#endif
 
         }

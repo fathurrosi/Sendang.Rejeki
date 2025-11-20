@@ -19,7 +19,10 @@ namespace Sendang.Rejeki.Master
         {
             InitializeComponent();
         }
-
+        public void Enter()
+        {
+            //throw new NotImplementedException();
+        }
         public void Search()
         {
             string textToSearch = ctlHeader1.TextToSearch;

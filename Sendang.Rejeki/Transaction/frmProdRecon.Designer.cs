@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label15 = new System.Windows.Forms.Label();
+            this.txtStock = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
             this.txtQty = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
@@ -41,6 +43,13 @@
             this.label5 = new System.Windows.Forms.Label();
             this.txtProductQty = new System.Windows.Forms.TextBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.txtBiayaPenyusutan = new System.Windows.Forms.TextBox();
+            this.txtLastHPP = new System.Windows.Forms.TextBox();
+            this.txtBiayaProduksi = new System.Windows.Forms.TextBox();
+            this.label14 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.cboBiayaPenyusutan = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.txtProductPricePerUnit = new System.Windows.Forms.TextBox();
             this.txtTransDate = new System.Windows.Forms.DateTimePicker();
@@ -56,15 +65,6 @@
             this.label11 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.label6 = new System.Windows.Forms.Label();
-            this.cboBiayaPenyusutan = new System.Windows.Forms.ComboBox();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label14 = new System.Windows.Forms.Label();
-            this.txtBiayaProduksi = new System.Windows.Forms.TextBox();
-            this.txtLastHPP = new System.Windows.Forms.TextBox();
-            this.txtBiayaPenyusutan = new System.Windows.Forms.TextBox();
-            this.label15 = new System.Windows.Forms.Label();
-            this.txtStock = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -90,6 +90,25 @@
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Catalog";
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(10, 125);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(87, 13);
+            this.label15.TabIndex = 37;
+            this.label15.Text = "Stock Available :";
+            // 
+            // txtStock
+            // 
+            this.txtStock.BackColor = System.Drawing.Color.White;
+            this.txtStock.Location = new System.Drawing.Point(107, 122);
+            this.txtStock.MaxLength = 50;
+            this.txtStock.Name = "txtStock";
+            this.txtStock.ReadOnly = true;
+            this.txtStock.Size = new System.Drawing.Size(176, 20);
+            this.txtStock.TabIndex = 36;
             // 
             // label10
             // 
@@ -232,6 +251,75 @@
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Catalog";
+            // 
+            // txtBiayaPenyusutan
+            // 
+            this.txtBiayaPenyusutan.BackColor = System.Drawing.Color.White;
+            this.txtBiayaPenyusutan.Location = new System.Drawing.Point(219, 119);
+            this.txtBiayaPenyusutan.MaxLength = 50;
+            this.txtBiayaPenyusutan.Name = "txtBiayaPenyusutan";
+            this.txtBiayaPenyusutan.ReadOnly = true;
+            this.txtBiayaPenyusutan.Size = new System.Drawing.Size(176, 20);
+            this.txtBiayaPenyusutan.TabIndex = 47;
+            // 
+            // txtLastHPP
+            // 
+            this.txtLastHPP.BackColor = System.Drawing.Color.White;
+            this.txtLastHPP.Location = new System.Drawing.Point(150, 96);
+            this.txtLastHPP.MaxLength = 50;
+            this.txtLastHPP.Name = "txtLastHPP";
+            this.txtLastHPP.ReadOnly = true;
+            this.txtLastHPP.Size = new System.Drawing.Size(245, 20);
+            this.txtLastHPP.TabIndex = 46;
+            // 
+            // txtBiayaProduksi
+            // 
+            this.txtBiayaProduksi.BackColor = System.Drawing.Color.White;
+            this.txtBiayaProduksi.Location = new System.Drawing.Point(150, 143);
+            this.txtBiayaProduksi.MaxLength = 50;
+            this.txtBiayaProduksi.Name = "txtBiayaProduksi";
+            this.txtBiayaProduksi.Size = new System.Drawing.Size(245, 20);
+            this.txtBiayaProduksi.TabIndex = 45;
+            this.txtBiayaProduksi.Enter += new System.EventHandler(this.tb_Enter);
+            this.txtBiayaProduksi.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tb_KeyPress);
+            this.txtBiayaProduksi.KeyUp += new System.Windows.Forms.KeyEventHandler(this.tb_KeyUp);
+            this.txtBiayaProduksi.Leave += new System.EventHandler(this.tb_Leave);
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(61, 146);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(83, 13);
+            this.label14.TabIndex = 44;
+            this.label14.Text = "Biaya Produksi :";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(67, 99);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(77, 13);
+            this.label7.TabIndex = 42;
+            this.label7.Text = "HPP Terakhir :";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(52, 122);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(92, 13);
+            this.label6.TabIndex = 40;
+            this.label6.Text = "Biaya Penysutan :";
+            // 
+            // cboBiayaPenyusutan
+            // 
+            this.cboBiayaPenyusutan.FormattingEnabled = true;
+            this.cboBiayaPenyusutan.Location = new System.Drawing.Point(150, 119);
+            this.cboBiayaPenyusutan.Name = "cboBiayaPenyusutan";
+            this.cboBiayaPenyusutan.Size = new System.Drawing.Size(63, 21);
+            this.cboBiayaPenyusutan.TabIndex = 39;
+            this.cboBiayaPenyusutan.SelectedIndexChanged += new System.EventHandler(this.cboBiayaPenyusutan_SelectedIndexChanged);
             // 
             // label3
             // 
@@ -388,93 +476,6 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(913, 304);
             this.panel2.TabIndex = 34;
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(52, 122);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(92, 13);
-            this.label6.TabIndex = 40;
-            this.label6.Text = "Biaya Penysutan :";
-            // 
-            // cboBiayaPenyusutan
-            // 
-            this.cboBiayaPenyusutan.FormattingEnabled = true;
-            this.cboBiayaPenyusutan.Location = new System.Drawing.Point(150, 119);
-            this.cboBiayaPenyusutan.Name = "cboBiayaPenyusutan";
-            this.cboBiayaPenyusutan.Size = new System.Drawing.Size(63, 21);
-            this.cboBiayaPenyusutan.TabIndex = 39;
-            this.cboBiayaPenyusutan.SelectedIndexChanged += new System.EventHandler(this.cboBiayaPenyusutan_SelectedIndexChanged);
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(67, 99);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(77, 13);
-            this.label7.TabIndex = 42;
-            this.label7.Text = "HPP Terakhir :";
-            // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(61, 146);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(83, 13);
-            this.label14.TabIndex = 44;
-            this.label14.Text = "Biaya Produksi :";
-            // 
-            // txtBiayaProduksi
-            // 
-            this.txtBiayaProduksi.BackColor = System.Drawing.Color.White;
-            this.txtBiayaProduksi.Location = new System.Drawing.Point(150, 143);
-            this.txtBiayaProduksi.MaxLength = 50;
-            this.txtBiayaProduksi.Name = "txtBiayaProduksi";
-            this.txtBiayaProduksi.Size = new System.Drawing.Size(245, 20);
-            this.txtBiayaProduksi.TabIndex = 45;
-            this.txtBiayaProduksi.Enter += new System.EventHandler(this.tb_Enter);
-            this.txtBiayaProduksi.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tb_KeyPress);
-            this.txtBiayaProduksi.KeyUp += new System.Windows.Forms.KeyEventHandler(this.tb_KeyUp);
-            this.txtBiayaProduksi.Leave += new System.EventHandler(this.tb_Leave);
-            // 
-            // txtLastHPP
-            // 
-            this.txtLastHPP.BackColor = System.Drawing.Color.White;
-            this.txtLastHPP.Location = new System.Drawing.Point(150, 96);
-            this.txtLastHPP.MaxLength = 50;
-            this.txtLastHPP.Name = "txtLastHPP";
-            this.txtLastHPP.ReadOnly = true;
-            this.txtLastHPP.Size = new System.Drawing.Size(245, 20);
-            this.txtLastHPP.TabIndex = 46;
-            // 
-            // txtBiayaPenyusutan
-            // 
-            this.txtBiayaPenyusutan.BackColor = System.Drawing.Color.White;
-            this.txtBiayaPenyusutan.Location = new System.Drawing.Point(219, 119);
-            this.txtBiayaPenyusutan.MaxLength = 50;
-            this.txtBiayaPenyusutan.Name = "txtBiayaPenyusutan";
-            this.txtBiayaPenyusutan.ReadOnly = true;
-            this.txtBiayaPenyusutan.Size = new System.Drawing.Size(176, 20);
-            this.txtBiayaPenyusutan.TabIndex = 47;
-            // 
-            // label15
-            // 
-            this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(10, 125);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(87, 13);
-            this.label15.TabIndex = 37;
-            this.label15.Text = "Stock Available :";
-            // 
-            // txtStock
-            // 
-            this.txtStock.BackColor = System.Drawing.Color.White;
-            this.txtStock.Location = new System.Drawing.Point(107, 122);
-            this.txtStock.MaxLength = 50;
-            this.txtStock.Name = "txtStock";
-            this.txtStock.Size = new System.Drawing.Size(176, 20);
-            this.txtStock.TabIndex = 36;
             // 
             // frmProdRecon
             // 

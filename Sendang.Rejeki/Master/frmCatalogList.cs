@@ -19,6 +19,10 @@ namespace Sendang.Rejeki.Master
 {
     public partial class frmCatalogList : Form, IMasterHeader, IMasterFooter
     {
+        public void Enter()
+        {
+            //throw new NotImplementedException();
+        }
         public frmCatalogList()
         {
             InitializeComponent();
@@ -104,7 +108,8 @@ namespace Sendang.Rejeki.Master
         {
             string reportPath = Directory.GetCurrentDirectory() + "\\Report\\Catalog.rdlc";
             LogicLayer.Helper.Report rpt = new LogicLayer.Helper.Report();
-            rpt.Print(reportPath, "Catalog", CatalogItem.GetAll());
+            //rpt.Print(reportPath,"",null, null);
+            //rpt.Print(reportPath, "Catalog", CatalogItem.GetAll());
         }
 
     }

@@ -34,8 +34,10 @@
             this.label1 = new System.Windows.Forms.Label();
             this.txtCode = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.txtDesc = new System.Windows.Forms.TextBox();
+            this.txtDisplay = new System.Windows.Forms.TextBox();
             this.ctlMaster1 = new Sendang.Rejeki.Control.ctlTransButton();
+            this.label3 = new System.Windows.Forms.Label();
+            this.txtDescription = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // fileDialog
@@ -77,18 +79,18 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(16, 66);
+            this.label2.Location = new System.Drawing.Point(35, 66);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(66, 13);
+            this.label2.Size = new System.Drawing.Size(47, 13);
             this.label2.TabIndex = 50;
-            this.label2.Text = "Description :";
+            this.label2.Text = "Display :";
             // 
-            // txtDesc
+            // txtDisplay
             // 
-            this.txtDesc.Location = new System.Drawing.Point(88, 63);
-            this.txtDesc.Name = "txtDesc";
-            this.txtDesc.Size = new System.Drawing.Size(262, 20);
-            this.txtDesc.TabIndex = 49;
+            this.txtDisplay.Location = new System.Drawing.Point(88, 63);
+            this.txtDisplay.Name = "txtDisplay";
+            this.txtDisplay.Size = new System.Drawing.Size(262, 20);
+            this.txtDisplay.TabIndex = 49;
             // 
             // ctlMaster1
             // 
@@ -96,20 +98,39 @@
             this.ctlMaster1.CancelButtonText = null;
             this.ctlMaster1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.ctlMaster1.IsLookup = false;
-            this.ctlMaster1.Location = new System.Drawing.Point(0, 91);
+            this.ctlMaster1.Location = new System.Drawing.Point(0, 191);
             this.ctlMaster1.Name = "ctlMaster1";
             this.ctlMaster1.SaveButtonEnabled = true;
             this.ctlMaster1.SaveButtonText = null;
-            this.ctlMaster1.Size = new System.Drawing.Size(368, 45);
+            this.ctlMaster1.Size = new System.Drawing.Size(525, 45);
             this.ctlMaster1.TabIndex = 46;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(16, 92);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(66, 13);
+            this.label3.TabIndex = 52;
+            this.label3.Text = "Description :";
+            // 
+            // txtDescription
+            // 
+            this.txtDescription.Location = new System.Drawing.Point(88, 89);
+            this.txtDescription.Multiline = true;
+            this.txtDescription.Name = "txtDescription";
+            this.txtDescription.Size = new System.Drawing.Size(424, 102);
+            this.txtDescription.TabIndex = 51;
             // 
             // frmOption
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(368, 136);
+            this.ClientSize = new System.Drawing.Size(525, 236);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.txtDescription);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.txtDesc);
+            this.Controls.Add(this.txtDisplay);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.txtCode);
             this.Controls.Add(this.ctlMaster1);
@@ -133,7 +154,8 @@
         private System.Windows.Forms.Label label1;
         public System.Windows.Forms.TextBox txtCode;
         private System.Windows.Forms.Label label2;
-        public System.Windows.Forms.TextBox txtDesc;
-
+        public System.Windows.Forms.TextBox txtDisplay;
+        private System.Windows.Forms.Label label3;
+        public System.Windows.Forms.TextBox txtDescription;
     }
 }

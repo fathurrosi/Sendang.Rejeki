@@ -1,15 +1,16 @@
 ﻿using DataLayer;
 using DataObject;
 using LogicLayer;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Text;
 using System.Windows.Forms;
-using Newtonsoft.Json;
 
 namespace Sendang.Rejeki.Master
 {
@@ -22,12 +23,12 @@ namespace Sendang.Rejeki.Master
 
         public bool IsValid()
         {
-            //if (txtCode.Text.Length == 0)
-            //{
-            //    Utilities.ShowValidation("Supplier code is empty!");
-            //    txtCode.Focus();
-            //    return false;
-            //}
+            if (txtKode.Text.Length == 0)
+            {
+                Utilities.ShowValidation("Supplier code is empty!");
+                txtKode.Focus();
+                return false;
+            }
             //else
             if (txtName.Text.Length == 0)
             {
@@ -48,23 +49,22 @@ namespace Sendang.Rejeki.Master
         public void Save()
         {
             int result = -1;
-            if (string.Format("{0}", Code).Length > 0)
+            if (string.Format("{0}", txtKode.Text).Length > 0)
             {
-                result = SupplierItem.Update(Code, txtName.Text, txtAddress.Text, txtPhone.Text, txtCellPhone.Text, Utilities.Username);
+                result = SupplierItem.Update(txtKode.Text, txtName.Text, txtAddress.Text, txtPhone.Text, txtCellPhone.Text, Utilities.Username, Code);
             }
             else
             {
-                string name = txtName.Text.Trim().Replace(" ", "");
-                string code = Utilities.Crop(name, name.Length > 5 ? 5 : name.Length);
-                Code = string.Format("{0}{1}", code, DateTime.Now.ToString(Utilities.FORMAT_DateTime_Flat));
-                result = SupplierItem.Insert(Code, txtName.Text, txtAddress.Text, txtPhone.Text, txtCellPhone.Text, Utilities.Username);
+                //string name = txtName.Text.Trim().Replace(" ", "");
+                //string code = Utilities.Crop(name, name.Length > 5 ? 5 : name.Length);
+                //Code = string.Format("{0}{1}", code, DateTime.Now.ToString(Utilities.FORMAT_DateTime_Flat));
+                result = SupplierItem.Insert(txtKode.Text, txtName.Text, txtAddress.Text, txtPhone.Text, txtCellPhone.Text, Utilities.Username);
             }
             if (result > 0)
             {
-
-                if (string.Format("{0}", Code).Length > 0)
-                    Log.Update(string.Format("{0}-{1}", this.Text,JsonConvert.SerializeObject(new Supplier() { Code = Code, Name = txtName.Text, Address = txtAddress.Text, Phone = txtPhone.Text })));
-                else Log.Insert(string.Format("{0}-{1}", this.Text,JsonConvert.SerializeObject(new Supplier() { Code = Code, Name = txtName.Text, Address = txtAddress.Text, Phone = txtPhone.Text })));
+                if (string.Format("{0}", txtKode.Text).Length > 0)
+                    Log.Update(string.Format("{0}-{1}", this.Text,JsonConvert.SerializeObject(new Supplier() { Code = txtName.Text, Name = txtName.Text, Address = txtAddress.Text, Phone = txtPhone.Text })));
+                else Log.Insert(string.Format("{0}-{1}", this.Text,JsonConvert.SerializeObject(new Supplier() { Code = txtName.Text, Name = txtName.Text, Address = txtAddress.Text, Phone = txtPhone.Text })));
 
                 this.DialogResult = System.Windows.Forms.DialogResult.OK;
             }
@@ -73,12 +73,11 @@ namespace Sendang.Rejeki.Master
         private void frm_Load(object sender, EventArgs e)
         {
            // txtCode.Enabled = true;
-            if (string.Format("{0}", Code).Length == 0) return;
+            if (string.Format("{0}", Code).Length == 0) return;            
             Supplier prd = SupplierItem.GetByCode(Code);
             if (prd != null)
             {
-                Code = prd.Code;
-                //txtCode.Enabled = false;
+                txtKode.Text = prd.Code;
                 txtAddress.Text = prd.Address;
                 txtName.Text = prd.Name;
                 txtPhone.Text = prd.Phone;

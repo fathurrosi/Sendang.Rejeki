@@ -34,10 +34,10 @@ namespace Sendang.Rejeki.Master
                 txtCode.Focus();
                 return false;
             }
-            else if (txtDesc.Text.Length == 0)
+            else if (txtDisplay.Text.Length == 0)
             {
                 Utilities.ShowValidation("Deskripsi tidak boleh kosong");
-                txtDesc.Focus();
+                txtDisplay.Focus();
                 return false;
             }
             return true;
@@ -51,9 +51,9 @@ namespace Sendang.Rejeki.Master
                 {
                     Name = txtName.Text.Trim(),
                     ValueMember = txtCode.Text.Trim(),
-                    DisplayMember = txtDesc.Text.Trim(),
-                    CreatedBy = Utilities.Username
-
+                    DisplayMember = txtDisplay.Text.Trim(),
+                    CreatedBy = Utilities.Username,
+                    Description = txtDescription.Text.Trim()
                 };
                 var result = OptionItem.Save(item);
                 if (result != null)
@@ -76,7 +76,8 @@ namespace Sendang.Rejeki.Master
             {
                 txtName.Text = prd.Name;
                 txtCode.Text = prd.ValueMember;
-                txtDesc.Text = prd.DisplayMember;
+                txtDisplay.Text = prd.DisplayMember;
+                txtDescription.Text = prd.Description;  
                 txtName.Enabled = false;
                 txtCode.Enabled = false;
             }

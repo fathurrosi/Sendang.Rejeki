@@ -90,7 +90,7 @@ namespace Sendang.Rejeki.Transaction
         void LoadData(string invoiceNo)
         {
             grid.AutoGenerateColumns = false;
-            Invoice item = InvoiceItem.GetOptionsByKey(invoiceNo);
+            Invoice item = InvoiceItem.GetInvoiceByNo(invoiceNo);
             if (item != null)
             {
                 Customer cust = CustomerItem.GetByID(item.CustomerID);

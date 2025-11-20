@@ -19,7 +19,10 @@ namespace Sendang.Rejeki.Transaction
         {
             InitializeComponent();
         }
-
+        public void Enter()
+        {
+            //throw new NotImplementedException();
+        }
         private void frmStocks_Load(object sender, EventArgs e)
         {
             //ctlHeader1.EditButtonEnabled = Utilities.IsSuperAdmin();

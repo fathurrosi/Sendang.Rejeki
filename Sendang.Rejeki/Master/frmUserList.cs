@@ -16,6 +16,10 @@ namespace Sendang.Rejeki.Master
     public partial class frmUserList : Form, IMasterHeader, IMasterFooter
     {
         static frmUserList _instance;
+        public void Enter()
+        {
+            //throw new NotImplementedException();
+        }
         public static frmUserList GetInstance()
         {
             if (_instance == null)
@@ -28,7 +32,7 @@ namespace Sendang.Rejeki.Master
         {
             InitializeComponent();
         }
-
+       
         public void Search()
         {
             string textToSearch = ctlHeader2.TextToSearch;

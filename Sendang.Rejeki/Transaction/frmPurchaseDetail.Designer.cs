@@ -150,7 +150,7 @@ namespace Sendang.Rejeki.Transaction
             this.ctlMaster1.SaveButtonText = null;
             this.ctlMaster1.Size = new System.Drawing.Size(329, 45);
             this.ctlMaster1.TabIndex = 5;
-            this.ctlMaster1.Load += new System.EventHandler(this.ctlMaster1_Load);
+            //this.ctlMaster1.Load += new System.EventHandler(this.ctlMaster1_Load);
             // 
             // frmPurchaseDetail
             // 

@@ -65,6 +65,7 @@ namespace DataLayer
             context.AddParameter("@ValueMember", item.ValueMember.Trim());
             context.AddParameter("@CreatedBy", item.CreatedBy);
             context.AddParameter("@DisplayMember", item.DisplayMember);
+            context.AddParameter("@Description", item.Description);
             int result = DBUtil.ExecuteNonQuery(context);
             if (result > 0)
             {

@@ -41,7 +41,10 @@ namespace Sendang.Rejeki
                     Log.Info("Close");
                     Application.Exit();
                     break;
-
+                case "po_detail":
+                    activeForm = new frmPurchaseOrder(); break;
+                case "po_list":
+                    activeForm = new frmPurchaseOrderList(); break;
 
                 case "option":
                     activeForm = new frmOptions(); break;

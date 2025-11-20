@@ -132,6 +132,13 @@ namespace Sendang.Rejeki.Transaction
             txtTransDate.CustomFormat = Utilities.FORMAT_DateTime;
             txtTransDate.Value = NOW;
             //txtTransDate.Enabled = Utilities.IsSuperAdmin();
+
+            bool isSuperAdmin = Utilities.CurrentUser.Roles.Where(t => t.IsSuperAdmin).Count() > 0;
+            if (string.IsNullOrEmpty(TransactionID) && isSuperAdmin)
+            {
+                txtTransDate.Enabled = isSuperAdmin;
+            }
+
             //int saleIndex = SaleItem.GetNewIndex(NOW);
             //txtTransNo.Text = (string.IsNullOrEmpty(TransactionID)) ? string.Format((saleIndex <= 1000) ? "{0}{1:000}" : "{0}{1:0000}", NOW.ToString(Utilities.FORMAT_Date_Flat), saleIndex) : TransactionID;
             txtTransNo.Text = (string.IsNullOrEmpty(TransactionID)) ? _AutoAID : TransactionID;
@@ -660,6 +667,7 @@ namespace Sendang.Rejeki.Transaction
             txtPayment.ReadOnly = true;
             txtTransNo.ReadOnly = true;
             txtTransDate.Enabled = false;
+
             grid.Enabled = false;
         }
         private void btnPrint_Click(object sender, EventArgs e)

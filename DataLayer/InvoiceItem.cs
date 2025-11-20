@@ -143,7 +143,7 @@ namespace DataLayer
             return result;
         }
 
-        public static Invoice GetOptionsByKey(string invoiceNo)
+        public static Invoice GetInvoiceByNo(string invoiceNo)
         {
             IDBHelper context = new DBHelper();
             context.AddParameter("@InvoiceNo", invoiceNo);

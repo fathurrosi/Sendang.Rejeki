@@ -161,12 +161,11 @@ namespace Sendang.Rejeki.Transaction
         {
             ComboBox cbo = (ComboBox)sender;
             Catalog item = (Catalog)cbo.SelectedItem;
-            cboUnit.Text = item.Unit;
-        }
-
-        private void ctlMaster1_Load(object sender, EventArgs e)
-        {
-
+            if (item != null)
+            {
+                cboUnit.Text = item.Unit;
+                cboUnit.Enabled = false;
+            }
         }
 
     }

@@ -15,6 +15,10 @@ namespace Sendang.Rejeki.Master
 {
     public partial class frmMenuList : Form, IMasterHeader, IMasterFooter
     {
+        public void Enter()
+        {
+            //throw new NotImplementedException();
+        }
         public frmMenuList()
         {
             InitializeComponent();

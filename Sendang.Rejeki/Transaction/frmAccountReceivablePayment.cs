@@ -101,7 +101,7 @@ namespace Sendang.Rejeki.Transaction
 
         void LoadData(string invoiceNo)
         {
-            Invoice item = InvoiceItem.GetOptionsByKey(invoiceNo);
+            Invoice item = InvoiceItem.GetInvoiceByNo(invoiceNo);
             if (item != null)
             {
                 cboBuyer.SelectedValue = item.CustomerID;

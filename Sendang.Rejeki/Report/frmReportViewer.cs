@@ -15,6 +15,23 @@ namespace Sendang.Rejeki.Report
 {
     public partial class frmReportViewer : Form
     {
+        void SaveReportToPdf(string outputPath)
+        {
+
+            Warning[] warnings;
+            string[] streamIds;
+            string mimeType = string.Empty;
+            string encoding = string.Empty;
+            string extension = string.Empty;
+
+            byte[] bytes = reportViewer.LocalReport.Render("PDF", null, out mimeType, out encoding, out extension, out streamIds, out warnings);
+
+            using (FileStream fs = new FileStream(outputPath, FileMode.Create))
+            {
+                fs.Write(bytes, 0, bytes.Length);
+            }
+
+        }
         public frmReportViewer()
         {
             InitializeComponent();
@@ -38,6 +55,8 @@ namespace Sendang.Rejeki.Report
                 // Set Processing Mode.
                 reportViewer.ProcessingMode = ProcessingMode.Local;
 
+                //ReportDataSource rptSource = new ReportDataSource("DataSet1", bindingSource);
+                //rptViewer.LocalReport.DataSources.Add(rptSource);
                 // Set RDL file.
                 reportViewer.LocalReport.ReportPath = ReportPath;
                 BindingSource bindingSource = new BindingSource();
@@ -49,6 +68,7 @@ namespace Sendang.Rejeki.Report
 
                 this.reportViewer.RefreshReport();
 
+                SaveReportToPdf("Phurchase-Order.pdf");
             }
             catch (Exception ex)
             {

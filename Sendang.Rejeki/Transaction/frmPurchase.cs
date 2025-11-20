@@ -15,6 +15,7 @@ using Newtonsoft.Json;
 
 namespace Sendang.Rejeki.Transaction
 {
+    //public partial class frmPurchase : Form
     public partial class frmPurchase : SendangRejekiForm
     {
 
@@ -28,6 +29,7 @@ namespace Sendang.Rejeki.Transaction
         {
             btnSave.Enabled = false;
             btnCancel.Text = "Close";
+
             if (AllowCreate || AllowUpdate)
             {
                 btnSave.Text = "Save";
@@ -40,6 +42,7 @@ namespace Sendang.Rejeki.Transaction
             btnEdit.Enabled = AllowRead || AllowCreate || AllowUpdate;
             if (!AllowUpdate && AllowRead)
                 btnEdit.Text = "View";
+
 
             grid.AutoGenerateColumns = false;
             List<Supplier> list = SupplierItem.GetAll();

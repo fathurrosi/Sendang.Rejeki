@@ -240,8 +240,6 @@ namespace Sendang.Rejeki.Transaction
                 return;
             }
 
-
-
             Catalog product = null;
             if (cboProduct.SelectedValue == null &&
                 string.Format("{0}", cboProduct.Text).Length > 0)

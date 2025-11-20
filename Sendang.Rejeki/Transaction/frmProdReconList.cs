@@ -24,7 +24,10 @@ namespace Sendang.Rejeki.Transaction
             string textToSearch = ctlHeader1.TextToSearch;
             LoadData(textToSearch, ctlFooter1.PageIndex, ctlFooter1.PageSize);
         }
-
+        public void Enter()
+        {
+            //throw new NotImplementedException();
+        }
         void LoadData(string text, int pageIndex, int pageSize)
         {
             int totalRecord = 0;

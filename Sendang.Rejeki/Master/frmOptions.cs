@@ -16,6 +16,10 @@ namespace Sendang.Rejeki.Master
 {
     public partial class frmOptions : Form, IMasterHeader, IMasterFooter
     {
+        public void Enter()
+        {
+            //throw new NotImplementedException();
+        }
         public frmOptions()
         {
             InitializeComponent();
